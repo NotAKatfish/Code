@@ -1,128 +1,249 @@
-#include "helper.h"
+#include <Arduino.h>
 #include <QTRSensors.h>
-
-
-extern QTRSensors qtr;
-extern const uint8_t SensorCount;
-extern uint16_t sensorValues[];
-
-
-extern int FLpin1;
-extern int FLpin2;
-extern int FLpinEN;
-extern int FRpin1;
-extern int FRpin2;
-extern int FRpinEN;
-extern int BLpin1;
-extern int BLpin2;
-extern int BLpinEN;
-extern int BRpin1;
-extern int BRpin2;
-extern int BRpinEN;
-
-extern int error;
-extern int prevError;
-
-extern float P;
-extern float I;
-extern float D;
-
+#include <HCSR04.h>
+#include "helper.h"
 
 void initializeAll(){
-      // configure the sensors
-    qtr.setTypeAnalog();
-    qtr.setSensorPins((const uint8_t[]){A8, A9, A10, A11, A12, A13, A14, A15}, SensorCount);
-    qtr.setEmitterPin(2);
-    delay(500);
-    pinMode(LED_BUILTIN, OUTPUT);
-    digitalWrite(LED_BUILTIN, HIGH);
+    // configure the sensors
+  qtr.setTypeAnalog();
+  qtr.setSensorPins((const uint8_t[]){A8, A9, A10, A11, A12, A13, A14, A15}, SensorCount);
+  qtr.setEmitterPin(2);
 
-    for (uint16_t i = 0; i < 400; i++) {
-        qtr.calibrate();
-    }
-    digitalWrite(LED_BUILTIN, LOW);
+  
+  pinMode(FLpin1, OUTPUT);
+  pinMode(FLpin2, OUTPUT);
+  pinMode(FLpinEN, OUTPUT);
 
-    Serial.begin(9600);
-    for (uint8_t i = 0; i < SensorCount; i++) {
-        Serial.print(qtr.calibrationOn.minimum[i]);
-        Serial.print(' ');
-    }
-    Serial.println();
+  
+  pinMode(FRpin1, OUTPUT);
+  pinMode(FRpin2, OUTPUT);
+  pinMode(FRpinEN, OUTPUT);
 
-    for (uint8_t i = 0; i < SensorCount; i++) {
-        Serial.print(qtr.calibrationOn.maximum[i]);
-        Serial.print(' ');
-    }
-    Serial.println();
-    Serial.println();
-    delay(1000);
+  pinMode(BLpin1, OUTPUT);
+  pinMode(BLpin2, OUTPUT);
+  pinMode(BLpinEN, OUTPUT);
+  
+  pinMode(BRpin1, OUTPUT);
+  pinMode(BRpin2, OUTPUT);
+  pinMode(BRpinEN, OUTPUT);
 
 
-    pinMode(FLpin1, OUTPUT);
-    pinMode(FLpin2, OUTPUT);
-    pinMode(FLpinEN, OUTPUT);
+  digitalWrite(FLpin1, Lpin1);
+  digitalWrite(FLpin2, Lpin2);
+  
+  digitalWrite(FRpin1, Rpin1);
+  digitalWrite(FRpin2, Rpin2);
 
-    pinMode(FRpin1, OUTPUT);
-    pinMode(FRpin2, OUTPUT);
-    pinMode(FRpinEN, OUTPUT);
-
-    pinMode(BLpin1, OUTPUT);
-    pinMode(BLpin2, OUTPUT);
-    pinMode(BLpinEN, OUTPUT);
-
-    pinMode(BRpin1, OUTPUT);
-    pinMode(BRpin2, OUTPUT);
-    pinMode(BRpinEN, OUTPUT);
-
-    digitalWrite(FLpin1, LOW);
-    digitalWrite(FLpin2, HIGH);
-
-    digitalWrite(FRpin1, LOW);
-    digitalWrite(FRpin2, HIGH);
-
-    digitalWrite(BLpin1, HIGH);
-    digitalWrite(BLpin2, LOW);
-
-    digitalWrite(BRpin1, HIGH);
-    digitalWrite(BRpin2, LOW);
+  digitalWrite(BLpin1, Lpin1);
+  digitalWrite(BLpin2, Lpin2);
+  
+  digitalWrite(BRpin1, Rpin1);
+  digitalWrite(BRpin2, Rpin2);
 }
 
+
+void lineFollowing() {
+  // read raw sensor values
+    getError();
+    pid = (Kp * P) - (Ki * I) + (Kd * D);
+    speedLeft = Nspeed - pid;
+    speedRight = Nspeed + pid;
+
+    // ensure value within limited power range
+    if (speedLeft > up_threshold){speedLeft = up_threshold;}
+    if (speedLeft < low_threshold){ speedLeft = low_threshold;}
+    if (speedRight > up_threshold){ speedRight = up_threshold;}
+    if (speedRight < low_threshold){ speedRight = low_threshold;}
+
+    Serial.print('\t');
+    Serial.print(pid);
+    Serial.print('\t');
+    Serial.print(speedLeft);
+    Serial.print('\t');
+    Serial.print(speedRight);
+    Serial.println();
+
+    if(speedLeft < 0){setLW_Reverse();}
+    else if (speedLeft >= 0){setLW_Forward();}
+    if(speedRight < 0){setRW_Reverse();}
+    else if(speedRight >= 0){setRW_Forward();}
+
+
+    // print sensor values
+    
+
+    // if see all white, turn
+    while(isWhite() == true){
+    setHardLeftTurn();
+    Serial.println("Seeing all white");
+    delay(1000);
+    }
+
+    Serial.println("NO MORE WHITE");
+    goMove();
+}
+
+
+void setHardLeftTurn(){
+  setLW_Reverse();
+  setRW_Forward();
+
+    analogWrite(BRpinEN, 120);
+    analogWrite(FLpinEN, 120);
+    analogWrite(BLpinEN, 120);
+    analogWrite(FRpinEN, 120);
+
+
+}
+
+
+
+void case1(){
+    //turn from entrance
+    while(isBlack() == true){
+    setHardLeftTurn();
+    Serial.println("Seeing all black");
+    delay(1000);
+    }
+}
+
+// return true if all white
+bool isWhite(){
+
+    // must always get new error and sensor values even in loop
+    // or else will never leave
+    getError();
+    for(uint8_t i = 0; i < SensorCount; i++) {
+      // if any are black, return false
+      if(s[i] >= 500) {
+        // Serial.println("Point2");
+        // Serial.println(s[i]);
+        // Serial.println(allWhiteThreshold);
+          return false;
+      }
+
+    }
+
+    Serial.println("Seeing all white");
+    return true;
+
+}
+
+// return true if all black
+bool isBlack(){
+    // must always get new error and sensor values even in loop
+    // or else will never leave
+    getError();
+    for(uint8_t i = 0; i < SensorCount; i++) {
+      // if any don't hit the black threshold, return false
+      if(s[i] <= 700) {
+        // Serial.println("Point2");
+        // Serial.println(s[i]);
+        // Serial.println(allWhiteThreshold);
+          return false;
+      }
+
+    }
+
+    Serial.println("Seeing all black");
+    return true;
+
+}
+
+// direction to make LW go backwards
+// flip pin if less than 0
+void setLW_Reverse(){
+
+      // backward movement pins
+      Lpin1 = 0;
+      Lpin2 = 1;
+
+    updateDirections();
+}
+
+void setLW_Forward(){
+
+      // normal forward movement
+      Lpin1 = 1;
+      Lpin2 = 0;
+
+    updateDirections();
+}
+
+void setRW_Forward(){
+     // normal forward movement
+      Rpin1 = 1;
+      Rpin2 = 0;
+      updateDirections();
+}
+
+
+// direction to make RW go backwards
+// flip pin if less than 0
+void setRW_Reverse(){
+      // backward movement pins
+      Rpin1 = 0;
+      Rpin2 = 1;
+    updateDirections();
+}
+
+// update pin directions with above
+void updateDirections(){
+    digitalWrite(FLpin1, Lpin1);
+    digitalWrite(FLpin2, Lpin2);
+  
+    digitalWrite(FRpin1, Rpin1);
+    digitalWrite(FRpin2, Rpin2);
+
+    digitalWrite(BLpin1, Lpin1);
+    digitalWrite(BLpin2, Lpin2);
+  
+    digitalWrite(BRpin1, Rpin1);
+    digitalWrite(BRpin2, Rpin2);
+}
+
+
+// magnitude of motor speed
+void goMove(){
+    // tells it to move in given direction
+    // analog writes 0-255
+    analogWrite(BRpinEN, abs(speedRight));
+    analogWrite(FLpinEN, abs(speedLeft));
+    analogWrite(BLpinEN, abs(speedLeft));
+    analogWrite(FRpinEN, abs(speedRight));
+}
 
 // error function
 void getError() {
-    qtr.read(sensorValues);
-    for (uint8_t i = 0; i < SensorCount; i++) {
-        Serial.print(sensorValues[i]);
-        Serial.print('\t');
+   qtr.read(sensorValues);
+   for (uint8_t i = 0; i < SensorCount; i++)
+  {
+    // normalizing into calibrated values
+    // absolute
+    s[i] = (sensorValues[i]-offsetVal[i])*1000/normVal[i];
+    if(s[i] < 0)
+    {
+      s[i] = 0; 
     }
-    int s0 = sensorValues[0];
-    int s1 = sensorValues[1];
-    int s2 = sensorValues[2];
-    int s3 = sensorValues[3];
-    int s4 = sensorValues[4];
-    int s5 = sensorValues[5];
-    int s6 = sensorValues[6];
-    int s7 = sensorValues[7];
-    error = 4 * s0 + 3 * s1 + 2 * s2 + s3 - s4 - 2 * s5 - 3 * s6 - 4 * s7;
+    // Serial.print(s[i]);
+    // Serial.print('\t');
+  }
 
-    P = error;
-    I = I + error;
-    D = error - prevError;
-    Serial.print(error);
+      // Serial.println();
+      // delay(1000);
 
-    prevError = error;
+  // dark lines kinda above 600
+  // under 100, white
+
+  error = 8*s[0]+4*s[1]+2*s[2]+s[3]-s[4]-2*s[5]-4*s[6]-8*s[7];
+
+  
+  P = error;
+  I = I + error;
+  D = error-prevError;
+  // Serial.print('\t');
+  // Serial.print(error);
+  prevError = error;
 }
 
-// grab item
-void clawSequence(){
-  Serial.println("claw sequence");
-}
-
-void turnRight90(){
-  Serial.println("claw sequence");
-}
-
-void turnLeft90(){
-
-}
 

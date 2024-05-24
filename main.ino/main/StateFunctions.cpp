@@ -1,70 +1,27 @@
+#include <Arduino.h>
 #include "StateFunctions.h"
 #include "helper.h"
 #include <QTRSensors.h>
 
-extern QTRSensors qtr;
-extern const uint8_t SensorCount;
-extern uint16_t sensorValues[];
-extern const float Nspeed;
-extern const float Kp;
-extern const float Ki;
-extern const float Kd;
-extern int threshold;
-
-extern int error;
-extern int prevError;
-extern int speedLeft;
-extern int speedRight;
-
-extern float P;
-extern float I;
-extern float D;
-extern float pid;
-
-extern int FLpinEN;
-extern int FRpinEN;
-extern int BLpinEN;
-extern int BRpinEN;
-
-void lineFollowing() {
-    getError();
-    pid = (Kp * P) - (Ki * I) + (Kd * D);
-    speedLeft = Nspeed - pid;
-    speedRight = Nspeed + pid;
-    if (speedLeft > threshold){ speedLeft = threshold;}
-    if (speedLeft < 0){ speedLeft = 0;}
-    if (speedRight > threshold){ speedRight = threshold;}
-    if (speedRight < 0){ speedRight = 0;}
-    Serial.print('\t');
-    Serial.print(pid);
-    Serial.print('\t');
-    Serial.print(speedLeft);
-    Serial.print('\t');
-    Serial.print(speedRight);
-    Serial.println();
-
-    analogWrite(BRpinEN, speedRight);
-    analogWrite(FLpinEN, speedLeft);
-    analogWrite(BLpinEN, speedLeft);
-    analogWrite(FRpinEN, speedRight);
-}
-
-
-Void pickUp(){
+void pickUp(){
     Serial.println("Pickup mode");
+    lineFollowing();
 
-    // turn into designated quadrant
+    // always make starting point center between 1 and 2
+    // cases for which number
+    int case = 1;
+    // if need to turn left
+    // if see all black, turn left
+    if(case == 1){
+      case1();
+    }
 
-    // ultrasound detects wall, stop
-
-    // clawSequence();  // grabs item, puts in storage box
-
-    //
-
-
+    goMove();
 }
 
-Void ramp(){
+
+
+void ramp(){
     Serial.println("ramp mode");
 
     // start when detect ultrasonic
@@ -72,7 +29,7 @@ Void ramp(){
     // increase torque, go over ramp
 }
 
-Void dropOff(){
+void dropOff(){
     Serial.println("drop off");
     // turn 90 deg right into drop off bay
 
