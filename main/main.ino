@@ -1,6 +1,7 @@
 #include <QTRSensors.h>
 #include "StateFunctions.h"
 #include "helper.h"
+#include "PU_Cases.h"
 // main file initializes sensors, sets up motor pins
 // loop switches between different modes based on 'current mode'
 
@@ -15,6 +16,7 @@ int32_t s[SensorCount];   // array of calibrated sensor values
 const int allBlackThreshold = 750; // Threshold for all sensors being considered "black"
 bool allGreaterThanBlack = true;
 const uint8_t allWhiteThreshold = 450; // Threshold for all sensors being considered "black"
+bool firstTurnDone = false;
 
 // Motor control pins
 int FLpin1 = 22;
@@ -62,7 +64,7 @@ int Rpin2 = 0;
 
 enum Mode {
     LINE_FOLLOWING,
-    PICKUP,
+    ASSEMBLY,
     RAMP
 };
 
@@ -75,14 +77,22 @@ void setup() {
 
 void loop() {
 
+    //if first turn done
+    // change to pickup mode
+    firstTurn();
+    if(firstTurnDone == true){currentMode = ASSEMBLY;}
+
+
 
     // State changer
     switch (currentMode) {
         case LINE_FOLLOWING:
             lineFollowing();
             break;
-        case PICKUP:
-            pickUp();
+        case ASSEMBLY:
+            Assembly();
+            // after assembly is done
+            currentMode = LINE_FOLLOWING;
             break;
         case RAMP:
             ramp();

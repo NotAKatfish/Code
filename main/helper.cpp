@@ -2,6 +2,7 @@
 #include <QTRSensors.h>
 #include <HCSR04.h>
 #include "helper.h"
+#include "stateFunctions.h"
 
 void initializeAll(){
     // configure the sensors
@@ -69,20 +70,25 @@ void lineFollowing() {
     else if(speedRight >= 0){setRW_Forward();}
 
 
-    // print sensor values
-    
-
-    // if see all white, turn
-    while(isWhite() == true){
-    setHardLeftTurn();
-    Serial.println("Seeing all white");
-    delay(1000);
-    }
+    // // do first turn
+    // firstTurn();
 
     Serial.println("NO MORE WHITE");
     goMove();
 }
 
+// first left turn state
+void firstTurn(){
+    // if see all white, turn
+    while(isWhite() == true){
+    setHardLeftTurn();
+    Serial.println("Seeing all white");
+    delay(1000);
+
+    firstTurnDone = true;
+    }
+
+}
 
 void setHardLeftTurn(){
   setLW_Reverse();
@@ -94,17 +100,6 @@ void setHardLeftTurn(){
     analogWrite(FRpinEN, 120);
 
 
-}
-
-
-
-void case1(){
-    //turn from entrance
-    while(isBlack() == true){
-    setHardLeftTurn();
-    Serial.println("Seeing all black");
-    delay(1000);
-    }
 }
 
 // return true if all white
