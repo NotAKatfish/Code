@@ -1,6 +1,6 @@
 #include <Arduino.h>
 #include <QTRSensors.h>
-#include <HCSR04.h>
+//#include <HCSR04.h>
 #include "helper.h"
 #include "stateFunctions.h"
 
@@ -28,6 +28,9 @@ void initializeAll(){
   pinMode(BRpin2, OUTPUT);
   pinMode(BRpinEN, OUTPUT);
 
+  pinMode(trigPin, OUTPUT); // Ultrasonic trig pin
+  pinMode(echoPin, INPUT); //Ultrasonic echo pin
+
 
   digitalWrite(FLpin1, Lpin1);
   digitalWrite(FLpin2, Lpin2);
@@ -40,6 +43,7 @@ void initializeAll(){
   
   digitalWrite(BRpin1, Rpin1);
   digitalWrite(BRpin2, Rpin2);
+
 }
 
 
@@ -55,6 +59,7 @@ void lineFollowing() {
     if (speedLeft < low_threshold){ speedLeft = low_threshold;}
     if (speedRight > up_threshold){ speedRight = up_threshold;}
     if (speedRight < low_threshold){ speedRight = low_threshold;}
+    
 
     Serial.print('\t');
     Serial.print(pid);
@@ -202,10 +207,28 @@ void updateDirections(){
 void goMove(){
     // tells it to move in given direction
     // analog writes 0-255
-    analogWrite(BRpinEN, abs(speedRight));
-    analogWrite(FLpinEN, abs(speedLeft));
-    analogWrite(BLpinEN, abs(speedLeft));
-    analogWrite(FRpinEN, abs(speedRight));
+    if(abs(speedRight)> 40)
+    {
+       analogWrite(BRpinEN, abs(speedRight));
+    } else if (abs(speedRight)<= 30)
+    {
+      analogWrite(BRpinEN, abs(speedRight)+30);
+      analogWrite(FRpinEN, abs(speedRight)+30);
+    }
+    
+    if(abs(speedLeft)> 40)
+    {
+       analogWrite(FLpinEN, abs(speedLeft));
+       analogWrite(BLpinEN, abs(speedLeft));
+    } else if (abs(speedLeft)<= 40)
+    {
+      analogWrite(FLpinEN, abs(speedLeft)+30);
+      analogWrite(BLpinEN, abs(speedLeft)+30);
+    }
+//    analogWrite(BRpinEN, abs(speedRight));
+//    analogWrite(FLpinEN, abs(speedLeft));
+//    analogWrite(BLpinEN, abs(speedLeft));
+//    analogWrite(FRpinEN, abs(speedRight));
 }
 
 // error function
@@ -220,17 +243,17 @@ void getError() {
     {
       s[i] = 0; 
     }
-    // Serial.print(s[i]);
-    // Serial.print('\t');
+     Serial.print(s[i]);
+     Serial.print('\t');
   }
 
-      // Serial.println();
+       
       // delay(1000);
 
   // dark lines kinda above 600
   // under 100, white
 
-  error = 8*s[0]+4*s[1]+2*s[2]+s[3]-s[4]-2*s[5]-4*s[6]-8*s[7];
+  error = 6*s[0]+4*s[1]+2*s[2]+s[3]-s[4]-2*s[5]-4*s[6]-6*s[7];
 
   
   P = error;
@@ -241,4 +264,19 @@ void getError() {
   prevError = error;
 }
 
-
+void getDistance() {
+  // Clears the trigPin
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+  // Sets the trigPin on HIGH state for 10 micro seconds
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+  // Reads the echoPin, returns the sound wave travel time in microseconds
+  duration = pulseIn(echoPin, HIGH);
+  // Calculating the distance
+  distance = duration * 0.034 / 2;
+  // Prints the distance on the Serial Monitor
+  Serial.print("Distance: ");
+  Serial.println(distance);
+}

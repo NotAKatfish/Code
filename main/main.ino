@@ -35,12 +35,18 @@ int BRpin1 = 26;
 int BRpin2 = 27;
 int BRpinEN = 10;
 
+//Ultrasonic Pins
+const int trigPin = 9;
+const int echoPin = 8;
+long duration;
+int distance;
+
 
 // speed vars, pid
-const float Nspeed = 90;
-const float Kp = 0.022;
-const float Ki = 0.0001;
-const float Kd = 0.02;
+const float Nspeed = 40; //60
+const float Kp = 0.003; //proportional 0-0.1
+const float Ki = 0.000; //offset  
+const float Kd = 0.05; //difference
 float P = 0;
 float I = 0;
 float D = 0;
@@ -52,8 +58,8 @@ int speedLeft = Nspeed;
 int speedRight = Nspeed;
 
 // min and max power output
-int up_threshold = 125;
-int low_threshold = -100;
+//int up_threshold = 80;
+//int low_threshold = -40;
 
 // switching to reverse
 int Lpin1 = 1;
@@ -76,7 +82,7 @@ void setup() {
 }
 
 void loop() {
-
+    //getDistance();
     //if first turn done
     // change to pickup mode
 
@@ -90,15 +96,15 @@ void loop() {
 
 
 
-    firstTurn();
-    if(firstTurnDone == true){currentMode = ASSEMBLY;}
+//    firstTurn();
+//    if(firstTurnDone == true){currentMode = ASSEMBLY;}
 
 
 
-    // State changer
+     //State changer
     switch (currentMode) {
         case LINE_FOLLOWING:
-            Serial.println("Line Following");
+//            Serial.println("Line Following");
             lineFollowing();
             break;
         case ASSEMBLY:
