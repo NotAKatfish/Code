@@ -37,10 +37,10 @@ int BRpinEN = 10;
 
 
 // speed vars, pid
-const float Nspeed = 80;
-const float Kp = .2;
-const float Ki = 0.0;
-const float Kd = 0.2;
+const float Nspeed = 90;
+const float Kp = 0.022;
+const float Ki = 0.0001;
+const float Kd = 0.02;
 float P = 0;
 float I = 0;
 float D = 0;
@@ -52,7 +52,7 @@ int speedLeft = Nspeed;
 int speedRight = Nspeed;
 
 // min and max power output
-int up_threshold = 150;
+int up_threshold = 125;
 int low_threshold = -100;
 
 // switching to reverse
@@ -79,6 +79,17 @@ void loop() {
 
     //if first turn done
     // change to pickup mode
+
+    // setLW_Reverse();
+    // setRW_Reverse();
+
+    // setLW_Forward();
+    // setRW_Forward();
+
+    // goMove();
+
+
+
     firstTurn();
     if(firstTurnDone == true){currentMode = ASSEMBLY;}
 
@@ -87,12 +98,14 @@ void loop() {
     // State changer
     switch (currentMode) {
         case LINE_FOLLOWING:
+            Serial.println("Line Following");
             lineFollowing();
             break;
         case ASSEMBLY:
             Assembly();
             // after assembly is done
             currentMode = LINE_FOLLOWING;
+            firstTurnDone = false;
             break;
         case RAMP:
             ramp();

@@ -73,7 +73,7 @@ void lineFollowing() {
     // // do first turn
     // firstTurn();
 
-    Serial.println("NO MORE WHITE");
+    // Serial.println("NO MORE WHITE");
     goMove();
 }
 

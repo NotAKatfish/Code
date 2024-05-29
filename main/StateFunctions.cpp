@@ -20,8 +20,8 @@ void Assembly(){
     int pattyLocation3 = 3;
     //pickup patty, replace patty Location with patties want to grab
     pickUp(pattyLocation1);
-    pickUp(pattyLocation2);
-    pickUp(pattyLocation3);
+    // pickUp(pattyLocation2);
+    // pickUp(pattyLocation3);
 
     // assembly ends at the starting location
 

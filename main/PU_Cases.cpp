@@ -9,33 +9,47 @@ void pickUp(int pattyLocation){
   if(pattyLocation == 1 || pattyLocation == 6)
   {
 
-    //turn from entrance
-    if (isBlack() == true){
 
-      // if 1 on left
-      if(pattyLocation == 1){
-        setHardLeftTurn();    // pretend turns correctly and stops
+    // line follow while it passes the black row
+    // at the end of the black row stop
+    while(isBlack() == true){lineFollowing();}
 
-        lineFollowing();  // follow to end
+    // NOW INITIATE TURN
 
-        // check ultrasonic to see if we can stop
-        //actual claw grab
+    // if 1 on left
+    if(pattyLocation == 1){
 
-        // reverse until see all black
+      delay(10000);
+      
 
-        // hard right turn
+      // once we see white in the left two sensors
+      // getError();
 
-        // reverse back to starting point
+      // hard left until see white in the left two sensors again
 
-      }
+      // then line follow
+      // lineFollowing();
 
-      // if 6 on right
-      if(pattyLocation == 6){
-        // setHardRightTurn();
-        Serial.println("Seeing all black");
-        delay(1000);
-      }
+
+
+      // check ultrasonic to see if we can stop
+      //actual claw grab
+
+      // reverse until see all black
+
+      // hard right turn
+
+      // reverse back to starting point
+
     }
+
+    // if 6 on right
+    if(pattyLocation == 6){
+      // setHardRightTurn();
+      Serial.println("Seeing all black");
+      delay(1000);
+    }
+    
 
   }
 
