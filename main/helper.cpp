@@ -1,6 +1,5 @@
 #include <Arduino.h>
 #include <QTRSensors.h>
-//#include <HCSR04.h>
 #include "helper.h"
 #include "stateFunctions.h"
 
@@ -45,6 +44,7 @@ void initializeAll(){
   
   digitalWrite(BRpin1, Rpin1);
   digitalWrite(BRpin2, Rpin2);
+
 
 }
 
@@ -215,27 +215,7 @@ void updateDirections(){
 
 // magnitude of motor speed
 void goMove(){
-    // tells it to move in given direction
-    // analog writes 0-255
-//    if(abs(speedRight)> deadzone)
-//    {
-//       analogWrite(BRpinEN, abs(speedRight));
-//       analogWrite(FRpinEN, abs(speedRight));
-//    } else if (abs(speedRight)<= deadzone)
-//    {
-//      analogWrite(BRpinEN, abs(speedRight)+deadzone_speed);
-//      analogWrite(FRpinEN, abs(speedRight)+deadzone_speed);
-//    }
-//    
-//    if(abs(speedLeft)> deadzone)
-//    {
-//       analogWrite(FLpinEN, abs(speedLeft));
-//       analogWrite(BLpinEN, abs(speedLeft));
-//    } else if (abs(speedLeft)<= deadzone)
-//    {
-//      analogWrite(FLpinEN, abs(speedLeft)+deadzone_speed);
-//      analogWrite(BLpinEN, abs(speedLeft)+deadzone_speed);
-//}
+
     analogWrite(BRpinEN, abs(speedRight)+deadzone_speed);
     analogWrite(FLpinEN, abs(speedLeft)+deadzone_speed);
     analogWrite(BLpinEN, abs(speedLeft)+deadzone_speed);
@@ -292,22 +272,7 @@ int getDistanceR() {
   Serial.println(Rdistance);
   return Rdistance;
 }
-//void getDistanceL() {
-//  // Clears the trigPin
-//  digitalWrite(LtrigPin, LOW);
-//  delayMicroseconds(2);
-//  // Sets the trigPin on HIGH state for 10 micro seconds
-//  digitalWrite(LtrigPin, HIGH);
-//  delayMicroseconds(10);
-//  digitalWrite(LtrigPin, LOW);
-//  // Reads the echoPin, returns the sound wave travel time in microseconds
-//  Lduration = pulseIn(LechoPin, HIGH);
-//  // Calculating the distance
-//  Ldistance = Lduration * 0.034 / 2;
-//  // Prints the distance on the Serial Monitor
-//  Serial.print("Left Distance: ");
-//  Serial.println(Ldistance);
-//}
+
 
 //servo_limit_test
 void grab() {
