@@ -90,11 +90,13 @@ void goMove();
 void getError();
 
 void setHardLeftTurn();
+void setHardRightTurn();
 bool isWhite();
 bool isBlack();
 
 void firstTurn();
 
 void getDistance();
+void grab();
 
 #endif

@@ -103,8 +103,16 @@ void setHardLeftTurn(){
     analogWrite(FLpinEN, 120);
     analogWrite(BLpinEN, 120);
     analogWrite(FRpinEN, 120);
+}
 
+void setHardRightTurn(){
+  setLW_Forward();
+  setRW_Reverse();
 
+    analogWrite(BRpinEN, 120);
+    analogWrite(FLpinEN, 120);
+    analogWrite(BLpinEN, 120);
+    analogWrite(FRpinEN, 120);
 }
 
 // return true if all white
@@ -280,4 +288,13 @@ void getDistance() {
   // Prints the distance on the Serial Monitor
   Serial.print("Distance: ");
   Serial.println(distance);
+}
+
+//servo_limit_test
+void grab() {
+  //raise the claw up to shelf
+  //open claw
+  //close claw until disk is secured/hits the sensor
+  //set pattycount = 1
+}
 }
