@@ -5,7 +5,7 @@
 
 extern QTRSensors qtr;
 extern const uint8_t SensorCount;
-extern int sensorValues[];
+extern uint16_t sensorValues[];
 extern const int32_t offsetVal[];
 extern const int32_t normVal[];
 extern int32_t s[];

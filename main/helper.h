@@ -6,7 +6,7 @@
 
 extern QTRSensors qtr;
 extern const uint8_t SensorCount;
-extern int sensorValues[];
+extern uint16_t sensorValues[];
 extern const int32_t offsetVal[];
 extern const int32_t normVal[];
 extern int32_t s[];
@@ -15,7 +15,7 @@ extern int32_t s[];
 // all black all white detected
 extern const int allBlackThreshold; // Threshold for all sensors being considered "black"
 extern bool allGreaterThanBlack;
-extern const uint8_t allWhiteThreshold; // Threshold for all sensors being considered "black"
+extern const int allWhiteThreshold; // Threshold for all sensors being considered "black"
 extern bool firstTurnDone;
 
 // // ultrasonic
@@ -102,8 +102,8 @@ bool isBlack();
 
 void firstTurn();
 
-void getDistanceR();
-//void getDistanceL();
+int getDistanceR();
+//int getDistanceL();
 void grab();
 
 #endif

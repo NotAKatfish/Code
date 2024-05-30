@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include "helper.h"
+#include "PU_Cases.h"
 
 void pickUp(int pattyLocation){
 
@@ -15,10 +16,10 @@ void pickUp(int pattyLocation){
     }
     //Turn until we are 10 cm from the wall
     if (getDistanceR()>10){
-      if (pattLocation == 1){
+      if (pattyLocation == 1){
       setHardLeftTurn();
       } else {
-        setHardRightTurn():
+        setHardRightTurn();
       }
     } else if (getDistanceR()>3) { //line follow until we are 3 cm from the wall or line follow until the sensor touches the wall
       lineFollowing();
@@ -33,7 +34,7 @@ void pickUp(int pattyLocation){
   if(pattyLocation == 2 || pattyLocation == 5)
   {
     // line follow while it passes the black row twice
-    while(row < 2){
+    while(rows < 2){
       lineFollowing();
       if(isBlack() == true){
         while(isBlack() == true){
@@ -42,7 +43,7 @@ void pickUp(int pattyLocation){
         rows++;
       }
     }    
-      if (pattLocation == 2){
+      if (pattyLocation == 2){
         pickUpLeft();
       } else {
         pickUpRight();
@@ -54,7 +55,7 @@ void pickUp(int pattyLocation){
   if(pattyLocation == 3 || pattyLocation == 4)
   {
     // line follow while it passes the black row twice
-    while(row < 3){
+    while(rows < 3){
       lineFollowing();
       if(isBlack() == true){
         while(isBlack() == true){
@@ -63,7 +64,7 @@ void pickUp(int pattyLocation){
         rows++;
       }
     }    
-      if (pattLocation == 3){
+      if (pattyLocation == 3){
         pickUpLeft();
       } else {
         pickUpRight();

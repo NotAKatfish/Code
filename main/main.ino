@@ -7,7 +7,7 @@
 
 QTRSensors qtr;
 const uint8_t SensorCount = 8;
-int sensorValues[SensorCount];
+uint16_t sensorValues[SensorCount];
 const int32_t offsetVal[SensorCount] = {449, 227, 197, 180, 183, 247, 160, 373};
 const int32_t normVal[SensorCount] = {525, 712, 734, 749, 747, 699, 774, 587};
 int32_t s[SensorCount];   // array of calibrated sensor values
@@ -15,7 +15,7 @@ int32_t s[SensorCount];   // array of calibrated sensor values
 // all black all white detected
 const int allBlackThreshold = 750; // Threshold for all sensors being considered "black"
 bool allGreaterThanBlack = true;
-const uint8_t allWhiteThreshold = 450; // Threshold for all sensors being considered "black"
+const int allWhiteThreshold = 450; // Threshold for all sensors being considered "black"
 bool firstTurnDone = false;
 
 // Motor control pins

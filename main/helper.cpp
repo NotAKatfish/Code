@@ -275,7 +275,7 @@ void getError() {
   prevError = error;
 }
 
-void getDistanceR() {
+int getDistanceR() {
   // Clears the trigPin
   digitalWrite(RtrigPin, LOW);
   delayMicroseconds(2);
@@ -290,6 +290,7 @@ void getDistanceR() {
   // Prints the distance on the Serial Monitor
   Serial.print("Right Distance: ");
   Serial.println(Rdistance);
+  return Rdistance;
 }
 //void getDistanceL() {
 //  // Clears the trigPin
@@ -314,5 +315,4 @@ void grab() {
   //open claw
   //close claw until disk is secured/hits the sensor
   //set pattycount = 1
-}
 }
