@@ -59,6 +59,9 @@ extern float I;
 extern float D;
 extern float pid;
 
+extern int deadzone;
+extern int deadzone_speed;
+
 extern int error;
 extern int prevError;
 extern int speedLeft;

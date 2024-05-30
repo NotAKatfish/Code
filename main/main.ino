@@ -43,10 +43,16 @@ int distance;
 
 
 // speed vars, pid
-const float Nspeed = 40; //60
+//const float Nspeed = 40; //60
+//const float Kp = 0.002; //proportional 0-0.1
+//const float Ki = 0.000; //offset  
+//const float Kd = 0.05; //difference
+
+const float Nspeed = 25 ; //30
 const float Kp = 0.003; //proportional 0-0.1
 const float Ki = 0.000; //offset  
-const float Kd = 0.05; //difference
+const float Kd = 0.015; //difference
+
 float P = 0;
 float I = 0;
 float D = 0;
@@ -60,12 +66,18 @@ int speedRight = Nspeed;
 // min and max power output
 //int up_threshold = 80;
 //int low_threshold = -40;
+int up_threshold = 55;
+int low_threshold = -50;
+int deadzone = 40;
+int deadzone_speed = 35;
+
 
 // switching to reverse
 int Lpin1 = 1;
 int Lpin2 = 0;
 int Rpin1 = 1;
 int Rpin2 = 0;
+
 
 
 enum Mode {

@@ -207,28 +207,29 @@ void updateDirections(){
 void goMove(){
     // tells it to move in given direction
     // analog writes 0-255
-    if(abs(speedRight)> 40)
-    {
-       analogWrite(BRpinEN, abs(speedRight));
-    } else if (abs(speedRight)<= 30)
-    {
-      analogWrite(BRpinEN, abs(speedRight)+30);
-      analogWrite(FRpinEN, abs(speedRight)+30);
-    }
-    
-    if(abs(speedLeft)> 40)
-    {
-       analogWrite(FLpinEN, abs(speedLeft));
-       analogWrite(BLpinEN, abs(speedLeft));
-    } else if (abs(speedLeft)<= 40)
-    {
-      analogWrite(FLpinEN, abs(speedLeft)+30);
-      analogWrite(BLpinEN, abs(speedLeft)+30);
-    }
-//    analogWrite(BRpinEN, abs(speedRight));
-//    analogWrite(FLpinEN, abs(speedLeft));
-//    analogWrite(BLpinEN, abs(speedLeft));
-//    analogWrite(FRpinEN, abs(speedRight));
+//    if(abs(speedRight)> deadzone)
+//    {
+//       analogWrite(BRpinEN, abs(speedRight));
+//       analogWrite(FRpinEN, abs(speedRight));
+//    } else if (abs(speedRight)<= deadzone)
+//    {
+//      analogWrite(BRpinEN, abs(speedRight)+deadzone_speed);
+//      analogWrite(FRpinEN, abs(speedRight)+deadzone_speed);
+//    }
+//    
+//    if(abs(speedLeft)> deadzone)
+//    {
+//       analogWrite(FLpinEN, abs(speedLeft));
+//       analogWrite(BLpinEN, abs(speedLeft));
+//    } else if (abs(speedLeft)<= deadzone)
+//    {
+//      analogWrite(FLpinEN, abs(speedLeft)+deadzone_speed);
+//      analogWrite(BLpinEN, abs(speedLeft)+deadzone_speed);
+//}
+    analogWrite(BRpinEN, abs(speedRight)+deadzone_speed);
+    analogWrite(FLpinEN, abs(speedLeft)+deadzone_speed);
+    analogWrite(BLpinEN, abs(speedLeft)+deadzone_speed);
+    analogWrite(FRpinEN, abs(speedRight)+deadzone_speed);
 }
 
 // error function
@@ -253,7 +254,7 @@ void getError() {
   // dark lines kinda above 600
   // under 100, white
 
-  error = 6*s[0]+4*s[1]+2*s[2]+s[3]-s[4]-2*s[5]-4*s[6]-6*s[7];
+  error = 8*s[0]+4*s[1]+2*s[2]+s[3]-s[4]-2*s[5]-4*s[6]-8*s[7];
 
   
   P = error;
