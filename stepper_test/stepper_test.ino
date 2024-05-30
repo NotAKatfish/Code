@@ -13,6 +13,7 @@ const int dirPin2 = 49;
 
 const int maxsteps1 = 1400; //200 steps per rotation, 7 complete rotations
 const int maxsteps2 = 2000; //200 steps per rotation, 10 complete rotations
+const int pulses = 200;
 int stepcounter = 0;
  
 void setup() {
@@ -27,7 +28,7 @@ void setup() {
 //  if (stepcounter <= maxsteps2){
 //  digitalWrite(dirPin2,LOW); // Enables the motor to move in a particular direction //dirPin2, HIGH is going up  dirPin2, LOW is going down
 //  // Makes 200 pulses for making one full cycle rotation
-//  for(int x = 0; x < 200; x++) {
+//  for(int x = 0; x < pulses; x++) {
 //    digitalWrite(stepPin2,HIGH); 
 //    delayMicroseconds(20000); 
 //    digitalWrite(stepPin2,LOW); 
@@ -43,7 +44,7 @@ void loop() {
   if (stepcounter <= maxsteps1){
   digitalWrite(dirPin1,LOW); // Enables the motor to move in a particular direction //LOW = clockwise HIGH = counterclockwise 
   // Makes 200 pulses for making one full cycle rotation
-  for(int x = 0; x < 200; x++) {
+  for(int x = 0; x < pulses; x++) {
     digitalWrite(stepPin1,HIGH); 
     delayMicroseconds(20000); 
     digitalWrite(stepPin1,LOW); 
