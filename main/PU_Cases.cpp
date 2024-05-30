@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include "helper.h"
 #include "PU_Cases.h"
+#include "Arm.h"
 
 void pickUp(int pattyLocation){
 

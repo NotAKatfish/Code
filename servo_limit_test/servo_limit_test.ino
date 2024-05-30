@@ -7,10 +7,10 @@ ezButton bottom_limitSwitch(43); // underneath
 
 Servo myservo;  // create servo object to control a servo
 
-int start = 180;    // starting position
+int start = 90;    // starting position
 int pos = start;
 bool go_right = true;
-int desired_pos = 93;
+int desired_pos = 10;
 
 // stepper vars
 const int stepPinRot = 51; //rotate 180 degrees
@@ -62,6 +62,10 @@ void loop() {
     stepcounter = 0;
     setStepperDir(dirPinRot, LOW);
     stepperMove(stepPinRot, stepcounter, maxstepsRot);
+
+    // reset claw position and make it open
+    pos = start;
+    myservo.write(pos);
 
     // Set motor direction cc
     stepcounter = 0;  // reset step counter

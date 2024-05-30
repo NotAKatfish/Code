@@ -2,6 +2,9 @@
 #include "StateFunctions.h"
 #include "helper.h"
 #include "PU_Cases.h"
+#include "Arm.h"
+#include "ezButton.h"
+#include "Servo.h"
 // main file initializes sensors, sets up motor pins
 // loop switches between different modes based on 'current mode'
 
@@ -86,6 +89,31 @@ int Rpin2 = 0;
 
 
 
+// arm variables
+// claw vars
+ezButton claw_limitSwitch(45);  // create ezButton object that attach to pin 7;
+ezButton bottom_limitSwitch(43); // underneath
+
+Servo myservo;  // create servo object to control a servo
+
+int start = 90;    // starting position
+int pos = start;
+bool go_right = true;
+int desired_pos = 10;
+
+// stepper vars
+const int stepPinRot = 51; //rotate 180 degrees
+const int dirPinRot = 53; 
+const int stepPinVert = 47; //go up or down
+const int dirPinVert = 49; 
+
+const int maxstepsRot = 1400; //200 steps per rotation, 7 complete rotations
+const int maxstepsVert = 2000; //200 steps per rotation, 10 complete rotations
+int stepper_stepcounter = 0;    // always reset before each stepper action
+
+bool armFaceFront = true; // arm default faces front
+
+
 enum Mode {
     LINE_FOLLOWING,
     ASSEMBLY,
@@ -95,11 +123,27 @@ enum Mode {
 Mode currentMode = LINE_FOLLOWING;
 
 void setup() {
+  // Arm initialization
+  // set claw pins
+  myservo.attach(41);  // attaches the servo on pin 3 to the servo object
+  claw_limitSwitch.setDebounceTime(50); // set debounce time to 50 milliseconds
+  bottom_limitSwitch.setDebounceTime(50);
+
+
+  // set stepper pins
+  pinMode(stepPinRot,OUTPUT); 
+  pinMode(dirPinRot,OUTPUT);
+  pinMode(stepPinVert,OUTPUT); 
+  pinMode(dirPinVert,OUTPUT);
   initializeAll();
   Serial.begin(9600);
 }
 
 void loop() {
+
+  moveArm();
+
+
     //getDistanceR();
     //if first turn done
     // change to pickup mode
@@ -119,22 +163,22 @@ void loop() {
 
 
 
-     //State changer
-    switch (currentMode) {
-        case LINE_FOLLOWING:
-//            Serial.println("Line Following");
-            lineFollowing();
-            break;
-        case ASSEMBLY:
-            Assembly();
-            // after assembly is done
-            currentMode = LINE_FOLLOWING;
-            firstTurnDone = false;
-            break;
-        case RAMP:
-            ramp();
-            break;
-    }
+//      //State changer
+//     switch (currentMode) {
+//         case LINE_FOLLOWING:
+// //            Serial.println("Line Following");
+//             lineFollowing();
+//             break;
+//         case ASSEMBLY:
+//             Assembly();
+//             // after assembly is done
+//             currentMode = LINE_FOLLOWING;
+//             firstTurnDone = false;
+//             break;
+//         case RAMP:
+//             ramp();
+//             break;
+    // }
   
 
 
