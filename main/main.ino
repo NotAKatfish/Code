@@ -35,11 +35,17 @@ int BRpin1 = 26;
 int BRpin2 = 27;
 int BRpinEN = 10;
 
-//Ultrasonic Pins
-const int trigPin = 9;
-const int echoPin = 8;
-long duration;
-int distance;
+//Right Ultrasonic Pins
+const int RtrigPin = 9;
+const int RechoPin = 8;
+long Rduration;
+int Rdistance;
+
+////Left Ultrasonic Pins
+//const int LtrigPin = 9;
+//const int LechoPin = 8;
+//long Lduration;
+//int Ldistance;
 
 
 // speed vars, pid
@@ -94,7 +100,7 @@ void setup() {
 }
 
 void loop() {
-    //getDistance();
+    //getDistanceR();
     //if first turn done
     // change to pickup mode
 

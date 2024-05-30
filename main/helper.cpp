@@ -28,9 +28,11 @@ void initializeAll(){
   pinMode(BRpin2, OUTPUT);
   pinMode(BRpinEN, OUTPUT);
 
-  pinMode(trigPin, OUTPUT); // Ultrasonic trig pin
-  pinMode(echoPin, INPUT); //Ultrasonic echo pin
+  pinMode(RtrigPin, OUTPUT); // Ultrasonic trig pin
+  pinMode(RechoPin, INPUT); //Ultrasonic echo pin
 
+//  pinMode(LtrigPin, OUTPUT); // Ultrasonic trig pin
+//  pinMode(LechoPin, INPUT); //Ultrasonic echo pin
 
   digitalWrite(FLpin1, Lpin1);
   digitalWrite(FLpin2, Lpin2);
@@ -273,22 +275,38 @@ void getError() {
   prevError = error;
 }
 
-void getDistance() {
+void getDistanceR() {
   // Clears the trigPin
-  digitalWrite(trigPin, LOW);
+  digitalWrite(RtrigPin, LOW);
   delayMicroseconds(2);
   // Sets the trigPin on HIGH state for 10 micro seconds
-  digitalWrite(trigPin, HIGH);
+  digitalWrite(RtrigPin, HIGH);
   delayMicroseconds(10);
-  digitalWrite(trigPin, LOW);
+  digitalWrite(RtrigPin, LOW);
   // Reads the echoPin, returns the sound wave travel time in microseconds
-  duration = pulseIn(echoPin, HIGH);
+  Rduration = pulseIn(RechoPin, HIGH);
   // Calculating the distance
-  distance = duration * 0.034 / 2;
+  Rdistance = Rduration * 0.034 / 2;
   // Prints the distance on the Serial Monitor
-  Serial.print("Distance: ");
-  Serial.println(distance);
+  Serial.print("Right Distance: ");
+  Serial.println(Rdistance);
 }
+//void getDistanceL() {
+//  // Clears the trigPin
+//  digitalWrite(LtrigPin, LOW);
+//  delayMicroseconds(2);
+//  // Sets the trigPin on HIGH state for 10 micro seconds
+//  digitalWrite(LtrigPin, HIGH);
+//  delayMicroseconds(10);
+//  digitalWrite(LtrigPin, LOW);
+//  // Reads the echoPin, returns the sound wave travel time in microseconds
+//  Lduration = pulseIn(LechoPin, HIGH);
+//  // Calculating the distance
+//  Ldistance = Lduration * 0.034 / 2;
+//  // Prints the distance on the Serial Monitor
+//  Serial.print("Left Distance: ");
+//  Serial.println(Ldistance);
+//}
 
 //servo_limit_test
 void grab() {

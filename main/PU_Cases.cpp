@@ -5,7 +5,7 @@ void pickUp(int pattyLocation){
 
   int rows = 0;
 
-  // if first line
+  // ROW 1
   if(pattyLocation == 1 || pattyLocation == 6)
   {
     // line follow while it passes the black row
@@ -14,19 +14,64 @@ void pickUp(int pattyLocation){
       lineFollowing();
     }
     //Turn until we are 10 cm from the wall
-    if (getDistance()>10){
+    if (getDistanceR()>10){
       if (pattLocation == 1){
       setHardLeftTurn();
       } else {
         setHardRightTurn():
       }
-    } else if (getDistance()>3) { //line follow until we are 3 cm from the wall or line follow until the sensor touches the wall
+    } else if (getDistanceR()>3) { //line follow until we are 3 cm from the wall or line follow until the sensor touches the wall
       lineFollowing();
     } else {
       //turn off motors
     }
-    grab(); //sevo_limit_test
+    //grab(); //sevo_limit_test
   }
+  
+
+//ROW 2
+  if(pattyLocation == 2 || pattyLocation == 5)
+  {
+    // line follow while it passes the black row twice
+    while(row < 2){
+      lineFollowing();
+      if(isBlack() == true){
+        while(isBlack() == true){
+          lineFollowing();
+        }
+        rows++;
+      }
+    }    
+      if (pattLocation == 2){
+        pickUpLeft();
+      } else {
+        pickUpRight();
+      } 
+  }
+
+
+  // ROW 3
+  if(pattyLocation == 3 || pattyLocation == 4)
+  {
+    // line follow while it passes the black row twice
+    while(row < 3){
+      lineFollowing();
+      if(isBlack() == true){
+        while(isBlack() == true){
+          lineFollowing();
+        }
+        rows++;
+      }
+    }    
+      if (pattLocation == 3){
+        pickUpLeft();
+      } else {
+        pickUpRight();
+      } 
+  }
+}
+
+
 //    // if 1 on left
 //    if(pattyLocation == 1){
 //
@@ -60,64 +105,20 @@ void pickUp(int pattyLocation){
 //      Serial.println("Seeing all black");
 //      delay(1000);
 //    }
-    
-
-  
-
-//ROW 2
-  if(pattyLocation == 2 || pattyLocation == 5)
-  {
-    // line follow while it passes the black row twice
-    while(row < 2){
-      lineFollowing();
-      if(isBlack() == true){
-        while(isBlack() == true){
-          lineFollowing();
-        }
-        rows++;
-      }
-    }    
-      if (pattLocation == 2){
-        pickUpLeft();
-      } else {
-        pickUpRight();
-      } 
-  }
-
-  // ROW 3
-  if(pattyLocation == 3 || pattyLocation == 4)
-  {
-    // line follow while it passes the black row twice
-    while(row < 3){
-      lineFollowing();
-      if(isBlack() == true){
-        while(isBlack() == true){
-          lineFollowing();
-        }
-        rows++;
-      }
-    }    
-      if (pattLocation == 3){
-        pickUpLeft();
-      } else {
-        pickUpRight();
-      } 
-  }
-}
 
 
 void pickUpLeft(){
-  if (getDistance()>10){
+  if (getDistanceR()>10){
     setHardLeftTurn();
-  } else if (getDistance()>1){
+  } else if (getDistanceR()>1){
     lineFollowing();
   }
 }
 
 void pickUpRight(){
-  if (getDistance()>10){
+  if (getDistanceR()>10){
     setHardRightTurn();
-  } else if (getDistance()>1){
+  } else if (getDistanceR()>1){
     lineFollowing();
   }
 }

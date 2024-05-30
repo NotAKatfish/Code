@@ -42,11 +42,17 @@ extern int BRpin1;
 extern int BRpin2;
 extern int BRpinEN;
 
-//Ultrasonic Sensor
-extern const int trigPin;
-extern const int echoPin;
-extern long duration;
-extern int distance;
+//Right Ultrasonic Sensor
+extern const int RtrigPin;
+extern const int RechoPin;
+extern long Rduration;
+extern int Rdistance;
+
+////Left Ultrasonic Sensor
+//extern const int LtrigPin;
+//extern const int LechoPin;
+//extern long Lduration;
+//extern int Ldistance;
 
 
 // speed vars, pid
@@ -96,7 +102,8 @@ bool isBlack();
 
 void firstTurn();
 
-void getDistance();
+void getDistanceR();
+//void getDistanceL();
 void grab();
 
 #endif
