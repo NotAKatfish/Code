@@ -31,7 +31,6 @@ void moveArm(){
   }
 }
 
-
 //TODO: not sure if this is looped inside or if it must be called in a loop
 // & makes the parameter passed by reference, so uses original object and not copy
 bool limitTouched(ezButton &limitSwitch){

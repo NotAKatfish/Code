@@ -7,6 +7,13 @@
 
 
 void Assembly(){
+
+    // turn on stepper pins before assembly
+    digitalWrite(RotPinEn, LOW);
+    digitalWrite(VertPinEn, LOW);
+    digitalWrite(StoragePinEn, LOW);
+
+
     Serial.println("Assembly mode");
 
     // follow line until reaches all black

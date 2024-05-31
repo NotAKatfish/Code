@@ -3,56 +3,6 @@
 #include "helper.h"
 #include "stateFunctions.h"
 
-void initializeAll(){
-    // configure the sensors
-  qtr.setTypeAnalog();
-  qtr.setSensorPins((const uint8_t[]){A8, A9, A10, A11, A12, A13, A14, A15}, SensorCount);
-  qtr.setEmitterPin(2);
-
-  
-  pinMode(FLpin1, OUTPUT);
-  pinMode(FLpin2, OUTPUT);
-  pinMode(FLpinEN, OUTPUT);
-
-  
-  pinMode(FRpin1, OUTPUT);
-  pinMode(FRpin2, OUTPUT);
-  pinMode(FRpinEN, OUTPUT);
-
-  pinMode(BLpin1, OUTPUT);
-  pinMode(BLpin2, OUTPUT);
-  pinMode(BLpinEN, OUTPUT);
-  
-  pinMode(BRpin1, OUTPUT);
-  pinMode(BRpin2, OUTPUT);
-  pinMode(BRpinEN, OUTPUT);
-
-  pinMode(RtrigPin, OUTPUT);  // RIGHT Ultrasonic trig pin
-  pinMode(RechoPin, INPUT);     // RIGHT Ultrasonic echo pin
-
-//  pinMode(LtrigPin, OUTPUT);  // LEFT Ultrasonic trig pin
-//  pinMode(LechoPin, INPUT);     // LEFT Ultrasonic echo pin
-  
-//  pinMode(TRIGGER_PIN_1, OUTPUT);  // RIGHT Ultrasonic trig pin
-//  pinMode(ECHO_PIN_1, INPUT);     // RIGHT Ultrasonic echo pin
-//
-//  pinMode(TRIGGER_PIN_2, OUTPUT);  // LEFT Ultrasonic trig pin
-//  pinMode(ECHO_PIN_2, INPUT);     // LEFT Ultrasonic echo pin
-
-  digitalWrite(FLpin1, Lpin1);
-  digitalWrite(FLpin2, Lpin2);
-  
-  digitalWrite(FRpin1, Rpin1);
-  digitalWrite(FRpin2, Rpin2);
-
-  digitalWrite(BLpin1, Lpin1);
-  digitalWrite(BLpin2, Lpin2);
-  
-  digitalWrite(BRpin1, Rpin1);
-  digitalWrite(BRpin2, Rpin2);
-
-
-}
 
 
 void lineFollowing() {

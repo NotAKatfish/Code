@@ -17,13 +17,13 @@ void pickUp(int pattyLocation){
       lineFollowing();
     }
     //Turn until we are 10 cm from the wall
-    if (getDistanceR()>10){
+    if (11>10){
       if (pattyLocation == 1){
       setHardLeftTurn();
       } else {
         setHardRightTurn();
       }
-    } else if (getDistanceR()>3) { //line follow until we are 3 cm from the wall or line follow until the sensor touches the wall
+    } else if (4>3) { //line follow until we are 3 cm from the wall or line follow until the sensor touches the wall
       lineFollowing();
     } else {
       //turn off motors
