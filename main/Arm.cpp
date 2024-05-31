@@ -4,10 +4,10 @@ void moveArm(){
 
   // claw
   if(limitTouched(bottom_limitSwitch)){
-    myservo.write(pos); // every loop
+    claw_servo.write(pos); // every loop
     // once position hits position cap or limit switch is touched, stop
     if(go_right == true && !(pos == desired_pos || limitTouched(claw_limitSwitch)) ){
-      myservo.write(pos--);
+      claw_servo.write(pos--);
       delay(40);
     }
     else{go_right = false;}
@@ -22,7 +22,7 @@ void moveArm(){
 
     // reset claw position and make it open
     pos = start;
-    myservo.write(pos);
+    claw_servo.write(pos);
 
     // Set motor direction cc
     stepper_stepcounter = 0;  // reset step counter

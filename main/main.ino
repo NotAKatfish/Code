@@ -5,6 +5,7 @@
 #include "Arm.h"
 #include "ezButton.h"
 #include "Servo.h"
+#include "Storage.h"
 // main file initializes sensors, sets up motor pins
 // loop switches between different modes based on 'current mode'
 
@@ -94,7 +95,7 @@ int Rpin2 = 0;
 ezButton claw_limitSwitch(45);  // create ezButton object that attach to pin 7;
 ezButton bottom_limitSwitch(43); // underneath
 
-Servo myservo;  // create servo object to control a servo
+Servo claw_servo;  // create servo object to control a servo
 
 int start = 90;    // starting position
 int pos = start;
@@ -114,6 +115,25 @@ int stepper_stepcounter = 0;    // always reset before each stepper action
 bool armFaceFront = true; // arm default faces front
 
 
+// initialize storage
+Servo servoL;
+Servo servoR;
+
+// defines pins numbers
+const int stepPinStorage = 10; 
+const int dirPinStorage = 11; 
+const int servoL_Pin = 8;
+const int servoR_Pin = 9;
+
+// alignment angles for the servo motors
+const int servoL_flat = 42;
+const int servoL_away = 7;
+const int servoR_flat = 8; 
+const int servoR_away = 43; 
+
+// number of steps to move the platform by the height of a disc (0.5 in)
+const int disc_steps = 635;
+
 enum Mode {
     LINE_FOLLOWING,
     ASSEMBLY,
@@ -123,9 +143,23 @@ enum Mode {
 Mode currentMode = LINE_FOLLOWING;
 
 void setup() {
+
+  // storage initialization
+  // define stepper step and direction pins
+  pinMode (stepPinStorage,OUTPUT); 
+  pinMode (dirPinStorage,OUTPUT);
+  // define servo pins
+  servoL.attach (servoL_Pin);
+  servoR.attach (servoR_Pin);
+  // move the aligners to their away position
+  servoL.write (servoL_away);
+  servoR.write (servoR_away);
+
+
+
   // Arm initialization
   // set claw pins
-  myservo.attach(41);  // attaches the servo on pin 3 to the servo object
+  claw_servo.attach(41);  // attaches the servo on pin 3 to the servo object
   claw_limitSwitch.setDebounceTime(50); // set debounce time to 50 milliseconds
   bottom_limitSwitch.setDebounceTime(50);
 
@@ -141,7 +175,8 @@ void setup() {
 
 void loop() {
 
-  moveArm();
+  goStorage();
+  // moveArm();
 
 
     //getDistanceR();

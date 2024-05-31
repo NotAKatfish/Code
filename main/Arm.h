@@ -8,7 +8,7 @@
 extern ezButton claw_limitSwitch;  // create ezButton object that attach to pin 7;
 extern ezButton bottom_limitSwitch; // underneath
 
-extern Servo myservo;  // create servo object to control a servo
+extern Servo claw_servo;  // create servo object to control a servo
 
 extern int start;    // starting position
 extern int pos;
