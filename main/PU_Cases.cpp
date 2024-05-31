@@ -2,6 +2,7 @@
 #include "helper.h"
 #include "PU_Cases.h"
 #include "Arm.h"
+#include <HCSR04.h>
 
 void pickUp(int pattyLocation){
 
@@ -110,17 +111,17 @@ void pickUp(int pattyLocation){
 
 
 void pickUpLeft(){
-  if (getDistanceR()>10){
+  if (sensor1.measureDistanceCm()>10){
     setHardLeftTurn();
-  } else if (getDistanceR()>1){
+  } else if (sensor1.measureDistanceCm()>1){
     lineFollowing();
   }
 }
 
 void pickUpRight(){
-  if (getDistanceR()>10){
+  if (sensor1.measureDistanceCm()>10){
     setHardRightTurn();
-  } else if (getDistanceR()>1){
+  } else if (sensor1.measureDistanceCm()>1){
     lineFollowing();
   }
 }

@@ -3,6 +3,7 @@
 #include "helper.h"
 #include <QTRSensors.h>
 #include "PU_Cases.h"
+//#include <HCSR04.h>
 
 
 void Assembly(){
@@ -25,7 +26,7 @@ void Assembly(){
 
     // assembly ends at the starting location
 
-
+    // assemblyDone = true;
 }
 
 
@@ -47,4 +48,3 @@ void dropOff(){
     // exit
 
 }
-

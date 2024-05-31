@@ -6,6 +6,7 @@
 #include "ezButton.h"
 #include "Servo.h"
 #include "Storage.h"
+#include <HCSR04.h>
 // main file initializes sensors, sets up motor pins
 // loop switches between different modes based on 'current mode'
 
@@ -38,19 +39,6 @@ int BLpinEN = 11;
 int BRpin1 = 26;
 int BRpin2 = 27;
 int BRpinEN = 10;
-
-//Right Ultrasonic Pins
-const int RtrigPin = 9;
-const int RechoPin = 8;
-long Rduration;
-int Rdistance;
-
-////Left Ultrasonic Pins
-//const int LtrigPin = 9;
-//const int LechoPin = 8;
-//long Lduration;
-//int Ldistance;
-
 
 // speed vars, pid
 //const float Nspeed = 40; //60
@@ -89,6 +77,14 @@ int Rpin1 = 1;
 int Rpin2 = 0;
 
 
+//Ultrasonic
+const byte TRIGGER_PIN_1 = 13;
+const byte ECHO_PIN_1 = 12;
+const byte TRIGGER_PIN_2 = 14;
+const byte ECHO_PIN_2 = 15;
+UltraSonicDistanceSensor sensor1(TRIGGER_PIN_1, ECHO_PIN_1);
+UltraSonicDistanceSensor sensor2(TRIGGER_PIN_2, ECHO_PIN_2);
+
 
 // arm variables
 // claw vars
@@ -96,6 +92,8 @@ ezButton claw_limitSwitch(45);  // create ezButton object that attach to pin 7;
 ezButton bottom_limitSwitch(43); // underneath
 
 Servo claw_servo;  // create servo object to control a servo
+
+
 
 int start = 90;    // starting position
 int pos = start;
@@ -197,6 +195,8 @@ void loop() {
 //    firstTurn();
 //    if(firstTurnDone == true){currentMode = ASSEMBLY;}
 
+
+//    if(assemblyDone == true && getDistance()< 4){currentMode = RAMP;}
 
 
 //      //State changer

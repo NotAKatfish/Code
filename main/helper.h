@@ -2,7 +2,7 @@
 #define HELPER_H
 
 #include <QTRSensors.h>
-// #include <HCSR04.h>
+
 
 extern QTRSensors qtr;
 extern const uint8_t SensorCount;
@@ -41,18 +41,6 @@ extern int BLpinEN;
 extern int BRpin1;
 extern int BRpin2;
 extern int BRpinEN;
-
-//Right Ultrasonic Sensor
-extern const int RtrigPin;
-extern const int RechoPin;
-extern long Rduration;
-extern int Rdistance;
-
-////Left Ultrasonic Sensor
-//extern const int LtrigPin;
-//extern const int LechoPin;
-//extern long Lduration;
-//extern int Ldistance;
 
 
 // speed vars, pid
@@ -102,8 +90,5 @@ bool isBlack();
 
 void firstTurn();
 
-int getDistanceR();
-//int getDistanceL();
-void grab();
 
 #endif

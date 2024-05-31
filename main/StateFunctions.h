@@ -2,6 +2,7 @@
 #define STATEFUNCTIONS_H
 
 #include <QTRSensors.h>
+//#include <HCSR04.h>
 
 extern QTRSensors qtr;
 extern const uint8_t SensorCount;

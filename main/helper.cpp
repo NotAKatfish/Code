@@ -27,11 +27,17 @@ void initializeAll(){
   pinMode(BRpin2, OUTPUT);
   pinMode(BRpinEN, OUTPUT);
 
-  pinMode(RtrigPin, OUTPUT); // Ultrasonic trig pin
-  pinMode(RechoPin, INPUT); //Ultrasonic echo pin
+  pinMode(RtrigPin, OUTPUT);  // RIGHT Ultrasonic trig pin
+  pinMode(RechoPin, INPUT);     // RIGHT Ultrasonic echo pin
 
-//  pinMode(LtrigPin, OUTPUT); // Ultrasonic trig pin
-//  pinMode(LechoPin, INPUT); //Ultrasonic echo pin
+//  pinMode(LtrigPin, OUTPUT);  // LEFT Ultrasonic trig pin
+//  pinMode(LechoPin, INPUT);     // LEFT Ultrasonic echo pin
+  
+//  pinMode(TRIGGER_PIN_1, OUTPUT);  // RIGHT Ultrasonic trig pin
+//  pinMode(ECHO_PIN_1, INPUT);     // RIGHT Ultrasonic echo pin
+//
+//  pinMode(TRIGGER_PIN_2, OUTPUT);  // LEFT Ultrasonic trig pin
+//  pinMode(ECHO_PIN_2, INPUT);     // LEFT Ultrasonic echo pin
 
   digitalWrite(FLpin1, Lpin1);
   digitalWrite(FLpin2, Lpin2);
@@ -253,31 +259,4 @@ void getError() {
   // Serial.print('\t');
   // Serial.print(error);
   prevError = error;
-}
-
-int getDistanceR() {
-  // Clears the trigPin
-  digitalWrite(RtrigPin, LOW);
-  delayMicroseconds(2);
-  // Sets the trigPin on HIGH state for 10 micro seconds
-  digitalWrite(RtrigPin, HIGH);
-  delayMicroseconds(10);
-  digitalWrite(RtrigPin, LOW);
-  // Reads the echoPin, returns the sound wave travel time in microseconds
-  Rduration = pulseIn(RechoPin, HIGH);
-  // Calculating the distance
-  Rdistance = Rduration * 0.034 / 2;
-  // Prints the distance on the Serial Monitor
-  Serial.print("Right Distance: ");
-  Serial.println(Rdistance);
-  return Rdistance;
-}
-
-
-//servo_limit_test
-void grab() {
-  //raise the claw up to shelf
-  //open claw
-  //close claw until disk is secured/hits the sensor
-  //set pattycount = 1
 }
