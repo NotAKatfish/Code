@@ -9,7 +9,7 @@ extern const uint8_t SensorCount;
 extern uint16_t sensorValues[];
 extern const int32_t offsetVal[];
 extern const int32_t normVal[];
-extern int32_t s[];
+extern uint16_t s[];
 
 // sensor, all black all whtie
 // all black all white detected

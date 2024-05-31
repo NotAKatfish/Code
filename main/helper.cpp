@@ -122,16 +122,15 @@ bool isWhite(){
 
     // must always get new error and sensor values even in loop
     // or else will never leave
-    getError();
+//    getError();
     for(uint8_t i = 0; i < SensorCount; i++) {
       // if any are black, return false
-      if(s[i] >= 500) {
+      if(s[i] >= 750) {
         // Serial.println("Point2");
         // Serial.println(s[i]);
         // Serial.println(allWhiteThreshold);
           return false;
       }
-
     }
 
     Serial.println("Seeing all white");
@@ -143,10 +142,10 @@ bool isWhite(){
 bool isBlack(){
     // must always get new error and sensor values even in loop
     // or else will never leave
-    getError();
+//    qtr.read(sensorValues);
     for(uint8_t i = 0; i < SensorCount; i++) {
       // if any don't hit the black threshold, return false
-      if(s[i] <= 700) {
+      if(s[i] <= 750) {
         // Serial.println("Point2");
         // Serial.println(s[i]);
         // Serial.println(allWhiteThreshold);
@@ -224,16 +223,26 @@ void goMove(){
 
 // error function
 void getError() {
-   qtr.read(sensorValues);
-   for (uint8_t i = 0; i < SensorCount; i++)
-  {
+//   qtr.read(sensorValues);
+//   for (uint8_t i = 0; i < SensorCount; i++)
+//  {
+//    // normalizing into calibrated values
+//    // absolute
+//    s[i] = (sensorValues[i]-offsetVal[i])*1000/normVal[i];
+//    if(s[i] < 0)
+//    {
+//      s[i] = 0; 
+//    }
+//     Serial.print(s[i]);
+//     Serial.print('\t');
+//  }
+
+    qtr.readCalibrated(sensorValues);
+    for (uint8_t i = 0; i < SensorCount; i++)
+    {
     // normalizing into calibrated values
     // absolute
-    s[i] = (sensorValues[i]-offsetVal[i])*1000/normVal[i];
-    if(s[i] < 0)
-    {
-      s[i] = 0; 
-    }
+    s[i] = sensorValues[i];
      Serial.print(s[i]);
      Serial.print('\t');
   }
