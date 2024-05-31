@@ -30,6 +30,6 @@ extern bool armFaceFront; // arm default faces front
 void moveArm();
 bool limitTouched(ezButton &limitSwitch);
 void setStepperDir(int dirPin, int LEVEL);
-void stepperMove(int stepPin, int &stepcounter, int maxsteps);
+void stepperMove(int stepPin, int &stepcounter, int desired_steps);
 
 #endif

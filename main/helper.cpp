@@ -6,7 +6,7 @@
 void initializeAll(){
     // configure the sensors
   qtr.setTypeAnalog();
-  // qtr.setSensorPins((const uint8_t[]){A8, A9, A10, A11, A12, A13, A14, A15}, SensorCount);
+  qtr.setSensorPins((const uint8_t[]){A8, A9, A10, A11, A12, A13, A14, A15}, SensorCount);
   qtr.setEmitterPin(2);
 
   

@@ -135,6 +135,7 @@ const int servoR_away = 43;
 const int disc_steps = 635;
 
 enum Mode {
+    CALIBRATION,
     LINE_FOLLOWING,
     ASSEMBLY,
     RAMP
@@ -176,7 +177,7 @@ void setup() {
 void loop() {
 
   goStorage();
-  // moveArm();
+  moveArm();
 
 
     //getDistanceR();

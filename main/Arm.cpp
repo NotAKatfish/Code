@@ -57,8 +57,8 @@ void setStepperDir(int dirPin, int LEVEL){
 }
 
 // stepper movement loop
-void stepperMove(int stepPin, int &stepcounter, int maxsteps){
-  for(; stepcounter < maxsteps; stepcounter++){
+void stepperMove(int stepPin, int &stepcounter, int desired_steps){
+  for(; stepcounter < desired_steps; stepcounter++){
     digitalWrite(stepPin, HIGH);
     delayMicroseconds(40000);
     digitalWrite(stepPin, LOW);
