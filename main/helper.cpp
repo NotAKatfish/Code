@@ -19,18 +19,28 @@ void lineFollowing() {
     if (speedRight < low_threshold){ speedRight = low_threshold;}
     
 
-    Serial.print('\t');
-    Serial.print(pid);
-    Serial.print('\t');
-    Serial.print(speedLeft);
-    Serial.print('\t');
-    Serial.print(speedRight);
-    Serial.println();
+    // Serial.print('\t');
+    // Serial.print(pid);
+    // Serial.print('\t');
+    // Serial.print(speedLeft);
+    // Serial.print('\t');
+    // Serial.print(speedRight);
+    // Serial.println();
 
     if(speedLeft < 0){setLW_Reverse();}
     else if (speedLeft >= 0){setLW_Forward();}
     if(speedRight < 0){setRW_Reverse();}
     else if(speedRight >= 0){setRW_Forward();}
+
+    if(isWhite()==true){
+      setLW_Reverse();
+      setRW_Reverse();
+      analogWrite(BRpinEN, 60);
+      analogWrite(FLpinEN, 60);
+      analogWrite(BLpinEN, 60);
+      analogWrite(FRpinEN, 60);
+      delay(100);
+    }
 
 
     // // do first turn

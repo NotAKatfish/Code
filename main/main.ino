@@ -179,7 +179,7 @@ void setup() {
 
   // IR pins
     qtr.setTypeAnalog();
-    qtr.setSensorPins((const uint8_t[]){A8, A9, A10, A11, A12, A13, A14, A15}, SensorCount);
+    qtr.setSensorPins((const uint8_t[]){A8, A9, A10, A11, A12, A13, A14, A15}, SensorCount);  // a8 left side
     qtr.setEmitterPin(2);
 
   
@@ -223,7 +223,6 @@ void loop() {
   // goStorage();
   // moveArm();
 
-//
   Calibration();
   Serial.println("Calibrated");
   
@@ -236,23 +235,6 @@ void loop() {
     }
     Serial.println();
   }
-  
-  
-//  goStorage();
- // moveArm();
-
-
-    //getDistanceR();
-    //if first turn done
-    // change to pickup mode
-
-    // setLW_Reverse();
-    // setRW_Reverse();
-
-    // setLW_Forward();
-    // setRW_Forward();
-
-    // goMove();
 
 //    firstTurn();
 //    if(firstTurnDone == true){currentMode = ASSEMBLY;}

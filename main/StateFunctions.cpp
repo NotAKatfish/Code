@@ -3,6 +3,7 @@
 #include "helper.h"
 #include <QTRSensors.h>
 #include "PU_Cases.h"
+#include "Arm.h"
 //#include <HCSR04.h>
 
 void Calibration(){
@@ -80,32 +81,6 @@ void Calibration(){
     }
     }
   
-//  Serial.println();
-//  }
-//    setLW_Forward();
-//    setRW_Forward();
-//    while(isBlack() == false)
-//    {
-//      
-//      analogWrite(BRpinEN, 60);
-//      analogWrite(FLpinEN, 60);
-//      analogWrite(BLpinEN, 60);
-//      analogWrite(FRpinEN, 60);
-//      
-//    }
-//    setLW_Forward();
-//    setRW_Reverse();
-//    analogWrite(BRpinEN, 100);
-//    analogWrite(FLpinEN, 100);
-//    analogWrite(BLpinEN, 100);
-//    analogWrite(FRpinEN, 100);
-//    delay(1200);
-//    analogWrite(BRpinEN, 0);
-//    analogWrite(FLpinEN, 0);
-//    analogWrite(BLpinEN, 0);
-//    analogWrite(FRpinEN, 0);
-//  digitalWrite(LED_BUILTIN, LOW); // turn off Arduino's LED to indicate we are through with calibration
-
   // print the calibration minimum values measured when emitters were on
   for (uint8_t i = 0; i < SensorCount; i++)
   {
@@ -134,14 +109,15 @@ void Assembly(){
     digitalWrite(VertPinEn, LOW);
     digitalWrite(StoragePinEn, LOW);
 
+    moveArm();
 
     Serial.println("Assembly mode");
 
     // follow line until reaches all black
-    while(isBlack() == false)
-    {
-      lineFollowing();
-    }
+    // while(isBlack() == false)
+    // {
+    //   lineFollowing();
+    // }
     
     // always starts at start line
     int pattyLocation1 = 1;
