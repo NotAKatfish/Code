@@ -13,9 +13,10 @@
   QTRSensors qtr;
   const uint8_t SensorCount = 8;
   uint16_t sensorValues[SensorCount];
-  const int32_t offsetVal[SensorCount] = {449, 227, 197, 180, 183, 247, 160, 373};
-  const int32_t normVal[SensorCount] = {525, 712, 734, 749, 747, 699, 774, 587};
-  int32_t s[SensorCount];   // array of calibrated sensor values
+  //const int32_t offsetVal[SensorCount] = {449, 227, 197, 180, 183, 247, 160, 373};
+  //const int32_t normVal[SensorCount] = {525, 712, 734, 749, 747, 699, 774, 587};
+  uint16_t s[SensorCount];   // array of calibrated sensor values
+
 
 // all black all white detecting
   const int allBlackThreshold = 750; // Threshold for all sensors being considered "black"
@@ -87,8 +88,8 @@
 
 
 // claw vars
-  ezButton claw_limitSwitch(45);  // create ezButton object that attach to pin 7;
-  ezButton bottom_limitSwitch(43); // underneath
+  ezButton claw_limitSwitch(47);  // create ezButton object that attach to pin 7;
+  ezButton bottom_limitSwitch(46); // underneath
 
   Servo claw_servo;  // create servo object to control a servo
 
@@ -97,11 +98,12 @@
   bool go_right = true;
   int desired_pos = 10;
 
+
 // stepper vars for arm
-  const int stepPinRot = 51; //rotate 180 degrees
+  const int stepPinRot = 52; //rotate 180 degrees
   const int dirPinRot = 53; 
-  const int stepPinVert = 47; //go up or down
-  const int dirPinVert = 49; 
+  const int stepPinVert = 50; //go up or down
+  const int dirPinVert = 51; 
 
   const int RotPinEn = 37;
   const int VertPinEn = 36;
@@ -117,9 +119,9 @@
 // initialize storage
   Servo servoL;
   Servo servoR;
-
-  const int stepPinStorage = 10; 
-  const int dirPinStorage = 11; 
+  // defines pins numbers
+  const int stepPinStorage = 48; 
+  const int dirPinStorage = 49; 
   const int servoL_Pin = 8;
   const int servoR_Pin = 9;
 
@@ -217,8 +219,41 @@ void setup() {
 
 void loop() {
 
-  goStorage();
-  moveArm();
+
+  // goStorage();
+  // moveArm();
+
+//
+  Calibration();
+  Serial.println("Calibrated");
+  
+   for (uint16_t i = 0; i < 400; i++)
+  {
+    qtr.readCalibrated(sensorValues);
+     for (uint8_t i = 0; i < SensorCount; i++){
+       Serial.print(sensorValues[i]);
+       Serial.print(' ');
+    }
+    Serial.println();
+  }
+  
+  
+//  goStorage();
+ // moveArm();
+
+
+    //getDistanceR();
+    //if first turn done
+    // change to pickup mode
+
+    // setLW_Reverse();
+    // setRW_Reverse();
+
+    // setLW_Forward();
+    // setRW_Forward();
+
+    // goMove();
+
 //    firstTurn();
 //    if(firstTurnDone == true){currentMode = ASSEMBLY;}
 

@@ -4,13 +4,14 @@
 #include <QTRSensors.h>
 //#include <HCSR04.h>
 
+
 // IR sensors
-  extern QTRSensors qtr;
-  extern const uint8_t SensorCount;
-  extern uint16_t sensorValues[];
-  extern const int32_t offsetVal[];
-  extern const int32_t normVal[];
-  extern int32_t s[];
+extern QTRSensors qtr;
+extern const uint8_t SensorCount;
+extern uint16_t sensorValues[];
+extern const int32_t offsetVal[];
+extern const int32_t normVal[];
+extern uint16_t s[];
 
 
 // motor pins 
@@ -61,8 +62,11 @@
   extern const int VertPinEn;
   extern const int StoragePinEn;
 
+
+
 void Assembly();
 void ramp();
 void dropOff();
+void Calibration();
 
 #endif
