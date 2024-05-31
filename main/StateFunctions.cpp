@@ -76,7 +76,7 @@ void Calibration(){
         analogWrite(FLpinEN, 0);
         analogWrite(BLpinEN, 0);
         analogWrite(FRpinEN, 0);
-        isCentered == true;
+        isCentered = true;
         Serial.print("centered");
     }
     }
@@ -97,7 +97,9 @@ void Calibration(){
   }
   Serial.println();
   Serial.println();
-  delay(10000);
+  delay(3000);
+
+  
   }
   
 

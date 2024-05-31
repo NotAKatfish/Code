@@ -19,28 +19,28 @@ void lineFollowing() {
     if (speedRight < low_threshold){ speedRight = low_threshold;}
     
 
-    // Serial.print('\t');
-    // Serial.print(pid);
-    // Serial.print('\t');
-    // Serial.print(speedLeft);
-    // Serial.print('\t');
-    // Serial.print(speedRight);
-    // Serial.println();
+    Serial.print('\t');
+    Serial.print(pid);
+    Serial.print('\t');
+    Serial.print(speedLeft);
+    Serial.print('\t');
+    Serial.print(speedRight);
+    Serial.println();
 
     if(speedLeft < 0){setLW_Reverse();}
     else if (speedLeft >= 0){setLW_Forward();}
     if(speedRight < 0){setRW_Reverse();}
     else if(speedRight >= 0){setRW_Forward();}
 
-    if(isWhite()==true){
-      setLW_Reverse();
-      setRW_Reverse();
-      analogWrite(BRpinEN, 60);
-      analogWrite(FLpinEN, 60);
-      analogWrite(BLpinEN, 60);
-      analogWrite(FRpinEN, 60);
-      delay(100);
-    }
+    // if(isWhite()==true){
+    //   setLW_Reverse();
+    //   setRW_Reverse();
+    //   analogWrite(BRpinEN, 60);
+    //   analogWrite(FLpinEN, 60);
+    //   analogWrite(BLpinEN, 60);
+    //   analogWrite(FRpinEN, 60);
+    //   delay(100);
+    // }
 
 
     // // do first turn
@@ -91,7 +91,7 @@ bool isWhite(){
 //    getError();
     for(uint8_t i = 0; i < SensorCount; i++) {
       // if any are black, return false
-      if(s[i] >= 750) {
+      if(s[i] >= 8090) {
         // Serial.println("Point2");
         // Serial.println(s[i]);
         // Serial.println(allWhiteThreshold);
@@ -111,7 +111,7 @@ bool isBlack(){
 //    qtr.read(sensorValues);
     for(uint8_t i = 0; i < SensorCount; i++) {
       // if any don't hit the black threshold, return false
-      if(s[i] <= 750) {
+      if(s[i] <= 800) {
         // Serial.println("Point2");
         // Serial.println(s[i]);
         // Serial.println(allWhiteThreshold);
@@ -203,7 +203,7 @@ void getError() {
 //     Serial.print('\t');
 //  }
 
-    uint16_t position = qtr.readLineBlack(sensorValues);
+    int32_t position = qtr.readLineBlack(sensorValues);
     for (uint8_t i = 0; i < SensorCount; i++)
     {
     // normalizing into calibrated values
@@ -220,13 +220,13 @@ void getError() {
   // dark lines kinda above 600
   // under 100, white
 
-    int error = 3500-position;
+  int32_t newError = 3500-position;
 
   
-  P = error;
-  I = I + error;
-  D = error-prevError;
-  // Serial.print('\t');
-  // Serial.print(error);
-  prevError = error;
+  P = newError;
+  I = I + newError;
+  D = newError-prevError;
+  Serial.print('\t');
+  Serial.println(newError);
+  prevError = newError;
 }

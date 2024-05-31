@@ -48,9 +48,9 @@
   //const float Kd = 0.05; //difference
 
   const float Nspeed = 25 ; //30
-  const float Kp = 0.003; //proportional 0-0.1
+  const float Kp = 0.00; //proportional 0-0.1
   const float Ki = 0.000; //offset  
-  const float Kd = 0.015; //difference
+  const float Kd = 0.0; //difference
 
   float P = 0;
   float I = 0;
@@ -142,7 +142,7 @@ enum Mode {
     RAMP
 };
 
-Mode currentMode = LINE_FOLLOWING;
+Mode currentMode = CALIBRATION;
 
 void setup() {
   // make all stepper poins HIGH (off before use)
@@ -223,18 +223,25 @@ void loop() {
   // goStorage();
   // moveArm();
 
-  Calibration();
-  Serial.println("Calibrated");
-  
-   for (uint16_t i = 0; i < 400; i++)
-  {
-    qtr.readCalibrated(sensorValues);
-     for (uint8_t i = 0; i < SensorCount; i++){
-       Serial.print(sensorValues[i]);
-       Serial.print(' ');
-    }
-    Serial.println();
+  if(currentMode == CALIBRATION){
+    Calibration();
+    Serial.println("Calibrated");
+    
+    // for (uint16_t i = 0; i < 400; i++)
+    // {
+    //   qtr.readCalibrated(sensorValues);
+    //   for (uint8_t i = 0; i < SensorCount; i++){
+    //     Serial.print(sensorValues[i]);
+    //     Serial.print(' ');
+    //   }
+    //   Serial.println();
+    // }
+    currentMode = LINE_FOLLOWING;
   }
+
+  lineFollowing();
+
+
 
 //    firstTurn();
 //    if(firstTurnDone == true){currentMode = ASSEMBLY;}
