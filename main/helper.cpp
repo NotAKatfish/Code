@@ -193,7 +193,7 @@ void getError() {
 //     Serial.print('\t');
 //  }
 
-    qtr.readCalibrated(sensorValues);
+    uint16_t position = qtr.readLineBlack(sensorValues);
     for (uint8_t i = 0; i < SensorCount; i++)
     {
     // normalizing into calibrated values
@@ -202,6 +202,7 @@ void getError() {
      Serial.print(s[i]);
      Serial.print('\t');
   }
+  
 
        
       // delay(1000);
@@ -209,7 +210,7 @@ void getError() {
   // dark lines kinda above 600
   // under 100, white
 
-  error = 8*s[0]+4*s[1]+2*s[2]+s[3]-s[4]-2*s[5]-4*s[6]-8*s[7];
+    int error = 3500-position;
 
   
   P = error;
