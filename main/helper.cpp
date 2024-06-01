@@ -3,56 +3,6 @@
 #include "helper.h"
 #include "stateFunctions.h"
 
-void initializeAll(){
-    // configure the sensors
-  qtr.setTypeAnalog();
-  qtr.setSensorPins((const uint8_t[]){A8, A9, A10, A11, A12, A13, A14, A15}, SensorCount);
-  qtr.setEmitterPin(2);
-
-  
-  pinMode(FLpin1, OUTPUT);
-  pinMode(FLpin2, OUTPUT);
-  pinMode(FLpinEN, OUTPUT);
-
-  
-  pinMode(FRpin1, OUTPUT);
-  pinMode(FRpin2, OUTPUT);
-  pinMode(FRpinEN, OUTPUT);
-
-  pinMode(BLpin1, OUTPUT);
-  pinMode(BLpin2, OUTPUT);
-  pinMode(BLpinEN, OUTPUT);
-  
-  pinMode(BRpin1, OUTPUT);
-  pinMode(BRpin2, OUTPUT);
-  pinMode(BRpinEN, OUTPUT);
-
-  pinMode(RtrigPin, OUTPUT);  // RIGHT Ultrasonic trig pin
-  pinMode(RechoPin, INPUT);     // RIGHT Ultrasonic echo pin
-
-//  pinMode(LtrigPin, OUTPUT);  // LEFT Ultrasonic trig pin
-//  pinMode(LechoPin, INPUT);     // LEFT Ultrasonic echo pin
-  
-//  pinMode(TRIGGER_PIN_1, OUTPUT);  // RIGHT Ultrasonic trig pin
-//  pinMode(ECHO_PIN_1, INPUT);     // RIGHT Ultrasonic echo pin
-//
-//  pinMode(TRIGGER_PIN_2, OUTPUT);  // LEFT Ultrasonic trig pin
-//  pinMode(ECHO_PIN_2, INPUT);     // LEFT Ultrasonic echo pin
-
-  digitalWrite(FLpin1, Lpin1);
-  digitalWrite(FLpin2, Lpin2);
-  
-  digitalWrite(FRpin1, Rpin1);
-  digitalWrite(FRpin2, Rpin2);
-
-  digitalWrite(BLpin1, Lpin1);
-  digitalWrite(BLpin2, Lpin2);
-  
-  digitalWrite(BRpin1, Rpin1);
-  digitalWrite(BRpin2, Rpin2);
-
-
-}
 
 
 void lineFollowing() {
@@ -81,6 +31,16 @@ void lineFollowing() {
     else if (speedLeft >= 0){setLW_Forward();}
     if(speedRight < 0){setRW_Reverse();}
     else if(speedRight >= 0){setRW_Forward();}
+
+    // if(isWhite()==true){
+    //   setLW_Reverse();
+    //   setRW_Reverse();
+    //   analogWrite(BRpinEN, 60);
+    //   analogWrite(FLpinEN, 60);
+    //   analogWrite(BLpinEN, 60);
+    //   analogWrite(FRpinEN, 60);
+    //   delay(100);
+    // }
 
 
     // // do first turn
@@ -128,16 +88,15 @@ bool isWhite(){
 
     // must always get new error and sensor values even in loop
     // or else will never leave
-    getError();
+//    getError();
     for(uint8_t i = 0; i < SensorCount; i++) {
       // if any are black, return false
-      if(s[i] >= 500) {
+      if(s[i] >= 8090) {
         // Serial.println("Point2");
         // Serial.println(s[i]);
         // Serial.println(allWhiteThreshold);
           return false;
       }
-
     }
 
     Serial.println("Seeing all white");
@@ -149,10 +108,10 @@ bool isWhite(){
 bool isBlack(){
     // must always get new error and sensor values even in loop
     // or else will never leave
-    getError();
+//    qtr.read(sensorValues);
     for(uint8_t i = 0; i < SensorCount; i++) {
       // if any don't hit the black threshold, return false
-      if(s[i] <= 700) {
+      if(s[i] <= 800) {
         // Serial.println("Point2");
         // Serial.println(s[i]);
         // Serial.println(allWhiteThreshold);
@@ -230,19 +189,30 @@ void goMove(){
 
 // error function
 void getError() {
-   qtr.read(sensorValues);
-   for (uint8_t i = 0; i < SensorCount; i++)
-  {
+//   qtr.read(sensorValues);
+//   for (uint8_t i = 0; i < SensorCount; i++)
+//  {
+//    // normalizing into calibrated values
+//    // absolute
+//    s[i] = (sensorValues[i]-offsetVal[i])*1000/normVal[i];
+//    if(s[i] < 0)
+//    {
+//      s[i] = 0; 
+//    }
+//     Serial.print(s[i]);
+//     Serial.print('\t');
+//  }
+
+    int32_t position = qtr.readLineBlack(sensorValues);
+    for (uint8_t i = 0; i < SensorCount; i++)
+    {
     // normalizing into calibrated values
     // absolute
-    s[i] = (sensorValues[i]-offsetVal[i])*1000/normVal[i];
-    if(s[i] < 0)
-    {
-      s[i] = 0; 
-    }
+    s[i] = sensorValues[i];
      Serial.print(s[i]);
      Serial.print('\t');
   }
+  
 
        
       // delay(1000);
@@ -250,13 +220,13 @@ void getError() {
   // dark lines kinda above 600
   // under 100, white
 
-  error = 8*s[0]+4*s[1]+2*s[2]+s[3]-s[4]-2*s[5]-4*s[6]-8*s[7];
+  int32_t newError = 3500-position;
 
   
-  P = error;
-  I = I + error;
-  D = error-prevError;
-  // Serial.print('\t');
-  // Serial.print(error);
-  prevError = error;
+  P = newError;
+  I = I + newError;
+  D = newError-prevError;
+  Serial.print('\t');
+  Serial.println(newError);
+  prevError = newError;
 }

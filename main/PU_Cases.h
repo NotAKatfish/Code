@@ -2,8 +2,9 @@
 #define PU_CASES
 #include <HCSR04.h>
 
-extern UltraSonicDistanceSensor sensor1;
-extern UltraSonicDistanceSensor sensor2;
+// ultrasonic vars
+  extern UltraSonicDistanceSensor sensor1;
+  extern UltraSonicDistanceSensor sensor2;
 
 void pickUp(int pattyLocation);
 void pickUpLeft();

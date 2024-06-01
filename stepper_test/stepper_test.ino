@@ -11,10 +11,21 @@ const int dirPin1 = 53;
 const int stepPin2 = 47; //go up or down
 const int dirPin2 = 49; 
 
+const int RotPinEn = 37;
+const int VertPinEn = 36;
+const in StorageEnPinEn = 35;
+
+
+
 const int maxsteps1 = 1400; //200 steps per rotation, 7 complete rotations
 const int maxsteps2 = 2000; //200 steps per rotation, 10 complete rotations
 const int pulses = 200;
 int stepcounter = 0;
+
+
+
+
+
  
 void setup() {
   // Sets the two pins as Outputs
