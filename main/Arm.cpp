@@ -34,29 +34,20 @@ void moveArm(){
 }
 
 
-pos = 90
+//pos = 90
 
 void clawPickup() {
-  
-   claw_servo.write(pos); // opens claw
-   int vert_stepcounter = 0; // initialize step counter
-   setStepperDir (dirPinVert, HIGH) // direction: down
-   while (!limitTouched(bottom_limitSwitch){ // moves claw down to platform until bottom limit switch is touched 
-    stepperMove (stepPinVert, 0, 1)
-    vert_steppercounter++;
-   }
-   // for the raising distance, if limit_limit switch pressed_ move one step. else 
-while (!(pos == desired_pos || limitTouched(claw_limitSwitch))){ // close claw
-claw_servo.write(pos--);
-}
-pos= start // reset claw position value in preparation to open again
+
+while (!limitTouched(claw_limitSwitch)) {
+goDownAndGrab();
+
+pos= start; // reset claw position value in preparation to open again
 
 setStepperDir(dirPinVert, LOW);//  set direction up
 
 stepper_stepcounter = 0;
-stepperMove (stepPinVert, stepper_stepcounter, vert_steppercounter); // move the claw back up to the top
-
-stepper_stepcounter = 0; 
+stepperMove (stepPinVert, stepper_stepcounter, vert_stepcounter); // move the claw back up to the top
+}
 
 setStepperDir(dirPinRot, LOW); // rotate clockwise 
 stepperMove(stepPinRot, stepper_stepcounter, maxstepsRot); // rotate back to storage
@@ -67,6 +58,20 @@ setStepperDir(dirPinRot, HIGH); // rotate counterclockwise
 stepperMove(stepPinRot, stepper_stepcounter, maxstepsRot); // rotate back to storage
 }
 
+void goDownAndGrab(){
+  claw_servo.write(pos); // opens claw
+    vert_stepcounter = 0; // initialize step counter
+   setStepperDir (dirPinVert, HIGH); // direction: down
+   while (!limitTouched(bottom_limitSwitch)){ // moves claw down to platform until bottom limit switch is touched 
+    incremental_step();
+    vert_stepcounter++;
+   }
+   // for the raising distance, if limit_limit switch pressed_ move one step. else 
+while (!(pos == desired_pos || limitTouched(claw_limitSwitch))){ // close claw
+claw_servo.write(pos--);
+}
+}
+
 void clawDropoff () {
     claw_servo.write(pos); // opens claw
     stepper_stepcounter = 0; 
@@ -75,27 +80,27 @@ void clawDropoff () {
     stepperMove(stepPinRot, stepper_stepcounter, 1200); // rotate partially 
     setStepperDir(dirPinVert, HIGH);//  set direction down
 
-    while (!limitTouched(bottom_limitSwitch){ // moves claw down to platform until bottom limit switch is touched 
-    stepperMove (stepPinVert, 0, 1)
-    vert_steppercounter++;
+    while (!limitTouched(bottom_limitSwitch)){ // moves claw down to platform until bottom limit switch is touched 
+    incremental_step();
+    vert_stepcounter++;
    }
    stepperMove(stepPinRot, stepper_stepcounter, maxstepsRot-1200);// rotate back to storage
-   goStorage(3);
+   //goStorage(3);
    while (!(pos == desired_pos || limitTouched(claw_limitSwitch))){ // close claw
     claw_servo.write(pos--);
    }
    setStepperDir(dirPinVert, LOW);//  set direction up
    stepper_stepcounter = 0; 
-   stepperMove (stepPinVert, stepper_stepcounter, vert_steppercounter); // move the claw back up to the top
+   stepperMove (stepPinVert, stepper_stepcounter, vert_stepcounter); // move the claw back up to the top
    setStepperDir(dirPinRot, HIGH); // rotate counterclockwise
    stepper_stepcounter = 0;
    stepperMove(stepPinRot, stepper_stepcounter, maxstepsRot); // rotate counter clockwise back to front position 
    setStepperDir(dirPinVert, HIGH);//  set direction down
 
    vert_stepcounter = 0;
-   while (!limitTouched(bottom_limitSwitch){ // moves claw down to platform until bottom limit switch is touched 
-   stepperMove (stepPinVert, 0, 1)
-   vert_steppercounter++;
+   while (!limitTouched(bottom_limitSwitch)){ // moves claw down to platform until bottom limit switch is touched 
+   incremental_step();
+   vert_stepcounter++;
    }
    claw_servo.write(pos); // opens claw
 }
@@ -125,7 +130,8 @@ void setStepperDir(int dirPin, int LEVEL){
 }
 
 // stepper movement loop
-void stepperMove(int stepPin, int &stepcounter, int desired_steps){
+void stepperMove(int stepPin, int &stepcounter, int desired_steps) {
+
   for(; stepcounter < desired_steps; stepcounter++){
     digitalWrite(stepPin, HIGH);
     delayMicroseconds(40000);
@@ -133,7 +139,15 @@ void stepperMove(int stepPin, int &stepcounter, int desired_steps){
     delayMicroseconds(40000);  
   }
   delay(2000);
+} 
+
+void incremental_step(int stepPin){
+  digitalWrite(stepPin, HIGH);
+    delayMicroseconds(40000);
+    digitalWrite(stepPin, LOW);
+    delayMicroseconds(40000); 
 }
+
 
 //PICKUP
 // put claw manually at the top

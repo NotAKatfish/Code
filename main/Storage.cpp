@@ -1,16 +1,16 @@
 #include "Storage.h"
 
 // defines pins numbers
-const int stepPinStorage; 
-const int dirPinStorage; 
-const int servoL_Pin;
-const int servoR_Pin;
+// const int stepPinStorage; 
+// const int dirPinStorage; 
+// const int servoL_Pin;
+// const int servoR_Pin;
 
-// alignment angles for the servo motors
-const int servoL_flat = 42;
-const int servoL_away = 7;
-const int servoR_flat = 8; 
-const int servoR_away = 43; 
+// // alignment angles for the servo motors
+// const int servoL_flat = 42;
+// const int servoL_away = 7;
+// const int servoR_flat = 8; 
+// const int servoR_away = 43; 
 
 
 

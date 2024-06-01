@@ -20,6 +20,8 @@
   extern const int dirPinRot; 
   extern const int stepPinVert; //go up or down
   extern const int dirPinVert; 
+  extern const int vert_step;
+  
 
 
 extern const int maxstepsRot; //200 steps per rotation, 7 complete rotations
@@ -34,5 +36,7 @@ void moveArm();
 bool limitTouched(ezButton &limitSwitch);
 void setStepperDir(int dirPin, int LEVEL);
 void stepperMove(int stepPin, int &stepcounter, int desired_steps);
+void goDownAndGrab();
+void incremental_step();
 
 #endif

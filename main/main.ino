@@ -112,6 +112,9 @@
   const int maxstepsRot = 1400; //200 steps per rotation, 7 complete rotations
   const int maxstepsVert = 2000; //200 steps per rotation, 10 complete rotations
   int stepper_stepcounter = 0;    // always reset before each stepper action
+  int vert_stepcounter = 0;
+  const int vert_step = 1;
+  
 
   bool armFaceFront = true; // arm default faces front
 
