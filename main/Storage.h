@@ -25,7 +25,6 @@ extern const int disc_steps;
 void goStorage();
 void flat();
 void away();
-void align();
 void move_disc(int n);
 
 

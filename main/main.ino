@@ -174,7 +174,7 @@ void setup() {
 
 void loop() {
 
-  goStorage();
+  //goStorage();
   moveArm();
 
 

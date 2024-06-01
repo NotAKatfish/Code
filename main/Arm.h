@@ -24,6 +24,7 @@ extern const int dirPinVert;
 extern const int maxstepsRot; //200 steps per rotation, 7 complete rotations
 extern const int maxstepsVert; //200 steps per rotation, 10 complete rotations
 extern int stepper_stepcounter;    // always reset before each stepper action
+extern int vert_stepcounter; // step counter for vertical stepper 
 
 extern bool armFaceFront; // arm default faces front
 
