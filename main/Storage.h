@@ -26,7 +26,6 @@ extern Servo servoR;
 void goStorage();
 void flat();
 void away();
-void align();
 void move_disc(int n);
 
 

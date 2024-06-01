@@ -20,10 +20,15 @@
   extern const int dirPinRot; 
   extern const int stepPinVert; //go up or down
   extern const int dirPinVert; 
+  extern const int vert_step;
+  
 
-  extern const int maxstepsRot; //200 steps per rotation, 7 complete rotations
-  extern const int maxstepsVert; //200 steps per rotation, 10 complete rotations
-  extern int stepper_stepcounter;    // always reset before each stepper action
+
+extern const int maxstepsRot; //200 steps per rotation, 7 complete rotations
+extern const int maxstepsVert; //200 steps per rotation, 10 complete rotations
+extern int stepper_stepcounter;    // always reset before each stepper action
+extern int vert_stepcounter; // step counter for vertical stepper 
+
 
   extern bool armFaceFront; // arm default faces front
 
@@ -31,5 +36,7 @@ void moveArm();
 bool limitTouched(ezButton &limitSwitch);
 void setStepperDir(int dirPin, int LEVEL);
 void stepperMove(int stepPin, int &stepcounter, int desired_steps);
+void goDownAndGrab();
+void incremental_step();
 
 #endif

@@ -1,5 +1,19 @@
 #include "Storage.h"
 
+// defines pins numbers
+// const int stepPinStorage; 
+// const int dirPinStorage; 
+// const int servoL_Pin;
+// const int servoR_Pin;
+
+// // alignment angles for the servo motors
+// const int servoL_flat = 42;
+// const int servoL_away = 7;
+// const int servoR_flat = 8; 
+// const int servoR_away = 43; 
+
+
+
 // older goStorage code
   //void goStorage(){
   //  // platform exposed at the start
@@ -25,15 +39,18 @@
   //}
 
 
+
 // store items
 void goStorage(int n){
+
   // platform exposed at the start
   away();
   
   move_disc(n);// move it down to hide it, its top surface will be in line with the box
+
  
   
-  flat(); // align the 1 disc
+  flat(); 
 }
 
 void flat(){
@@ -45,6 +62,7 @@ void away(){
   servoL.write(servoL_away);
   servoR.write(servoR_away);
 }
+
 
 
 
