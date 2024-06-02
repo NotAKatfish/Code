@@ -110,8 +110,8 @@ void Assembly(){
     digitalWrite(RotPinEn, LOW);
     digitalWrite(VertPinEn, LOW);
     digitalWrite(StoragePinEn, LOW);
-
-    moveArm();
+    //goStorage(-1);  
+    clawPickup();
 
     Serial.println("Assembly mode");
 
@@ -149,8 +149,16 @@ void ramp(){
 void dropOff(){
     Serial.println("drop off");
     // turn 90 deg right into drop off bay
-
-    //clawSequence();
+    int dropoffLocation = 2;
+    //if the robot sees black on the right most sensor, count the row
+    //keep going straight
+    //when row number=dropofflocation stop 
+    //setHardRightTurn();
+    //go straight until both ultrasonic sensors read about 3-4 cm
+    //clawDropoff();
+    // reverse until you see all black
+    //setHardLeftTurn();
+   
 
     // exit
 

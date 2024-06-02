@@ -70,11 +70,11 @@ void away(){
 void move_disc(int n){
   if (n > 0) // positive n makes platform  move up, negative n makes the platform move down
   {
-    digitalWrite (dirPinStorage, LOW); // this makes the motor move up
+    digitalWrite (dirPinStorage, HIGH); // this makes the motor move up
   }
   else 
     {
-    digitalWrite (dirPinStorage, HIGH); // this makes the motor move down
+    digitalWrite (dirPinStorage, LOW); // this makes the motor move down
     }
   for(int x = 0; x < abs(n) * disc_steps ; x++) 
   {

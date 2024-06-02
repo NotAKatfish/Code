@@ -230,3 +230,14 @@ void getError() {
   Serial.println(newError);
   prevError = newError;
 }
+
+//void printDistance(){
+//  Serial.print("Sensor 1: ");
+//    Serial.print(sensor1.measureDistanceCm());
+//    Serial.println(" cm");
+//    delay(100);
+//    Serial.print("Sensor 2: ");
+//    Serial.print(sensor2.measureDistanceCm());
+//    Serial.println(" cm");
+//    delay(100);
+//}

@@ -37,51 +37,63 @@ void moveArm(){
 //pos = 90
 
 void clawPickup() {
+  
+  //while (!limitTouched(claw_limitSwitch)) {
+    goDownAndGrab();
+    Serial.println("After goDownAndGrab()");
+    pos = start; // reset claw position value in preparation to open again
+    
+    setStepperDir(dirPinVert, HIGH);//  set direction up
+    Serial.println(vert_stepcounter);
+    stepper_stepcounter = 0;
+    stepperMove (stepPinVert, stepper_stepcounter, vert_stepcounter); // move the claw back up to the top
+  //}
+  vert_stepcounter = 0;
+  stepper_stepcounter = 0;
+  setStepperDir(dirPinRot, LOW); // rotate clockwise 
+  stepperMove(stepPinRot, stepper_stepcounter, maxstepsRot); // rotate back to storage
+  
+  
+  claw_servo.write(pos); // open the claw
 
-while (!limitTouched(claw_limitSwitch)) {
-goDownAndGrab();
-
-pos= start; // reset claw position value in preparation to open again
-
-setStepperDir(dirPinVert, LOW);//  set direction up
-
-stepper_stepcounter = 0;
-stepperMove (stepPinVert, stepper_stepcounter, vert_stepcounter); // move the claw back up to the top
-}
-
-setStepperDir(dirPinRot, LOW); // rotate clockwise 
-stepperMove(stepPinRot, stepper_stepcounter, maxstepsRot); // rotate back to storage
-
-claw_servo.write(pos); // open the claw
-
-setStepperDir(dirPinRot, HIGH); // rotate counterclockwise 
-stepperMove(stepPinRot, stepper_stepcounter, maxstepsRot); // rotate back to storage
+  stepper_stepcounter = 0;
+  setStepperDir(dirPinRot, HIGH); // rotate counterclockwise 
+  stepperMove(stepPinRot, stepper_stepcounter, maxstepsRot); // rotate back to storage
+  goStorage(-1);
 }
 
 void goDownAndGrab(){
-  claw_servo.write(pos); // opens claw
-    vert_stepcounter = 0; // initialize step counter
-   setStepperDir (dirPinVert, HIGH); // direction: down
-   while (!limitTouched(bottom_limitSwitch)){ // moves claw down to platform until bottom limit switch is touched 
-    incremental_step();
+  claw_servo.write(90); // opens claw
+  vert_stepcounter = 0; // initialize step counter
+  setStepperDir (dirPinVert, LOW); // direction: down
+  while (!limitTouched(bottom_limitSwitch)){ 
+    // moves claw down to platform until bottom limit switch is touched 
+    //incremental_step();
+    stepper_stepcounter = 0;
+    stepperMove (stepPinVert, stepper_stepcounter, 1);
+    delay(50);
     vert_stepcounter++;
-   }
-   // for the raising distance, if limit_limit switch pressed_ move one step. else 
-while (!(pos == desired_pos || limitTouched(claw_limitSwitch))){ // close claw
-claw_servo.write(pos--);
-}
+  }
+  // for the raising distance, if limit_limit switch pressed_ move one step. else 
+  while (!(pos == desired_pos || limitTouched(claw_limitSwitch))){ 
+    // close claw
+    claw_servo.write(pos--);
+    delay(40);
+  }
 }
 
-void clawDropoff () {
+void clawDropoff() {
     claw_servo.write(pos); // opens claw
     stepper_stepcounter = 0; 
-    int vert_stepcounter = 0;
+    vert_stepcounter = 0;
     setStepperDir(dirPinRot, LOW); // rotate clockwise 
     stepperMove(stepPinRot, stepper_stepcounter, 1200); // rotate partially 
     setStepperDir(dirPinVert, HIGH);//  set direction down
 
     while (!limitTouched(bottom_limitSwitch)){ // moves claw down to platform until bottom limit switch is touched 
-    incremental_step();
+    //incremental_step(&int 1);
+    stepper_stepcounter = 0;
+    stepperMove (stepPinVert, stepper_stepcounter, 1);
     vert_stepcounter++;
    }
    stepperMove(stepPinRot, stepper_stepcounter, maxstepsRot-1200);// rotate back to storage
@@ -99,7 +111,9 @@ void clawDropoff () {
 
    vert_stepcounter = 0;
    while (!limitTouched(bottom_limitSwitch)){ // moves claw down to platform until bottom limit switch is touched 
-   incremental_step();
+   //incremental_step(&int 1);
+   stepper_stepcounter = 0;
+    stepperMove (stepPinVert, stepper_stepcounter, 1);
    vert_stepcounter++;
    }
    claw_servo.write(pos); // opens claw
@@ -138,7 +152,7 @@ void stepperMove(int stepPin, int &stepcounter, int desired_steps) {
     digitalWrite(stepPin, LOW);
     delayMicroseconds(40000);  
   }
-  delay(2000);
+  //delay(2000);
 } 
 
 void incremental_step(int stepPin){

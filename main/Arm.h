@@ -2,7 +2,7 @@
 #define ARM_H
 
 #include <Servo.h>
-#include <ezButton.h>
+#include "ezButton.h"
 
 // claw vars
   extern ezButton claw_limitSwitch;  // create ezButton object that attach to pin 7;
@@ -33,10 +33,13 @@ extern int vert_stepcounter; // step counter for vertical stepper
   extern bool armFaceFront; // arm default faces front
 
 void moveArm();
+void clawPickup();
+void goDownAndGrab();
+void clawDropoff();
 bool limitTouched(ezButton &limitSwitch);
 void setStepperDir(int dirPin, int LEVEL);
 void stepperMove(int stepPin, int &stepcounter, int desired_steps);
-void goDownAndGrab();
-void incremental_step();
+void incremental_step(int stepPin);
+extern void goStorage(int n);
 
 #endif
