@@ -108,9 +108,9 @@
   const int stepPinVert = 50; //go up or down
   const int dirPinVert = 51; 
 
-  const int RotPinEn = 37;
+  const int RotPinEn = 35; //37
   const int VertPinEn = 36;
-  const int StoragePinEn = 35;
+  const int StoragePinEn = 37; //
 
   const int maxstepsRot = 1400; //200 steps per rotation, 7 complete rotations
   const int maxstepsVert = 2000; //200 steps per rotation, 10 complete rotations
@@ -128,8 +128,8 @@
   // defines pins numbers
   const int stepPinStorage = 48; 
   const int dirPinStorage = 49; 
-  const int servoL_Pin = 8;
-  const int servoR_Pin = 9;
+  const int servoL_Pin = 33;
+  const int servoR_Pin = 34;
 
   // alignment angles for the servo motors
   const int servoL_flat = 42;
@@ -145,7 +145,8 @@ enum Mode {
     CALIBRATION,
     LINE_FOLLOWING,
     ASSEMBLY,
-    RAMP
+    RAMP,
+    DROPOFF
 };
 
 Mode currentMode = CALIBRATION;
@@ -171,7 +172,7 @@ void setup() {
 
   // Arm initialization
     // set claw pins
-    claw_servo.attach(41);  // attaches the servo on pin 3 to the servo object
+    claw_servo.attach(39);  // attaches the servo on pin 3 to the servo object
     claw_limitSwitch.setDebounceTime(50); // set debounce time to 50 milliseconds
     bottom_limitSwitch.setDebounceTime(50);
 
@@ -223,35 +224,30 @@ void setup() {
   Serial.begin(9600);
 }
 
-void loop() {
 
+void loop() {  
+Assembly();
 
-
-
-  //goStorage();
- // moveArm();
-
-
-  // goStorage();
-  // moveArm();
-
-  if(currentMode == CALIBRATION){
-    Calibration();
-    Serial.println("Calibrated");
     
-    // for (uint16_t i = 0; i < 400; i++)
-    // {
-    //   qtr.readCalibrated(sensorValues);
-    //   for (uint8_t i = 0; i < SensorCount; i++){
-    //     Serial.print(sensorValues[i]);
-    //     Serial.print(' ');
-    //   }
-    //   Serial.println();
-    // }
-    currentMode = LINE_FOLLOWING;
-  }
+  
 
-  lineFollowing();
+//  if(currentMode == CALIBRATION){
+//    Calibration();
+//    Serial.println("Calibrated");
+//    
+//    // for (uint16_t i = 0; i < 400; i++)
+//    // {
+//    //   qtr.readCalibrated(sensorValues);
+//    //   for (uint8_t i = 0; i < SensorCount; i++){
+//    //     Serial.print(sensorValues[i]);
+//    //     Serial.print(' ');
+//    //   }
+//    //   Serial.println();
+//    // }
+//    currentMode = LINE_FOLLOWING;
+//  }
+//
+//  lineFollowing();
 
 
 
@@ -276,5 +272,8 @@ void loop() {
 //         case RAMP:
 //             ramp();
 //             break;
-//     }
+//         case DROPOFF:
+//            dropOff();
+//            break;
+////     }
 }

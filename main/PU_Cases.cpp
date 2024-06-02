@@ -111,17 +111,17 @@ void pickUp(int pattyLocation){
 
 
 void pickUpLeft(){
-  if (sensor1.measureDistanceCm()>10){
+  if (sensor1.measureDistanceCm()>25 && sensor2.measureDistanceCm()>10){
     setHardLeftTurn();
-  } else if (sensor1.measureDistanceCm()>1){
+  } else if (sensor1.measureDistanceCm()>1 && sensor2.measureDistanceCm()>1){
     lineFollowing();
   }
 }
 
 void pickUpRight(){
-  if (sensor1.measureDistanceCm()>10){
+  if (sensor1.measureDistanceCm()>25 && sensor2.measureDistanceCm()>10){
     setHardRightTurn();
-  } else if (sensor1.measureDistanceCm()>1){
+  } else if (sensor1.measureDistanceCm()>1 && sensor2.measureDistanceCm()>5){
     lineFollowing();
   }
 }

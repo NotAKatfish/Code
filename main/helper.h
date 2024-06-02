@@ -19,12 +19,6 @@
   extern const int allWhiteThreshold; // Threshold for all sensors being considered "black"
   extern bool firstTurnDone;
 
-// // ultrasonic
-// // Initialize sensor that uses digital pins 13 and 12.
-// const byte triggerPin = 2;
-// const byte echoPin = 3;
-// UltraSonicDistanceSensor distanceSensor(triggerPin, echoPin);
-
 
 // motor vars
   extern int FLpin1;
@@ -72,6 +66,7 @@
   extern int Rpin1;
   extern int Rpin2;
 
+
 void lineFollowing();
 void setLW_Reverse();
 void setRW_Reverse();
@@ -86,6 +81,7 @@ bool isWhite();
 bool isBlack();
 
 void firstTurn();
+//void printDistance();
 
 
 #endif

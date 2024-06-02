@@ -23,7 +23,7 @@ extern Servo servoR;
   extern const int disc_steps;
 
 
-void goStorage();
+void goStorage(int n);
 void flat();
 void away();
 void move_disc(int n);
