@@ -18,7 +18,7 @@ void Calibration(){
   // Call calibrate() 400 times to make calibration take about 10 seconds.
   for (uint16_t i = 0; i < 800; i++)
   {
-    if (calCounter == 6)
+    if (calCounter == 2)
     {
       break;
     }

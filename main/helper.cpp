@@ -8,7 +8,7 @@
 void lineFollowing() {
   // read raw sensor values
     getError();
-    pid = (Kp * P) - (Ki * I) + (Kd * D);
+    pid = (Kp * P) + (Ki * I) + (Kd * D);
     speedLeft = Nspeed - pid;
     speedRight = Nspeed + pid;
 
@@ -227,7 +227,7 @@ void getError() {
   I = I + newError;
   D = newError-prevError;
   Serial.print('\t');
-  Serial.println(newError);
+  Serial.print(newError);
   prevError = newError;
 }
 

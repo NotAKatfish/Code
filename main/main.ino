@@ -42,15 +42,15 @@
   int BRpinEN = 10;
 
 // speed vars, pid
-  //const float Nspeed = 40; //60
-  //const float Kp = 0.002; //proportional 0-0.1
-  //const float Ki = 0.000; //offset  
-  //const float Kd = 0.05; //difference
-
-  const float Nspeed = 25 ; //30
-  const float Kp = 0.00; //proportional 0-0.1
+  const float Nspeed = 20; //60
+  const float Kp = 0.009; //proportional 0-0.1
   const float Ki = 0.000; //offset  
-  const float Kd = 0.0; //difference
+  const float Kd = 0.02; //difference
+
+//  const float Nspeed = 25 ; //30
+//  const float Kp = 0.007; //proportional 0-0.1
+//  const float Ki = 0.000; //offset  
+//  const float Kd = 0.0; //difference
 
   float P = 0;
   float I = 0;
@@ -65,10 +65,10 @@
   // min and max power output
   //int up_threshold = 80;
   //int low_threshold = -40;
-  int up_threshold = 55;
+  int up_threshold = 50;
   int low_threshold = -50;
   int deadzone = 40;
-  int deadzone_speed = 35;
+  int deadzone_speed = 50;
 
 
   // switching to reverse
