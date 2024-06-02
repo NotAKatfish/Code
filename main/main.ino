@@ -1,4 +1,6 @@
 #include <QTRSensors.h>
+#include <IRremote.h>
+#include <LiquidCrystal.h>
 #include "StateFunctions.h"
 #include "helper.h"
 #include "PU_Cases.h"
@@ -6,6 +8,7 @@
 #include "ezButton.h"
 #include "Servo.h"
 #include "Storage.h"
+
 #include <HCSR04.h>
 
 // initializing variablesvariables 
@@ -42,12 +45,12 @@
   int BRpinEN = 10;
 
 // speed vars, pid
-  const float Nspeed = 20; //60
-  const float Kp = 0.009; //proportional 0-0.1
+  const float Nspeed = 25; //60
+  const float Kp = 0.0080; //proportional 0-0.1
   const float Ki = 0.000; //offset  
   const float Kd = 0.02; //difference
 
-//  const float Nspeed = 25 ; //30
+//  const float Nspeed = 20 ; //30
 //  const float Kp = 0.007; //proportional 0-0.1
 //  const float Ki = 0.000; //offset  
 //  const float Kd = 0.0; //difference
@@ -65,7 +68,7 @@
   // min and max power output
   //int up_threshold = 80;
   //int low_threshold = -40;
-  int up_threshold = 50;
+  int up_threshold = 40;
   int low_threshold = -50;
   int deadzone = 40;
   int deadzone_speed = 50;
@@ -79,12 +82,12 @@
 
 
 //Ultrasonic
-  const byte TRIGGER_PIN_1 = 13;
-  const byte ECHO_PIN_1 = 12;
-  const byte TRIGGER_PIN_2 = 14;
-  const byte ECHO_PIN_2 = 15;
-  UltraSonicDistanceSensor sensor1(TRIGGER_PIN_1, ECHO_PIN_1);
-  UltraSonicDistanceSensor sensor2(TRIGGER_PIN_2, ECHO_PIN_2);
+  const byte TRIGGER_PIN_L = 45;
+  const byte ECHO_PIN_L = 43;
+  const byte TRIGGER_PIN_R = 44;
+    const byte ECHO_PIN_R = 42;
+  UltraSonicDistanceSensor sensor1(TRIGGER_PIN_L, ECHO_PIN_L);
+  UltraSonicDistanceSensor sensor2(TRIGGER_PIN_R, ECHO_PIN_R);
 
 
 // claw vars
@@ -223,8 +226,10 @@ void setup() {
 void loop() {
 
 
+
+
   //goStorage();
-  moveArm();
+ // moveArm();
 
 
   // goStorage();

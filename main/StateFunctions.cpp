@@ -68,8 +68,8 @@ void Calibration(){
         Serial.println();
       if (sensorValues[3] < 800){
         analogWrite(BRpinEN, 50);
-        analogWrite(FLpinEN, 110);
-        analogWrite(BLpinEN, 110);
+        analogWrite(FLpinEN, 120);
+        analogWrite(BLpinEN, 120);
         analogWrite(FRpinEN, 50);
       } else {
         analogWrite(BRpinEN, 0);

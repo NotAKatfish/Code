@@ -91,7 +91,7 @@ bool isWhite(){
 //    getError();
     for(uint8_t i = 0; i < SensorCount; i++) {
       // if any are black, return false
-      if(s[i] >= 8090) {
+      if(s[i] >= 800) {
         // Serial.println("Point2");
         // Serial.println(s[i]);
         // Serial.println(allWhiteThreshold);
@@ -180,6 +180,13 @@ void updateDirections(){
 
 // magnitude of motor speed
 void goMove(){
+    if(((speedLeft < 0) || (speedRight< 0)) && ((speedLeft > 0) || (speedRight> 0)))
+    {
+      deadzone_speed = 100;
+      Serial.println("turning");
+    } else {
+      deadzone_speed = 40;
+    }
 
     analogWrite(BRpinEN, abs(speedRight)+deadzone_speed);
     analogWrite(FLpinEN, abs(speedLeft)+deadzone_speed);
