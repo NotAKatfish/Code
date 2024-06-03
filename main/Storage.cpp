@@ -1,5 +1,9 @@
 #include "Storage.h"
 
+#include "Stepper.h"
+
+//Stepper myStepper = Stepper(2038, 8, 10, 9, 11);
+
 // defines pins numbers
 // const int stepPinStorage; 
 // const int dirPinStorage; 
@@ -38,7 +42,8 @@
   //  away(); 
   //}
 
-
+// Creates an instance of stepper class
+// Pins entered in sequence IN1-IN3-IN2-IN4 for proper step sequence
 
 // store items
 void goStorage(int n){
@@ -62,8 +67,6 @@ void away(){
   servoL.write(servoL_away);
   servoR.write(servoR_away);
 }
-
-
 
 
 // n is how many discs you want to move up or down by

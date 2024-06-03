@@ -87,8 +87,8 @@ void clawDropoff() {
     stepper_stepcounter = 0; 
     vert_stepcounter = 0;
     setStepperDir(dirPinRot, LOW); // rotate clockwise 
-    stepperMove(stepPinRot, stepper_stepcounter, 1200); // rotate partially 
-    setStepperDir(dirPinVert, HIGH);//  set direction down
+    stepperMove(stepPinRot, stepper_stepcounter, 1300); // rotate partially 
+    setStepperDir(dirPinVert, LOW);//  set direction down 
 
     while (!limitTouched(bottom_limitSwitch)){ // moves claw down to platform until bottom limit switch is touched 
     //incremental_step(&int 1);
@@ -96,8 +96,8 @@ void clawDropoff() {
     stepperMove (stepPinVert, stepper_stepcounter, 1);
     vert_stepcounter++;
    }
-   stepperMove(stepPinRot, stepper_stepcounter, maxstepsRot-1200);// rotate back to storage
-   //goStorage(3);
+   stepperMove(stepPinRot, stepper_stepcounter, maxstepsRot-1300);// rotate back to storage
+   goStorage(3);
    while (!(pos == desired_pos || limitTouched(claw_limitSwitch))){ // close claw
     claw_servo.write(pos--);
    }

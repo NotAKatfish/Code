@@ -253,7 +253,7 @@ void getError() {
 }
 
 int getDistance(){
-    distanceLeftUS = sensorL.measureDistanceCm();
-    distanceRightUS = sensorR.measureDistanceCm();
-    return (distanceLeftUS+distanceRightUS)/2;
+//    distanceLeftUS = sensorL.measureDistanceCm();
+//    distanceRightUS = sensorR.measureDistanceCm();
+//    return (distanceLeftUS+distanceRightUS)/2;
     }
