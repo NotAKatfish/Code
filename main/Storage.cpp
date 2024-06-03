@@ -1,5 +1,9 @@
 #include "Storage.h"
 
+#include "Stepper.h"
+
+//Stepper myStepper = Stepper(2038, 8, 10, 9, 11);
+
 // defines pins numbers
 // const int stepPinStorage; 
 // const int dirPinStorage; 
@@ -38,7 +42,8 @@
   //  away(); 
   //}
 
-
+// Creates an instance of stepper class
+// Pins entered in sequence IN1-IN3-IN2-IN4 for proper step sequence
 
 // store items
 void goStorage(int n){
@@ -64,17 +69,15 @@ void away(){
 }
 
 
-
-
 // n is how many discs you want to move up or down by
 void move_disc(int n){
   if (n > 0) // positive n makes platform  move up, negative n makes the platform move down
   {
-    digitalWrite (dirPinStorage, LOW); // this makes the motor move up
+    digitalWrite (dirPinStorage, HIGH); // this makes the motor move up
   }
   else 
     {
-    digitalWrite (dirPinStorage, HIGH); // this makes the motor move down
+    digitalWrite (dirPinStorage, LOW); // this makes the motor move down
     }
   for(int x = 0; x < abs(n) * disc_steps ; x++) 
   {

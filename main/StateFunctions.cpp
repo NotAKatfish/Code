@@ -183,9 +183,11 @@ void Assembly(){
     int pattyLocation3 = 3;
     //pickup patty, replace patty Location with patties want to grab
     pickUp(pattyLocation1);
-    //clawPickup();
-    // pickUp(pattyLocation2);
+    //backtoStart();
+    //pickUp(pattyLocation2);
+    //backtoStart();
     // pickUp(pattyLocation3);
+    //backtoStart();
 
     // assembly ends at the starting location
 
@@ -198,6 +200,7 @@ void ramp(){
     Serial.println("ramp mode");
 
     // start when detect ultrasonic
+    //if (sensor1.measureDistanceCm()<15 && sensor2.measureDistanceCm()<15) //change 15 to whatever distance.
     
     // increase torque, go over ramp
 }
@@ -207,7 +210,14 @@ void dropOff(){
     // turn 90 deg right into drop off bay
 
     //clawSequence();
-
+ //if the robot sees black on the right most sensor, count the row
+//    //keep going straight
+//    //when row number=dropofflocation stop 
+//    //setHardRightTurn();
+//    //go straight until both ultrasonic sensors read about 3-4 cm
+//    //clawDropoff();
+//    // reverse until you see all black
+//    //setHardLeftTurn();
     // exit
 
 }
