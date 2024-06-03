@@ -12,6 +12,7 @@ void pickUp(int pattyLocation);
 void pickUpLeft();
 void pickUpRight();
 void dropOff(int n);
+void backtoStart();
 
 
 

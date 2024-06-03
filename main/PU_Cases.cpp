@@ -139,3 +139,31 @@ void dropOff(int n){
     lineFollowing();
   } 
 }
+
+
+
+
+void backtoStart() {
+   //reverse straight until the sensors read all black
+  while(isBlack()==false){
+    setFullReverse();
+  }
+  setHardLeftTurn();
+  delay(1000);
+  while(s[3] <= 800 && s[4]<= 800){ //or until we get a certain distacne away from the shelf
+    setHardLeftTurn();
+  }
+  while(rows > 0){
+    lineFollowing();
+    if(isBlack() == true){
+        while(isBlack() == true){
+          lineFollowing();
+        }
+        rows--;
+    }
+  }
+  
+  //roatate 180 degrees
+  //delay for 1 second
+  //stop rotating when the middle two sensors read black
+}

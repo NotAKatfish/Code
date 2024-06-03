@@ -83,6 +83,16 @@ void setHardRightTurn(){
     analogWrite(FRpinEN, 120);
 }
 
+void setFullReverse(){
+  setLW_Reverse();
+  setRW_Reverse();
+
+    analogWrite(BRpinEN, 120);
+    analogWrite(FLpinEN, 120);
+    analogWrite(BLpinEN, 120);
+    analogWrite(FRpinEN, 120);
+}
+
 // return true if all white
 bool isWhite(){
 

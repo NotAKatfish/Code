@@ -232,6 +232,7 @@ void ramp(){
 //    lcd.clear();
 
     // start when detect ultrasonic
+    //if (sensor1.measureDistanceCm()<15 && sensor2.measureDistanceCm()<15) //change 15 to whatever distance.
     
     // increase torque, go over ramp
 }

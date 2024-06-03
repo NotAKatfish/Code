@@ -77,6 +77,7 @@ void goMove();
 void getError();
 void setHardLeftTurn();
 void setHardRightTurn();
+void setFullReverse();
 bool isWhite();
 bool isBlack();
 bool isHalfBlack();
