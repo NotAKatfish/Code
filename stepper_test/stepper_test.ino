@@ -5,15 +5,15 @@
  */
 
 // defines pins numbers
-const int stepPin1 = 51; //rotate 180 degrees
-const int dirPin1 = 53; 
+const int stepPin1 = 8; //rotate 180 degrees
+const int dirPin1 = 9; 
 
-const int stepPin2 = 47; //go up or down
-const int dirPin2 = 49; 
-
-const int RotPinEn = 37;
-const int VertPinEn = 36;
-const in StorageEnPinEn = 35;
+//const int stepPin2 = 47; //go up or down
+//const int dirPin2 = 49; 
+//
+//const int RotPinEn = 37;
+//const int VertPinEn = 36;
+//const in StorageEnPinEn = 35;
 
 
 
@@ -31,8 +31,6 @@ void setup() {
   // Sets the two pins as Outputs
   pinMode(stepPin1,OUTPUT); 
   pinMode(dirPin1,OUTPUT);
-  pinMode(stepPin2,OUTPUT); 
-  pinMode(dirPin2,OUTPUT);
 }
 
 //void loop() {

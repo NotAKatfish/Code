@@ -253,11 +253,12 @@ void setup() {
     lcd.begin(16, 2);
   // Print a message to the LCD.
     lcd.print("hello, world!");
+    userInput();
 }
 
 
 void loop() {  
-
+  Serial.print("point1");
 
     
   
@@ -278,7 +279,7 @@ void loop() {
 //    currentMode = LINE_FOLLOWING;
 //  }
 
-  curvedSection();
+//  curvedSection();
 
 
 
