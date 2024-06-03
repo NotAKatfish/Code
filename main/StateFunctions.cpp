@@ -4,7 +4,63 @@
 #include <QTRSensors.h>
 #include "PU_Cases.h"
 #include "Arm.h"
+#include <IRremote.hpp> 
 //#include <HCSR04.h>
+void userInput(){
+  IrReceiver.begin(IR_RECEIVE_PIN);
+  
+  while(inputsReceived != pattyNumber)
+  {  
+      
+      // set up the LCD's number of columns and rows:
+    if (IrReceiver.decode() && (inputsReceived != pattyNumber)) {
+          IrReceiver.resume();
+          int command = IrReceiver.decodedIRData.command;
+            if((command == IR_BUTTON_1)&&(pressed1 == false)){
+              Serial.println("Pressed on button 1");
+              pattyLocation[inputsReceived] = 1;
+              inputsReceived++;
+              pressed1 = true;
+            } else if((command == IR_BUTTON_2)&&(pressed2 == false)){
+              Serial.println("Pressed on button 2");
+              pattyLocation[inputsReceived] = 2;
+              inputsReceived++;
+              pressed2 = true;
+            } else if((command == IR_BUTTON_3)&&(pressed3 == false)){
+              Serial.println("Pressed on button 3");
+              pattyLocation[inputsReceived] = 3;
+              inputsReceived++;
+              pressed3 = true;
+            } else if((command == IR_BUTTON_4)&&(pressed4 == false)){
+              Serial.println("Pressed on button 4");
+              pattyLocation[inputsReceived] = 4;
+              inputsReceived++;
+              pressed4 = true;
+            } else if((command == IR_BUTTON_5)&&(pressed5 == false)){
+              Serial.println("Pressed on button 5");
+              pattyLocation[inputsReceived] = 5;
+              inputsReceived++;
+              pressed5 = true;
+            } else if((command == IR_BUTTON_6)&&(pressed6 == false)){
+              Serial.println("Pressed on button 6");
+              pattyLocation[inputsReceived] = 6;
+              inputsReceived++;
+              pressed6 = true;
+            }
+          }
+  
+            lcd.setCursor(0, 0);
+            lcd.print("Enter Location:");
+            lcd.setCursor(0, 1);
+            lcd.print(pattyLocation[0]);
+            lcd.setCursor(2, 1);
+            lcd.print(pattyLocation[1]);
+            lcd.setCursor(4, 1);
+            lcd.print(pattyLocation[2]);
+  
+   
+      }
+}
 
 void Calibration(){
   uint16_t calCounter = 0;
@@ -154,4 +210,31 @@ void dropOff(){
 
     // exit
 
+}
+
+void curvedSection(){
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("Curved Section");
+  delay(500);
+  lcd.clear();
+  while(getDistance() > 5)
+  {
+    lcd.setCursor(0, 0);
+    lcd.print("LineFollowing");
+    lineFollowing();
+    lcd.setCursor(0, 1);
+    lcd.print("LS:");
+    lcd.setCursor(3, 1);
+    lcd.print(abs(speedLeft));
+    lcd.setCursor(6, 1);
+    lcd.print("RS:");
+    lcd.setCursor(9,1);
+    lcd.print(abs(speedRight));
+    lcd.setCursor(12,1);
+    lcd.print("D:");
+    lcd.setCursor(14,1);
+    lcd.print(getDistance());
+  }
+  setHardLeftTurn();
 }

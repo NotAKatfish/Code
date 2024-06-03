@@ -1,5 +1,5 @@
 #include <QTRSensors.h>
-#include <IRremote.h>
+
 #include <LiquidCrystal.h>
 #include "StateFunctions.h"
 #include "helper.h"
@@ -82,12 +82,12 @@
 
 
 //Ultrasonic
-  const byte TRIGGER_PIN_L = 45;
-  const byte ECHO_PIN_L = 43;
-  const byte TRIGGER_PIN_R = 44;
-    const byte ECHO_PIN_R = 42;
-  UltraSonicDistanceSensor sensor1(TRIGGER_PIN_L, ECHO_PIN_L);
-  UltraSonicDistanceSensor sensor2(TRIGGER_PIN_R, ECHO_PIN_R);
+  const byte TRIGGER_PIN_L = 43;
+  const byte ECHO_PIN_L = 45;
+  const byte TRIGGER_PIN_R = 42;
+    const byte ECHO_PIN_R = 44;
+  UltraSonicDistanceSensor sensorL(TRIGGER_PIN_L, ECHO_PIN_L);
+  UltraSonicDistanceSensor sensorR(TRIGGER_PIN_R, ECHO_PIN_R);
 
 
 // claw vars
@@ -99,7 +99,7 @@
   int start = 90;    // starting position
   int pos = start;
   bool go_right = true;
-  int desired_pos = 10;
+  int desired_pos = 17;
 
 
 // stepper vars for arm
@@ -140,6 +140,27 @@
   // number of steps to move the platform by the height of a disc (0.5 in)
   const int disc_steps = 635;
 
+  // initialize the library by associating any needed LCD interface pin
+// with the arduino pin number it is connected to
+  const int rs = 8, en = 7, d4 = 6, d5 = 5, d6 = 4, d7 = 3;
+  LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
+  
+  
+  int distanceLeftUS = 999;
+  int distanceRightUS = 999;
+  //
+  
+  const int pattyNumber = 3;
+  int pattyLocation[pattyNumber];
+  int inputsReceived = 0;
+  
+  bool pressed1 = false;
+  bool pressed2 = false;
+  bool pressed3 = false;
+  bool pressed4 = false;
+  bool pressed5 = false;
+  bool pressed6 = false;
+
 
 enum Mode {
     CALIBRATION,
@@ -171,7 +192,7 @@ void setup() {
 
   // Arm initialization
     // set claw pins
-    claw_servo.attach(41);  // attaches the servo on pin 3 to the servo object
+    claw_servo.attach(39);  // attaches the servo on pin 3 to the servo object
     claw_limitSwitch.setDebounceTime(50); // set debounce time to 50 milliseconds
     bottom_limitSwitch.setDebounceTime(50);
 
@@ -221,23 +242,27 @@ void setup() {
 
 
   Serial.begin(9600);
+
+     lcd.begin(16, 2);
+  // Print a message to the LCD.
+     lcd.print("hello, world!");
 }
 
 void loop() {
 
-
-
-
+//sensorR.measureDistanceCm();
+//Serial.println(sensorL.measureDistanceCm());
+//Serial.println(getDistance());
   //goStorage();
  // moveArm();
 
 
   // goStorage();
   // moveArm();
-
-  if(currentMode == CALIBRATION){
-    Calibration();
-    Serial.println("Calibrated");
+//
+//  if(currentMode == CALIBRATION){
+//    Calibration();
+//    Serial.println("Calibrated");
     
     // for (uint16_t i = 0; i < 400; i++)
     // {
@@ -248,10 +273,10 @@ void loop() {
     //   }
     //   Serial.println();
     // }
-    currentMode = LINE_FOLLOWING;
-  }
-
-  lineFollowing();
+//    currentMode = LINE_FOLLOWING;
+//  }
+//
+//  lineFollowing();
 
 
 

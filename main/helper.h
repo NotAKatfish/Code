@@ -2,7 +2,7 @@
 #define HELPER_H
 
 #include <QTRSensors.h>
-
+#include <HCSR04.h>
 
 // IR vars
   extern QTRSensors qtr;
@@ -72,6 +72,11 @@
   extern int Rpin1;
   extern int Rpin2;
 
+  extern UltraSonicDistanceSensor sensorL;
+  extern UltraSonicDistanceSensor sensorR;
+  extern int distanceLeftUS;
+  extern int distanceRightUS;
+
 void lineFollowing();
 void setLW_Reverse();
 void setRW_Reverse();
@@ -84,7 +89,7 @@ void setHardLeftTurn();
 void setHardRightTurn();
 bool isWhite();
 bool isBlack();
-
+float getDistance();
 void firstTurn();
 
 

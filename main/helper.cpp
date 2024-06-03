@@ -237,3 +237,10 @@ void getError() {
   Serial.print(newError);
   prevError = newError;
 }
+
+float getDistance(){
+    distanceLeftUS = sensorL.measureDistanceCm();
+    distanceRightUS = sensorR.measureDistanceCm();
+    
+    return (distanceLeftUS+distanceRightUS)/2;
+    }
