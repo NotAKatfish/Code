@@ -223,8 +223,10 @@ void setup() {
 
 
 void loop() {  
-
-
+    digitalWrite(RotPinEn, LOW);
+    digitalWrite(VertPinEn, LOW);
+    digitalWrite(StoragePinEn, LOW);
+    clawDropoff();
     
     
 //  if(currentMode == CALIBRATION){
