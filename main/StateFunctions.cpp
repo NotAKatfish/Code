@@ -184,7 +184,7 @@ void Assembly(){
     digitalWrite(VertPinEn, LOW);
     digitalWrite(StoragePinEn, LOW);
 
-    moveArm();
+    
 
     Serial.println("Assembly mode");
 
@@ -194,6 +194,21 @@ void Assembly(){
     //   lineFollowing();
     // }
     
+    for(int i = 0; i < 3; i++){
+      pickUp(pattyLocation[i]);
+      clawPickup();
+
+      
+      backtoStart();
+    }
+    // turn stepper pins off after assembly
+    digitalWrite(RotPinEn, HIGH);
+    digitalWrite(VertPinEn, HIGH);
+    digitalWrite(StoragePinEn, HIGH);
+
+    //backtoStart();
+    //pickUp(pattyLocation2);
+    //backtoStart();
     // always starts at start line
     int pattyLocation1 = 1;
     int pattyLocation2 = 2;

@@ -54,6 +54,11 @@ void lineFollowing() {
 void firstTurn(){
     // if see all white, turn
     while(firstTurnDone == false){
+      
+    setHardLeftTurn();
+    delay(1000);
+
+    firstTurnDone = true;
       getError();
       setHardLeftTurn();
       if(abs(newError) < 200){
@@ -63,6 +68,7 @@ void firstTurn(){
         analogWrite(BLpinEN, 0);
         analogWrite(FRpinEN, 0);
         firstTurnDone = true;
+
     }
 }
 delay(10000);

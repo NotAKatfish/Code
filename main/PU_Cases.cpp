@@ -6,8 +6,6 @@
 
 void pickUp(int pattyLocation){
 
-  int rows = 0;
-
   // ROW 1
   if(pattyLocation == 1 || pattyLocation == 6)
   {
@@ -108,17 +106,17 @@ void pickUp(int pattyLocation){
 
 
 void pickUpLeft(){
-  if (sensor1.measureDistanceCm()>25 && sensor2.measureDistanceCm()>25){
+  if (getDistance() > 25){
     setHardLeftTurn();
-  } else if (sensor1.measureDistanceCm()>5 && sensor2.measureDistanceCm()>5){
+  } else if (getDistance()>5){
     lineFollowing();
   }
 }
 
 void pickUpRight(){
-  if (sensor1.measureDistanceCm()>25 && sensor2.measureDistanceCm()>25){
+  if (getDistance() > 25){
     setHardRightTurn();
-  } else if (sensor1.measureDistanceCm()>5 && sensor2.measureDistanceCm()>5){
+  } else if (getDistance()>5){
     lineFollowing();
   }
 }
@@ -148,12 +146,14 @@ void backtoStart() {
   while(isBlack()==false){
     //setFullReverse();
   }
+
+  // turns to avoid middle black line
   setHardLeftTurn();
-  delay(1000);
+  delay(500);
   while(s[3] <= 800 && s[4]<= 800){ //or until we get a certain distacne away from the shelf
     setHardLeftTurn();
   }
-  while(rows > 0){
+  while(rows > -1){
     lineFollowing();
     if(isBlack() == true){
         while(isBlack() == true){
@@ -162,8 +162,15 @@ void backtoStart() {
         rows--;
     }
   }
+  // if rows > -1
+  rows = 0;
   
   //roatate 180 degrees
   //delay for 1 second
   //stop rotating when the middle two sensors read black
+  setHardLeftTurn();
+  delay(2000);
+
+
+
 }
