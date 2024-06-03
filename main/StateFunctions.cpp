@@ -72,9 +72,16 @@ void Calibration(){
   // 0.1 ms per sensor * 4 samples per sensor read (default) * 6 sensors
   // * 10 reads per calibrate() call = ~24 ms per calibrate() call.
   // Call calibrate() 400 times to make calibration take about 10 seconds.
+            lcd.clear();
+            lcd.setCursor(0, 0);
+            lcd.print("Mode:");
+            lcd.setCursor(0, 1);
+            lcd.print("Calibration");
+ 
+  
   for (uint16_t i = 0; i < 800; i++)
   {
-    if (calCounter == 6)
+    if (calCounter == 2)
     {
       break;
     }
@@ -113,6 +120,13 @@ void Calibration(){
       onWhite = false;
     }
   }
+
+            lcd.clear();
+            lcd.setCursor(0, 0);
+            lcd.print("Calibration");
+            lcd.setCursor(0, 1);
+            lcd.print("Complete");
+            
     while (isCentered == false){
       setLW_Forward();
       setRW_Reverse();
@@ -133,7 +147,10 @@ void Calibration(){
         analogWrite(BLpinEN, 0);
         analogWrite(FRpinEN, 0);
         isCentered = true;
-        Serial.print("centered");
+            lcd.clear();
+            lcd.setCursor(0, 0);
+            lcd.print("Centered");
+
     }
     }
   
@@ -218,23 +235,30 @@ void curvedSection(){
   lcd.print("Curved Section");
   delay(500);
   lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("LineFollowing");
+  lcd.setCursor(0, 1);
+  lcd.print("LS:");
+  lcd.setCursor(4, 1);
+  lcd.print("RS:");
+  lcd.setCursor(12,1);
+  lcd.print("D:");
+  delay(500);
   while(getDistance() > 5)
   {
-    lcd.setCursor(0, 0);
-    lcd.print("LineFollowing");
+    
     lineFollowing();
-    lcd.setCursor(0, 1);
-    lcd.print("LS:");
+
     lcd.setCursor(3, 1);
     lcd.print(abs(speedLeft));
-    lcd.setCursor(6, 1);
-    lcd.print("RS:");
+
     lcd.setCursor(9,1);
     lcd.print(abs(speedRight));
-    lcd.setCursor(12,1);
-    lcd.print("D:");
+
     lcd.setCursor(14,1);
     lcd.print(getDistance());
+    Serial.print(getDistance());
   }
-  setHardLeftTurn();
+  
+  
 }

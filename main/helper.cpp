@@ -53,7 +53,7 @@ void lineFollowing() {
 // first left turn state
 void firstTurn(){
     // if see all white, turn
-    while(isWhite() == true){
+    while(firstTurnDone == false){
     setHardLeftTurn();
     Serial.println("Seeing all white");
     delay(1000);
@@ -66,16 +66,18 @@ void firstTurn(){
 void setHardLeftTurn(){
   setLW_Reverse();
   setRW_Forward();
+  
 
-    analogWrite(BRpinEN, 120);
-    analogWrite(FLpinEN, 120);
-    analogWrite(BLpinEN, 120);
-    analogWrite(FRpinEN, 120);
+  analogWrite(BRpinEN, 120);
+  analogWrite(FLpinEN, 120);
+  analogWrite(BLpinEN, 120);
+  analogWrite(FRpinEN, 120);
 }
 
 void setHardRightTurn(){
-  setLW_Forward();
-  setRW_Reverse();
+    setLW_Forward();
+    setRW_Reverse();
+    
 
     analogWrite(BRpinEN, 120);
     analogWrite(FLpinEN, 120);
@@ -237,10 +239,13 @@ void getError() {
   Serial.print(newError);
   prevError = newError;
 }
-
-float getDistance(){
+int getDistance(){
     distanceLeftUS = sensorL.measureDistanceCm();
     distanceRightUS = sensorR.measureDistanceCm();
-    
+    if (((distanceLeftUS+distanceRightUS)/2) > 99) {
+      return 99;
+    }
+    else {
     return (distanceLeftUS+distanceRightUS)/2;
     }
+}

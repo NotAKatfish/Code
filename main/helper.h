@@ -89,7 +89,7 @@ void setHardLeftTurn();
 void setHardRightTurn();
 bool isWhite();
 bool isBlack();
-float getDistance();
+int getDistance();
 void firstTurn();
 
 

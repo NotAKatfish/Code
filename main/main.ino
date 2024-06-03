@@ -146,8 +146,8 @@
   LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
   
   
-  int distanceLeftUS = 999;
-  int distanceRightUS = 999;
+  int distanceLeftUS = 99;
+  int distanceRightUS = 99;
   //
   
   const int pattyNumber = 3;
@@ -259,24 +259,15 @@ void loop() {
 
   // goStorage();
   // moveArm();
-//
-//  if(currentMode == CALIBRATION){
-//    Calibration();
-//    Serial.println("Calibrated");
-    
-    // for (uint16_t i = 0; i < 400; i++)
-    // {
-    //   qtr.readCalibrated(sensorValues);
-    //   for (uint8_t i = 0; i < SensorCount; i++){
-    //     Serial.print(sensorValues[i]);
-    //     Serial.print(' ');
-    //   }
-    //   Serial.println();
-    // }
-//    currentMode = LINE_FOLLOWING;
-//  }
-//
-//  lineFollowing();
+
+  if(currentMode == CALIBRATION){
+    Calibration();
+    Serial.println("Calibrated");
+
+    currentMode = LINE_FOLLOWING;
+  }
+
+  curvedSection();
 
 
 
