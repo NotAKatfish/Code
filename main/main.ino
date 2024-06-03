@@ -1,4 +1,5 @@
 #include <QTRSensors.h>
+#include <LiquidCrystal.h>
 #include "StateFunctions.h"
 #include "helper.h"
 #include "PU_Cases.h"
@@ -6,7 +7,10 @@
 #include "ezButton.h"
 #include "Servo.h"
 #include "Storage.h"
+
 #include <HCSR04.h>
+#include <LiquidCrystal.h>
+
 
 // initializing variablesvariables 
 // IR sensors
@@ -42,12 +46,12 @@
   int BRpinEN = 10;
 
 // speed vars, pid
-  const float Nspeed = 20; //60
-  const float Kp = 0.009; //proportional 0-0.1
+  const float Nspeed = 25; //60
+  const float Kp = 0.0080; //proportional 0-0.1
   const float Ki = 0.000; //offset  
   const float Kd = 0.02; //difference
 
-//  const float Nspeed = 25 ; //30
+//  const float Nspeed = 20 ; //30
 //  const float Kp = 0.007; //proportional 0-0.1
 //  const float Ki = 0.000; //offset  
 //  const float Kd = 0.0; //difference
@@ -57,7 +61,7 @@
   float D = 0;
   float pid = 0;
 
-  int error = 0;
+  int32_t error = 0;
   int prevError = 0;
   int speedLeft = Nspeed;
   int speedRight = Nspeed;
@@ -65,7 +69,7 @@
   // min and max power output
   //int up_threshold = 80;
   //int low_threshold = -40;
-  int up_threshold = 50;
+  int up_threshold = 40;
   int low_threshold = -50;
   int deadzone = 40;
   int deadzone_speed = 50;
@@ -79,12 +83,12 @@
 
 
 //Ultrasonic
-  const byte TRIGGER_PIN_1 = 43; //right
-  const byte ECHO_PIN_1 = 42;
-  const byte TRIGGER_PIN_2 = 41;//left
-  const byte ECHO_PIN_2 = 40;
-  UltraSonicDistanceSensor sensor1(TRIGGER_PIN_1, ECHO_PIN_1);
-  UltraSonicDistanceSensor sensor2(TRIGGER_PIN_2, ECHO_PIN_2);
+  const byte TRIGGER_PIN_L = 45;
+  const byte ECHO_PIN_L = 43;
+  const byte TRIGGER_PIN_R = 44;
+    const byte ECHO_PIN_R = 42;
+  UltraSonicDistanceSensor sensorL(TRIGGER_PIN_L, ECHO_PIN_L);
+  UltraSonicDistanceSensor sensorR(TRIGGER_PIN_R, ECHO_PIN_R);
 
 
 // claw vars
@@ -97,6 +101,8 @@
   int pos = start;
   bool go_right = true;
   int desired_pos = 10;
+
+
 
 
 // stepper vars for arm
@@ -136,6 +142,30 @@
 
   // number of steps to move the platform by the height of a disc (0.5 in)
   const int disc_steps = 635;
+
+  // initialize the library by associating any needed LCD interface pin
+// with the arduino pin number it is connected to
+  const int rs = 8, en = 7, d4 = 6, d5 = 5, d6 = 4, d7 = 3;
+  LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
+  
+  
+  int distanceLeftUS = -1;
+  int distanceRightUS = -1;
+  //
+  
+  const int pattyNumber = 3;
+  int pattyLocation[pattyNumber];
+  int inputsReceived = 0;
+  
+  bool pressed1 = false;
+  bool pressed2 = false;
+  bool pressed3 = false;
+  bool pressed4 = false;
+  bool pressed5 = false;
+  bool pressed6 = false;
+       
+
+
 
 
 enum Mode {
@@ -216,14 +246,17 @@ void setup() {
     
     digitalWrite(BRpin1, Rpin1);
     digitalWrite(BRpin2, Rpin2);
+    
 
+    Serial.begin(9600);
 
-  Serial.begin(9600);
+    lcd.begin(16, 2);
+  // Print a message to the LCD.
+    lcd.print("hello, world!");
 }
 
 
 void loop() {  
-//Assembly();
 
     digitalWrite(RotPinEn, LOW);
     digitalWrite(VertPinEn, LOW);
@@ -234,21 +267,21 @@ void loop() {
 
 //  if(currentMode == CALIBRATION){
 //    Calibration();
-//    Serial.println("Calibrated");
-//    
-//    // for (uint16_t i = 0; i < 400; i++)
-//    // {
-//    //   qtr.readCalibrated(sensorValues);
-//    //   for (uint8_t i = 0; i < SensorCount; i++){
-//    //     Serial.print(sensorValues[i]);
-//    //     Serial.print(' ');
-//    //   }
-//    //   Serial.println();
-//    // }
+////    Serial.println("Calibrated");
+////    
+////     for (uint16_t i = 0; i < 400; i++)
+////     {
+////       qtr.readCalibrated(sensorValues);
+////       for (uint8_t i = 0; i < SensorCount; i++){
+////         Serial.print(sensorValues[i]);
+////         Serial.print(' ');
+////       }
+////       Serial.println();
+////     }
 //    currentMode = LINE_FOLLOWING;
 //  }
-//
-//  lineFollowing();
+
+  curvedSection();
 
 
 

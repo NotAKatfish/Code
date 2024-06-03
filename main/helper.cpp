@@ -91,7 +91,7 @@ bool isWhite(){
 //    getError();
     for(uint8_t i = 0; i < SensorCount; i++) {
       // if any are black, return false
-      if(s[i] >= 8090) {
+      if(s[i] >= 800) {
         // Serial.println("Point2");
         // Serial.println(s[i]);
         // Serial.println(allWhiteThreshold);
@@ -194,6 +194,13 @@ void updateDirections(){
 
 // magnitude of motor speed
 void goMove(){
+    if(((speedLeft < 0) || (speedRight< 0)) && ((speedLeft > 0) || (speedRight> 0)))
+    {
+      deadzone_speed = 100;
+      Serial.println("turning");
+    } else {
+      deadzone_speed = 40;
+    }
 
     analogWrite(BRpinEN, abs(speedRight)+deadzone_speed);
     analogWrite(FLpinEN, abs(speedLeft)+deadzone_speed);
@@ -234,24 +241,19 @@ void getError() {
   // dark lines kinda above 600
   // under 100, white
 
-  int32_t newError = 3500-position;
+  error = 3500-position;
 
   
-  P = newError;
-  I = I + newError;
-  D = newError-prevError;
+  P = error;
+  I = I + error;
+  D = error-prevError;
   Serial.print('\t');
-  Serial.print(newError);
-  prevError = newError;
+  Serial.print(error);
+  prevError = error;
 }
 
-//void printDistance(){
-//  Serial.print("Sensor 1: ");
-//    Serial.print(sensor1.measureDistanceCm());
-//    Serial.println(" cm");
-//    delay(100);
-//    Serial.print("Sensor 2: ");
-//    Serial.print(sensor2.measureDistanceCm());
-//    Serial.println(" cm");
-//    delay(100);
-//}
+int getDistance(){
+    distanceLeftUS = sensorL.measureDistanceCm();
+    distanceRightUS = sensorR.measureDistanceCm();
+    return (distanceLeftUS+distanceRightUS)/2;
+    }

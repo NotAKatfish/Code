@@ -1,6 +1,6 @@
 #ifndef HELPER_H
 #define HELPER_H
-
+#include <HCSR04.h>
 #include <QTRSensors.h>
 
 
@@ -51,7 +51,7 @@
   extern int deadzone;
   extern int deadzone_speed;
 
-  extern int error;
+  extern int32_t error;
   extern int prevError;
   extern int speedLeft;
   extern int speedRight;
@@ -65,6 +65,12 @@
   extern int Lpin2;
   extern int Rpin1;
   extern int Rpin2;
+
+  
+  extern UltraSonicDistanceSensor sensorL;
+  extern UltraSonicDistanceSensor sensorR;
+  extern int distanceLeftUS;
+  extern int distanceRightUS;
 
 
 void lineFollowing();
@@ -82,7 +88,7 @@ bool isBlack();
 bool isHalfBlack();
 
 void firstTurn();
-//void printDistance();
+int getDistance();
 
 
 #endif
