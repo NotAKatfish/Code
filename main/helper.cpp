@@ -54,13 +54,18 @@ void lineFollowing() {
 void firstTurn(){
     // if see all white, turn
     while(firstTurnDone == false){
-    setHardLeftTurn();
-    Serial.println("Seeing all white");
-    delay(1000);
-
-    firstTurnDone = true;
+      getError();
+      setHardLeftTurn();
+      if(abs(newError) < 200){
+        Serial.print("turned");
+        analogWrite(BRpinEN, 0);
+        analogWrite(FLpinEN, 0);
+        analogWrite(BLpinEN, 0);
+        analogWrite(FRpinEN, 0);
+        firstTurnDone = true;
     }
-
+}
+delay(10000);
 }
 
 void setHardLeftTurn(){
@@ -78,15 +83,6 @@ void setHardRightTurn(){
     setLW_Forward();
     setRW_Reverse();
     
-
-    analogWrite(BRpinEN, 120);
-    analogWrite(FLpinEN, 120);
-    analogWrite(BLpinEN, 120);
-    analogWrite(FRpinEN, 120);
-}
-void setFullReverse(){
-  setLW_Reverse();
-  setRW_Reverse();
 
     analogWrite(BRpinEN, 120);
     analogWrite(FLpinEN, 120);
@@ -134,22 +130,6 @@ bool isBlack(){
     Serial.println("Seeing all black");
     return true;
 
-}
-bool isHalfBlack(){
-    // must always get new error and sensor values even in loop
-    // or else will never leave
-//    qtr.read(sensorValues);
-    for(uint8_t i = 3; i < SensorCount; i++) {
-      // if any don't hit the black threshold, return false
-      if(s[i] <= 800) {
-        // Serial.println("Point2");
-        // Serial.println(s[i]);
-        // Serial.println(allWhiteThreshold);
-          return false;
-      }
-    }
-    Serial.println("Seeing all black");
-    return true;
 }
 
 // direction to make LW go backwards
@@ -238,15 +218,15 @@ void getError() {
 //  }
 
     int32_t position = qtr.readLineBlack(sensorValues);
-    for (uint8_t i = 0; i < SensorCount; i++)
-    {
-    // normalizing into calibrated values
-    // absolute
-    s[i] = sensorValues[i];
-     Serial.print(s[i]);
-     Serial.print('\t');
-  }
-  
+//    for (uint8_t i = 0; i < SensorCount; i++)
+//    {
+//    // normalizing into calibrated values
+//    // absolute
+//    s[i] = sensorValues[i];
+//     Serial.print(s[i]);
+//     Serial.print('\t');
+//  }
+//  
 
        
       // delay(1000);
@@ -254,7 +234,7 @@ void getError() {
   // dark lines kinda above 600
   // under 100, white
 
-  int32_t newError = 3500-position;
+  newError = 3500-position;
 
   
   P = newError;
@@ -264,6 +244,34 @@ void getError() {
   Serial.print(newError);
   prevError = newError;
 }
+
+bool isHalfBlack(){
+    // must always get new error and sensor values even in loop
+    // or else will never leave
+//    qtr.read(sensorValues);
+    for(uint8_t i = 3; i < SensorCount; i++) {
+      // if any don't hit the black threshold, return false
+      if(s[i] <= 800) {
+        // Serial.println("Point2");
+        // Serial.println(s[i]);
+        // Serial.println(allWhiteThreshold);
+          return false;
+      }
+    }
+    Serial.println("Seeing all black");
+    return true;
+}
+
+void setFullReverse(){
+  setLW_Reverse();
+  setRW_Reverse();
+
+    analogWrite(BRpinEN, 120);
+    analogWrite(FLpinEN, 120);
+    analogWrite(BLpinEN, 120);
+    analogWrite(FRpinEN, 120);
+}
+
 int getDistance(){
     distanceLeftUS = sensorL.measureDistanceCm();
     distanceRightUS = sensorR.measureDistanceCm();
@@ -271,6 +279,6 @@ int getDistance(){
       return 99;
     }
     else {
-    return (distanceLeftUS+distanceRightUS)/2;
+    return ((distanceLeftUS+distanceRightUS)/2);
     }
 }

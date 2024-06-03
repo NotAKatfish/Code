@@ -81,7 +81,7 @@ void Calibration(){
   
   for (uint16_t i = 0; i < 800; i++)
   {
-    if (calCounter == 2)
+    if (calCounter == 6)
     {
       break;
     }
@@ -238,6 +238,7 @@ void curvedSection(){
   delay(500);
   while(getDistance() > 5)
   {
+    Serial.print(getDistance());
     lineFollowing();
     lcd.clear();
     lcd.setCursor(0, 0);
@@ -252,12 +253,10 @@ void curvedSection(){
     lcd.print(abs(speedLeft));
     lcd.setCursor(9,1);
     lcd.print(abs(speedRight));
-    Serial.print(sensorL.measureDistanceCm());
-    Serial.print(sensorR.measureDistanceCm());
     lcd.setCursor(14,1);
     lcd.print(getDistance());
-    Serial.print(getDistance());
   }
+  firstTurn();
   
   
 }
