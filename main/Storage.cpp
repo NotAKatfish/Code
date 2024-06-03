@@ -1,5 +1,9 @@
 #include "Storage.h"
 
+#include "Stepper.h"
+
+Stepper myStepper = Stepper(2038, 8, 10, 9, 11);
+
 // defines pins numbers
 // const int stepPinStorage; 
 // const int dirPinStorage; 
@@ -38,7 +42,8 @@
   //  away(); 
   //}
 
-
+// Creates an instance of stepper class
+// Pins entered in sequence IN1-IN3-IN2-IN4 for proper step sequence
 
 // store items
 void goStorage(int n){
@@ -65,23 +70,33 @@ void away(){
 
 
 
-
 // n is how many discs you want to move up or down by
 void move_disc(int n){
-  if (n > 0) // positive n makes platform  move up, negative n makes the platform move down
-  {
-    digitalWrite (dirPinStorage, HIGH); // this makes the motor move up
-  }
-  else 
-    {
-    digitalWrite (dirPinStorage, LOW); // this makes the motor move down
-    }
-  for(int x = 0; x < abs(n) * disc_steps ; x++) 
-  {
-    digitalWrite(stepPinStorage,HIGH); 
-    delayMicroseconds(20000); 
-    digitalWrite(stepPinStorage,LOW); 
-    delayMicroseconds(20000); 
-  }
-
+    int temp_disc_steps = 0.5 * 25.4 * 2038 * (1/ 8);
+    myStepper.setSpeed(5);
+    myStepper.step(n * temp_disc_steps);
+    delay(1000); 
 }
+
+
+
+
+//// n is how many discs you want to move up or down by
+//void move_disc(int n){
+//  if (n > 0) // positive n makes platform  move up, negative n makes the platform move down
+//  {
+//    digitalWrite (dirPinStorage, HIGH); // this makes the motor move up
+//  }
+//  else 
+//    {
+//    digitalWrite (dirPinStorage, LOW); // this makes the motor move down
+//    }
+//  for(int x = 0; x < abs(n) * disc_steps ; x++) 
+//  {
+//    digitalWrite(stepPinStorage,HIGH); 
+//    delayMicroseconds(20000); 
+//    digitalWrite(stepPinStorage,LOW); 
+//    delayMicroseconds(20000); 
+//  }
+//
+//}

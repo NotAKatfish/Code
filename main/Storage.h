@@ -2,11 +2,13 @@
 #define STORAGE_H
 
 #include <Servo.h>
+#include <Stepper.h>
 #include "Arduino.h"
 extern Servo servoL;
 extern Servo servoR;
 
 // vars
+
   // defines pins numbers
   extern const int stepPinStorage; 
   extern const int dirPinStorage; 
