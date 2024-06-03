@@ -177,7 +177,11 @@ void Calibration(){
 
 
 void Assembly(){
-
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("Assembly Section");
+    delay(500);
+    lcd.clear();
     // turn on stepper pins before assembly
     digitalWrite(RotPinEn, LOW);
     digitalWrite(VertPinEn, LOW);
@@ -211,7 +215,11 @@ void Assembly(){
 
 
 void ramp(){
-    Serial.println("ramp mode");
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("Ramp Section");
+    delay(500);
+    lcd.clear();
 
     // start when detect ultrasonic
     
@@ -219,7 +227,11 @@ void ramp(){
 }
 
 void dropOff(){
-    Serial.println("drop off");
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("DropOff Section");
+    delay(500);
+    lcd.clear();
     // turn 90 deg right into drop off bay
     int dropoffLocation = 2;
     //if the robot sees black on the right most sensor, count the row
