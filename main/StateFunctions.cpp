@@ -177,11 +177,23 @@ void Calibration(){
 
 
 void Assembly(){
-
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("Assembly Section");
+    delay(500);
+    lcd.clear();
     // turn on stepper pins before assembly
+
+//    Serial.print("point1");
+//  stepper_stepcounter = 0;
+//  setStepperDir(dirPinRot, LOW); // rotate clockwise 
+//  stepperMove(stepPinRot, stepper_stepcounter, maxstepsRot); // rotate back to storage
+    
+    
     digitalWrite(RotPinEn, LOW);
     digitalWrite(VertPinEn, LOW);
     digitalWrite(StoragePinEn, LOW);
+    Serial.print("point2");
     //goStorage(-1);  
     clawPickup();
 
@@ -199,9 +211,11 @@ void Assembly(){
     int pattyLocation3 = 3;
     //pickup patty, replace patty Location with patties want to grab
     pickUp(pattyLocation1);
-    //clawPickup();
-    // pickUp(pattyLocation2);
+    //backtoStart();
+    //pickUp(pattyLocation2);
+    //backtoStart();
     // pickUp(pattyLocation3);
+    //backtoStart();
 
     // assembly ends at the starting location
 
@@ -211,17 +225,32 @@ void Assembly(){
 
 
 void ramp(){
-    Serial.println("ramp mode");
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("Ramp Section");
+    delay(500);
+    lcd.clear();
 
     // start when detect ultrasonic
     
     // increase torque, go over ramp
 }
 
-void dropOff(){
+
+void disAssemble(){
     Serial.println("drop off");
+}
+
+void dropOff(){
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("DropOff Section");
+    delay(500);
+    lcd.clear();
     // turn 90 deg right into drop off bay
     int dropoffLocation = 2;
+    dropOff(dropoffLocation);
+    clawDropoff();
     //if the robot sees black on the right most sensor, count the row
     //keep going straight
     //when row number=dropofflocation stop 

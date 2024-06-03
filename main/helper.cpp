@@ -117,12 +117,26 @@ bool isBlack(){
         // Serial.println(allWhiteThreshold);
           return false;
       }
-
     }
-
     Serial.println("Seeing all black");
     return true;
+}
 
+bool isHalfBlack(){
+    // must always get new error and sensor values even in loop
+    // or else will never leave
+//    qtr.read(sensorValues);
+    for(uint8_t i = 3; i < SensorCount; i++) {
+      // if any don't hit the black threshold, return false
+      if(s[i] <= 800) {
+        // Serial.println("Point2");
+        // Serial.println(s[i]);
+        // Serial.println(allWhiteThreshold);
+          return false;
+      }
+    }
+    Serial.println("Seeing all black");
+    return true;
 }
 
 // direction to make LW go backwards
