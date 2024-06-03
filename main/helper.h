@@ -82,6 +82,7 @@ void setLW_Reverse();
 void setRW_Reverse();
 void setLW_Forward();
 void setRW_Forward();
+void setFullReverse();
 void updateDirections();
 void goMove();
 void getError();
@@ -89,6 +90,7 @@ void setHardLeftTurn();
 void setHardRightTurn();
 bool isWhite();
 bool isBlack();
+bool isHalfBlack();
 int getDistance();
 void firstTurn();
 
