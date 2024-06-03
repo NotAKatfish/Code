@@ -190,7 +190,6 @@ void goMove(){
     if(((speedLeft < 0) || (speedRight< 0)) && ((speedLeft > 0) || (speedRight> 0)))
     {
       deadzone_speed = 100;
-      Serial.println("turning");
     } else {
       deadzone_speed = 40;
     }
