@@ -272,6 +272,7 @@ void loop() {
   }
 
   curvedSection();
+  Assembly();
 
 
 

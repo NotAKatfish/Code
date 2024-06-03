@@ -251,7 +251,7 @@ void curvedSection(){
   delay(500);
 
   delay(500);
-  while(getDistance() > 5)
+  while(getDistance() > 10)
   {
     Serial.print(getDistance());
     lineFollowing();
