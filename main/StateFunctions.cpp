@@ -184,7 +184,7 @@ void Assembly(){
     digitalWrite(VertPinEn, LOW);
     digitalWrite(StoragePinEn, LOW);
 
-    moveArm();
+    
 
     Serial.println("Assembly mode");
 
@@ -194,12 +194,18 @@ void Assembly(){
     //   lineFollowing();
     // }
     
-    // always starts at start line
-    int pattyLocation1 = 1;
-    int pattyLocation2 = 2;
-    int pattyLocation3 = 3;
-    //pickup patty, replace patty Location with patties want to grab
-    pickUp(pattyLocation1);
+    for(int i = 0; i < 3; i++){
+      pickUp(pattyLocation[i]);
+      clawPickup();
+
+      
+      backtoStart();
+    }
+    // turn stepper pins off after assembly
+    digitalWrite(RotPinEn, HIGH);
+    digitalWrite(VertPinEn, HIGH);
+    digitalWrite(StoragePinEn, HIGH);
+
     //backtoStart();
     //pickUp(pattyLocation2);
     //backtoStart();

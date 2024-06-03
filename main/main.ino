@@ -27,6 +27,9 @@
   const int allWhiteThreshold = 450; // Threshold for all sensors being considered "black"
   bool firstTurnDone = false;
 
+  // pikcup and line
+  int rows = 0;
+
 // Motor control pins
   int FLpin1 = 22;
   int FLpin2 = 23;

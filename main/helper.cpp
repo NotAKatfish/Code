@@ -54,8 +54,8 @@ void lineFollowing() {
 void firstTurn(){
     // if see all white, turn
     while(firstTurnDone == false){
+      
     setHardLeftTurn();
-    Serial.println("Seeing all white");
     delay(1000);
 
     firstTurnDone = true;
