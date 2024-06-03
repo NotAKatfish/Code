@@ -11,24 +11,21 @@ void pickUp(int pattyLocation){
   // ROW 1
   if(pattyLocation == 1 || pattyLocation == 6)
   {
-    // line follow while it passes the black row
-    // at the end of the black row stop
-    while(isBlack() == true){
+    // line follow while it passes the black row twice
+    while(rows < 1){
       lineFollowing();
-    }
-    //Turn until we are 10 cm from the wall
-    if (11>10){
-      if (pattyLocation == 1){
-      setHardLeftTurn();
-      } else {
-        setHardRightTurn();
+      if(isBlack() == true){
+        while(isBlack() == true){
+          lineFollowing();
+        }
+        rows++;
       }
-    } else if (4>3) { //line follow until we are 3 cm from the wall or line follow until the sensor touches the wall
-      lineFollowing();
-    } else {
-      //turn off motors
-    }
-    //grab(); //sevo_limit_test
+    }    
+      if (pattyLocation == 1){
+        pickUpLeft();
+      } else {
+        pickUpRight();
+      } 
   }
   
 
@@ -111,19 +108,34 @@ void pickUp(int pattyLocation){
 
 
 void pickUpLeft(){
-  if (sensor1.measureDistanceCm()>25 && sensor2.measureDistanceCm()>10){
+  if (sensor1.measureDistanceCm()>25 && sensor2.measureDistanceCm()>25){
     setHardLeftTurn();
-  } else if (sensor1.measureDistanceCm()>1 && sensor2.measureDistanceCm()>1){
+  } else if (sensor1.measureDistanceCm()>5 && sensor2.measureDistanceCm()>5){
     lineFollowing();
   }
 }
 
 void pickUpRight(){
-  if (sensor1.measureDistanceCm()>25 && sensor2.measureDistanceCm()>10){
+  if (sensor1.measureDistanceCm()>25 && sensor2.measureDistanceCm()>25){
     setHardRightTurn();
-  } else if (sensor1.measureDistanceCm()>1 && sensor2.measureDistanceCm()>5){
+  } else if (sensor1.measureDistanceCm()>5 && sensor2.measureDistanceCm()>5){
     lineFollowing();
   }
 }
 
-//
+void dropOff(int n){
+  while(rows < n){
+      lineFollowing();
+      if(isHalfBlack() == true){
+        while(isHalfBlack() == true){
+          lineFollowing();
+        }
+        rows++;
+      }
+    }
+    if (sensor1.measureDistanceCm()>25 && sensor2.measureDistanceCm()>25){
+    setHardRightTurn();
+  } else if (sensor1.measureDistanceCm()>5 && sensor2.measureDistanceCm()>5){
+    lineFollowing();
+  } 
+}

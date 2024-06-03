@@ -6,9 +6,12 @@
   extern UltraSonicDistanceSensor sensor1;
   extern UltraSonicDistanceSensor sensor2;
 
+ extern int rows;
+
 void pickUp(int pattyLocation);
 void pickUpLeft();
 void pickUpRight();
+void dropOff(int n);
 
 
 

@@ -223,10 +223,14 @@ void setup() {
 
 
 void loop() {  
-Assembly();
+//Assembly();
 
-    
-  
+    digitalWrite(RotPinEn, LOW);
+    digitalWrite(VertPinEn, LOW);
+    digitalWrite(StoragePinEn, LOW);
+  stepper_stepcounter = 0;
+  setStepperDir(dirPinRot, LOW); // rotate clockwise 
+  stepperMove(stepPinRot, stepper_stepcounter, maxstepsRot); // rotate back to storage c
 
 //  if(currentMode == CALIBRATION){
 //    Calibration();

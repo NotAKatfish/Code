@@ -38,7 +38,7 @@ void moveArm(){
 
 void clawPickup() {
   
-  //while (!limitTouched(claw_limitSwitch)) {
+//  while (!limitTouched(claw_limitSwitch)) {
     goDownAndGrab();
     Serial.println("After goDownAndGrab()");
     pos = start; // reset claw position value in preparation to open again
@@ -71,7 +71,7 @@ void goDownAndGrab(){
     //incremental_step();
     stepper_stepcounter = 0;
     stepperMove (stepPinVert, stepper_stepcounter, 1);
-    delay(50);
+    //delay(50);
     vert_stepcounter++;
   }
   // for the raising distance, if limit_limit switch pressed_ move one step. else 
@@ -147,6 +147,7 @@ void setStepperDir(int dirPin, int LEVEL){
 void stepperMove(int stepPin, int &stepcounter, int desired_steps) {
 
   for(; stepcounter < desired_steps; stepcounter++){
+
     digitalWrite(stepPin, HIGH);
     delayMicroseconds(40000);
     digitalWrite(stepPin, LOW);
