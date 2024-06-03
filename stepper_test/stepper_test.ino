@@ -1,28 +1,3 @@
-//Includes the Arduino Stepper Library
-#include <Stepper.h>
-
-// Defines the number of steps per rotation
-const int stepsPerRevolution = 2038;
-
-// Creates an instance of stepper class
-// Pins entered in sequence IN1-IN3-IN2-IN4 for proper step sequence
-Stepper myStepper = Stepper(stepsPerRevolution, 8, 10, 9, 11);
-
-void setup() {
-    // Nothing to do (Stepper Library sets pins as outputs)
-}
-
-void loop() {
-	// Rotate CW slowly at 5 RPM
-	myStepper.setSpeed(5);
-	myStepper.step(stepsPerRevolution);
-	delay(1000);
-	
-	// Rotate CCW quickly at 10 RPM
-	myStepper.setSpeed(10);
-	myStepper.step(-stepsPerRevolution);
-	delay(1000);
-}
 
 
 
@@ -33,8 +8,8 @@ void loop() {
 //  */
 
 // // defines pins numbers
-// const int stepPin1 = 51; //rotate 180 degrees
-// const int dirPin1 = 53; 
+ const int stepPin1 = 8; //rotate 180 degrees
+ const int dirPin1 = 9; 
 
 // const int stepPin2 = 47; //go up or down
 // const int dirPin2 = 49; 
@@ -45,23 +20,23 @@ void loop() {
 
 
 
-// const int maxsteps1 = 1400; //200 steps per rotation, 7 complete rotations
-// const int maxsteps2 = 2000; //200 steps per rotation, 10 complete rotations
-// const int pulses = 200;
-// int stepcounter = 0;
+ const int maxsteps1 = 1400; //200 steps per rotation, 7 complete rotations
+ const int maxsteps2 = 2000; //200 steps per rotation, 10 complete rotations
+ const int pulses = 200;
+ int stepcounter = 0;
 
 
 
 
 
  
-// void setup() {
-//   // Sets the two pins as Outputs
-//   pinMode(stepPin1,OUTPUT); 
-//   pinMode(dirPin1,OUTPUT);
+ void setup() {
+   // Sets the two pins as Outputs
+   pinMode(stepPin1,OUTPUT); 
+   pinMode(dirPin1,OUTPUT);
 //   pinMode(stepPin2,OUTPUT); 
 //   pinMode(dirPin2,OUTPUT);
-// }
+ }
 
 // //void loop() {
 // //  if (stepcounter <= maxsteps2){
@@ -79,20 +54,20 @@ void loop() {
 // //}
 // //}
 
-// void loop() {
-//   if (stepcounter <= maxsteps1){
-//   digitalWrite(dirPin1,LOW); // Enables the motor to move in a particular direction //LOW = clockwise HIGH = counterclockwise 
-//   // Makes 200 pulses for making one full cycle rotation
-//   for(int x = 0; x < pulses; x++) {
-//     digitalWrite(stepPin1,HIGH); 
-//     delayMicroseconds(20000); 
-//     digitalWrite(stepPin1,LOW); 
-//     delayMicroseconds(2000); 
-//     stepcounter++;
-//   }}
+ void loop() {
+   if (stepcounter <= maxsteps1){
+   digitalWrite(dirPin1,LOW); // Enables the motor to move in a particular direction //LOW = clockwise HIGH = counterclockwise 
+   // Makes 200 pulses for making one full cycle rotation
+   for(int x = 0; x < pulses; x++) {
+     digitalWrite(stepPin1,HIGH); 
+     delayMicroseconds(2000); 
+     digitalWrite(stepPin1,LOW); 
+     delayMicroseconds(2000); 
+     stepcounter++;
+   }}
   
-//   delay(1000); // One second delay  
-// }
+   delay(1000); // One second delay  
+ }
 
 // // to go completely up from the bottom is 10 *200 = 2000 steps
 

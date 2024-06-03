@@ -81,9 +81,9 @@ void Calibration(){
   // 0.1 ms per sensor * 4 samples per sensor read (default) * 6 sensors
   // * 10 reads per calibrate() call = ~24 ms per calibrate() call.
   // Call calibrate() 400 times to make calibration take about 10 seconds.
-  for (uint16_t i = 0; i < 20; i++)
+  for (uint16_t i = 0; i < 800; i++)
   {
-    if (calCounter == 2)
+    if (calCounter == 4) 
     {
       break;
     }
