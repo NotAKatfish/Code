@@ -227,24 +227,19 @@ void getError() {
   // dark lines kinda above 600
   // under 100, white
 
-  int32_t newError = 3500-position;
+  error = 3500-position;
 
   
-  P = newError;
-  I = I + newError;
-  D = newError-prevError;
+  P = error;
+  I = I + error;
+  D = error-prevError;
   Serial.print('\t');
-  Serial.print(newError);
-  prevError = newError;
+  Serial.print(error);
+  prevError = error;
 }
 
-//void printDistance(){
-//  Serial.print("Sensor 1: ");
-//    Serial.print(sensor1.measureDistanceCm());
-//    Serial.println(" cm");
-//    delay(100);
-//    Serial.print("Sensor 2: ");
-//    Serial.print(sensor2.measureDistanceCm());
-//    Serial.println(" cm");
-//    delay(100);
-//}
+int getDistance(){
+    distanceLeftUS = sensorL.measureDistanceCm();
+    distanceRightUS = sensorR.measureDistanceCm();
+    return (distanceLeftUS+distanceRightUS)/2;
+    }
