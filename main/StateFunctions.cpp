@@ -81,7 +81,7 @@ void Calibration(){
   
   for (uint16_t i = 0; i < 800; i++)
   {
-    if (calCounter == 2)
+    if (calCounter == 6)
     {
       break;
     }
@@ -209,8 +209,15 @@ void Assembly(){
     //backtoStart();
     //pickUp(pattyLocation2);
     //backtoStart();
+    // always starts at start line
+    int pattyLocation1 = 1;
+    int pattyLocation2 = 2;
+    int pattyLocation3 = 3;
+    //pickup patty, replace patty Location with patties want to grab
+    pickUp(pattyLocation1);
+    //clawPickup();
+    // pickUp(pattyLocation2);
     // pickUp(pattyLocation3);
-    //backtoStart();
 
     // assembly ends at the starting location
 
@@ -223,7 +230,6 @@ void ramp(){
     Serial.println("ramp mode");
 
     // start when detect ultrasonic
-    //if (sensor1.measureDistanceCm()<15 && sensor2.measureDistanceCm()<15) //change 15 to whatever distance.
     
     // increase torque, go over ramp
 }
@@ -233,14 +239,7 @@ void dropOff(){
     // turn 90 deg right into drop off bay
 
     //clawSequence();
- //if the robot sees black on the right most sensor, count the row
-//    //keep going straight
-//    //when row number=dropofflocation stop 
-//    //setHardRightTurn();
-//    //go straight until both ultrasonic sensors read about 3-4 cm
-//    //clawDropoff();
-//    // reverse until you see all black
-//    //setHardLeftTurn();
+
     // exit
 
 }
@@ -250,31 +249,29 @@ void curvedSection(){
   lcd.setCursor(0, 0);
   lcd.print("Curved Section");
   delay(500);
-  lcd.clear();
-  lcd.setCursor(0, 0);
-  lcd.print("LineFollowing");
-  lcd.setCursor(0, 1);
-  lcd.print("LS:");
-  lcd.setCursor(4, 1);
-  lcd.print("RS:");
-  lcd.setCursor(12,1);
-  lcd.print("D:");
+
   delay(500);
   while(getDistance() > 5)
   {
-    
+    Serial.print(getDistance());
     lineFollowing();
-
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("LineFollowing");
+    lcd.setCursor(0, 1);
+    lcd.print("LS:");
+    lcd.setCursor(6, 1);
+    lcd.print("RS:");
+    lcd.setCursor(12,1);
+    lcd.print("D:");
     lcd.setCursor(3, 1);
     lcd.print(abs(speedLeft));
-
     lcd.setCursor(9,1);
     lcd.print(abs(speedRight));
-
     lcd.setCursor(14,1);
     lcd.print(getDistance());
-    Serial.print(getDistance());
   }
+  firstTurn();
   
   
 }

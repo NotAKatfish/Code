@@ -64,6 +64,7 @@
   float pid = 0;
 
   int error = 0;
+  int32_t newError = 0;
   int prevError = 0;
   int speedLeft = Nspeed;
   int speedRight = Nspeed;
@@ -111,9 +112,9 @@
   const int stepPinVert = 50; //go up or down
   const int dirPinVert = 51; 
 
-  const int RotPinEn = 35;
+  const int RotPinEn = 37;
   const int VertPinEn = 36;
-  const int StoragePinEn = 37;
+  const int StoragePinEn = 35;
 
   const int maxstepsRot = 1400; //200 steps per rotation, 7 complete rotations
   const int maxstepsVert = 2000; //200 steps per rotation, 10 complete rotations
@@ -131,8 +132,8 @@
   // defines pins numbers
   const int stepPinStorage = 48; 
   const int dirPinStorage = 49; 
-  const int servoL_Pin = 33;
-  const int servoR_Pin = 34;
+  const int servoL_Pin = 8;
+  const int servoR_Pin = 9;
 
   // alignment angles for the servo motors
   const int servoL_flat = 42;
@@ -253,8 +254,6 @@ void setup() {
 
 void loop() {
 
-  Calibration();
-  curvedSection();
 //sensorR.measureDistanceCm();
 //Serial.println(sensorL.measureDistanceCm());
 //Serial.println(getDistance());

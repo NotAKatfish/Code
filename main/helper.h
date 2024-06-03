@@ -58,6 +58,7 @@
   extern int deadzone_speed;
 
   extern int error;
+  extern int32_t newError;
   extern int prevError;
   extern int speedLeft;
   extern int speedRight;
@@ -82,7 +83,6 @@ void setLW_Reverse();
 void setRW_Reverse();
 void setLW_Forward();
 void setRW_Forward();
-void setFullReverse();
 void updateDirections();
 void goMove();
 void getError();
@@ -91,6 +91,7 @@ void setHardRightTurn();
 bool isWhite();
 bool isBlack();
 bool isHalfBlack();
+void setFullReverse();
 int getDistance();
 void firstTurn();
 

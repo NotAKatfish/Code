@@ -144,7 +144,7 @@ void dropOff(int n){
 void backtoStart() {
    //reverse straight until the sensors read all black
   while(isBlack()==false){
-    setFullReverse();
+    //setFullReverse();
   }
 
   // turns to avoid middle black line
