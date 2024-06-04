@@ -78,22 +78,22 @@
   extern int distanceLeftUS;
   extern int distanceRightUS;
 
-void lineFollowing();
-void setLW_Reverse();
-void setRW_Reverse();
-void setLW_Forward();
-void setRW_Forward();
-void updateDirections();
-void goMove();
-void getError();
-void setHardLeftTurn();
-void setHardRightTurn();
-bool isWhite();
-bool isBlack();
-bool isHalfBlack();
-void setFullReverse();
-int getDistance();
-void firstTurn();
+  void lineFollowing();
+  void setLW_Reverse();
+  void setRW_Reverse();
+  void setLW_Forward();
+  void setRW_Forward();
+  void updateDirections();
+  void goMove();
+  void getError();
+  void setHardLeftTurn();
+  void setHardRightTurn();
+  bool isWhite();
+  bool isBlack();
+  bool isHalfBlack();
+  void setFullReverse();
+  int getDistance();
+  void firstTurn();
 
 
 #endif

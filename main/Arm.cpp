@@ -56,6 +56,7 @@ void clawPickup() {
   
   
   claw_servo.write(pos); // open the claw
+  
 
   stepper_stepcounter = 0;
   setStepperDir(dirPinRot, HIGH); // rotate counterclockwise 
