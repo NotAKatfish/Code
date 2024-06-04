@@ -1,6 +1,6 @@
 #ifndef HELPER_H
 #define HELPER_H
-
+#include <LiquidCrystal.h>
 #include <QTRSensors.h>
 #include <HCSR04.h>
 
@@ -25,7 +25,7 @@
 // const byte echoPin = 3;
 // UltraSonicDistanceSensor distanceSensor(triggerPin, echoPin);
 
-
+  extern  LiquidCrystal lcd;
 // motor vars
   extern int FLpin1;
   extern int FLpin2;
@@ -85,7 +85,7 @@ void setLW_Forward();
 void setRW_Forward();
 void updateDirections();
 void goMove();
-void getError();
+int32_t getError();
 void setHardLeftTurn();
 void setHardRightTurn();
 bool isWhite();
@@ -94,6 +94,7 @@ bool isHalfBlack();
 void setFullReverse();
 int getDistance();
 void firstTurn();
-
-
+void stop();
+void updateLCDLF();
+void setFullForward();
 #endif

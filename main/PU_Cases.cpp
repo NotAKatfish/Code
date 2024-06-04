@@ -105,54 +105,53 @@ void pickUp(int pattyLocation){
 
 
 void pickUpLeft(){
-  qtr.readCalibrated(sensorValues);
-////  bool readWhite = false;
-////  //while ((getDistance() > 15) && (sensorValues[1] <= 800)){
-//  while ((readWhite == false) || (sensorValues[0] <= 800)){
-//    Serial.print(sensorValues[0]);
-//    setHardLeftTurn();
-//    delay(100);
-//    if(sensorValues[3] <= 800){
-//      readWhite = true;
-//    }
-//    qtr.readCalibrated(sensorValues);
-//  }
-  while(isWhite() == false)
-  {
+
+  while(!isWhite()){
     setHardLeftTurn();
   }
   getError();
-  while(sensorValues[1] <= 900)
-  {
-   Serial.println(sensorValues[1]);
+  
+  Serial.println();
+  
+  while(sensorValues[1] <= 800){
    setHardLeftTurn(); 
    getError();
+   Serial.println();
   }
-
-
-   
-   while (getDistance()>4){
+  while (getDistance()>5){
     lineFollowing();
+    updateLCDLF();
   }
-  analogWrite(BRpinEN, 0);
-  analogWrite(FLpinEN, 0);
-  analogWrite(BLpinEN, 0);
-  analogWrite(FRpinEN, 0);
-  delay(1000);
-}
+  stop(); delay(1000);
+  while(!isBlack()){
+    setFullReverse();
+  }
+  stop(); 
+  setFullForward();
+  delay(100);
+  
+  while (getDistance()>2){
+    lineFollowing();
+    updateLCDLF();
+  }
+  delay(100);
+  stop();
+  delay(10000);
+  }
+
 
 void pickUpRight(){
   while (getDistance() > 15){
     setHardRightTurn();
     }
-   while (getDistance()>4){
+   while (getDistance()>2){
     lineFollowing();
   }
   analogWrite(BRpinEN, 0);
   analogWrite(FLpinEN, 0);
   analogWrite(BLpinEN, 0);
   analogWrite(FRpinEN, 0);
-  delay(1000);
+  delay(10000);
 }
 
 void dropOff(int n){

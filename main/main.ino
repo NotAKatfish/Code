@@ -48,8 +48,8 @@
   int BRpinEN = 10;
 
 // speed vars, pid
-  const float Nspeed = 25; //60
-  const float Kp = 0.0080; //proportional 0-0.1
+  const float Nspeed = 10; //60
+  const float Kp = 0.0070; //proportional 0-0.1
   const float Ki = 0.000; //offset  
   const float Kd = 0.02; //difference
 
@@ -72,10 +72,10 @@
   // min and max power output
   //int up_threshold = 80;
   //int low_threshold = -40;
-  int up_threshold = 40;
+  int up_threshold = 20;
   int low_threshold = -50;
   int deadzone = 40;
-  int deadzone_speed = 50;
+  int deadzone_speed = 40;
 
 
   // switching to reverse
@@ -143,7 +143,7 @@
 
   // number of steps to move the platform by the height of a disc (0.5 in)
   const int disc_steps = 635;
-
+  
   // initialize the library by associating any needed LCD interface pin
 // with the arduino pin number it is connected to
   const int rs = 8, en = 7, d4 = 6, d5 = 5, d6 = 4, d7 = 3;
@@ -250,7 +250,7 @@ void setup() {
      lcd.begin(16, 2);
   // Print a message to the LCD.
     
-     //userInput();
+    //userInput();
 }
 
 void loop() {
@@ -261,19 +261,21 @@ void loop() {
   //goStorage();
  // moveArm();
 
-
+    //Serial.println(getDistance());
   // goStorage();
   // moveArm();
-
-//  if(currentMode == CALIBRATION){
-//    Calibration();
-//    Serial.println("Calibrated");
-//
-//    currentMode = LINE_FOLLOWING;
-//  }
-
-//  curvedSection();
+  if(currentMode == CALIBRATION){
+    Calibration();
+    Serial.println("Calibrated");
+    currentMode = LINE_FOLLOWING;
+  }
+     curvedSection();
+     Assembly();
+}
+   
+ 
   //Assembly();
+  
 
 
 
@@ -299,4 +301,3 @@ void loop() {
 //             ramp();
 //             break;
 //     }
-}

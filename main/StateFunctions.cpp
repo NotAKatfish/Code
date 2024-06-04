@@ -57,6 +57,8 @@ void userInput(){
             lcd.print(pattyLocation[1]);
             lcd.setCursor(4, 1);
             lcd.print(pattyLocation[2]);
+            lcd.setCursor(6, 1);
+            lcd.print(inputsReceived);
   
    
       }
@@ -94,22 +96,25 @@ void Calibration(){
       setRW_Reverse();
       Serial.println("GoingReverse");
     }
-          analogWrite(BRpinEN, 60);
-          analogWrite(FLpinEN, 60);
-          analogWrite(BLpinEN, 60);
-          analogWrite(FRpinEN, 60);
+          analogWrite(BRpinEN, 50);
+          analogWrite(FLpinEN, 50);
+          analogWrite(BLpinEN, 50);
+          analogWrite(FRpinEN, 50);
    
     qtr.calibrate();
     qtr.read(sensorValues);
-    for (uint8_t i = 0; i < SensorCount; i++){
-       s[i] = sensorValues[i];
-       Serial.print(sensorValues[i]);
-       Serial.print(' ');
-    }
+//    for (uint8_t i = 0; i < SensorCount; i++){
+//       s[i] = sensorValues[i];
+//       Serial.print(sensorValues[i]);
+//       Serial.print(' ');
+//    }
     if (onWhite == false)
     {
       if (isWhite() == true) {
-        delay(150);
+        for(int i = 0; i< 3; i++)
+        {
+          qtr.calibrate();
+        }
         calCounter++;
         Serial.println(calCounter);
         onWhite = true;
@@ -129,30 +134,35 @@ void Calibration(){
             
     while (isCentered == false){
       setLW_Forward();
-      setRW_Reverse();
-      qtr.readCalibrated(sensorValues);
-       for (uint8_t i = 0; i < SensorCount; i++){
-         Serial.print(sensorValues[i]);
-         Serial.print(' ');
-       }
-        Serial.println();
-      if (sensorValues[3] < 800){
+      setRW_Forward();
+ 
+      while (!isBlack()){
         analogWrite(BRpinEN, 50);
-        analogWrite(FLpinEN, 120);
-        analogWrite(BLpinEN, 120);
+        analogWrite(FLpinEN, 50);
+        analogWrite(BLpinEN, 50);
         analogWrite(FRpinEN, 50);
-      } else {
-        analogWrite(BRpinEN, 0);
-        analogWrite(FLpinEN, 0);
-        analogWrite(BLpinEN, 0);
-        analogWrite(FRpinEN, 0);
-        isCentered = true;
+      }
+      delay(150);
+
+      setHardRightTurn();
+      delay(500);
+      while(abs(getError() > 500)){
+        Serial.println();
+       
+     setHardRightTurn();
+        
+     }
+     analogWrite(BRpinEN, 0);
+     analogWrite(FLpinEN, 0);
+     analogWrite(BLpinEN, 0);
+     analogWrite(FRpinEN, 0);
+             isCentered = true;
             lcd.clear();
             lcd.setCursor(0, 0);
             lcd.print("Centered");
 
     }
-    }
+    
   
   // print the calibration minimum values measured when emitters were on
   for (uint8_t i = 0; i < SensorCount; i++)
@@ -176,33 +186,27 @@ void Calibration(){
   }
   
 
-
 void Assembly(){
 
-    // turn on stepper pins before assembly
-    digitalWrite(RotPinEn, LOW);
-    digitalWrite(VertPinEn, LOW);
-    digitalWrite(StoragePinEn, LOW);
-    clawPickup();
-
+//    // turn on stepper pins before assembly
+//    digitalWrite(RotPinEn, LOW);
+//    digitalWrite(VertPinEn, LOW);
+//    digitalWrite(StoragePinEn, LOW);
+//    clawPickup();
+    lcd.clear();
     Serial.println("Assembly mode");
 
     // follow line until reaches all black
-//     while(isBlack() == false)
-//     {
-//       lineFollowing();
-//     }
 
 
-//    analogWrite(BRpinEN, 0);
-//    analogWrite(FLpinEN, 0);
-//    analogWrite(BLpinEN, 0);
-//    analogWrite(FRpinEN, 0);
+
+    stop();
     
     //delay(1000);
     
-//    for(int i = 0; i < 3; i++){
-//      pickUp(pattyLocation[i]);
+    for(int i = 0; i < 3; i++){
+      pickUp(pattyLocation[i]);
+    }
 
 
       
@@ -257,28 +261,13 @@ void curvedSection(){
   lcd.print("Curved Section");
   delay(500);
 
-  delay(500);
-  while(getDistance() > 10)
+  while(isBlack() == false)
   {
-    Serial.print(getDistance());
     lineFollowing();
-    lcd.clear();
-    lcd.setCursor(0, 0);
-    lcd.print("LineFollowing");
-    lcd.setCursor(0, 1);
-    lcd.print("LS:");
-    lcd.setCursor(6, 1);
-    lcd.print("RS:");
-    lcd.setCursor(12,1);
-    lcd.print("D:");
-    lcd.setCursor(3, 1);
-    lcd.print(abs(speedLeft));
-    lcd.setCursor(9,1);
-    lcd.print(abs(speedRight));
-    lcd.setCursor(14,1);
-    lcd.print(getDistance());
+    updateLCDLF();
   }
-  firstTurn();
+  delay(150);
+  
   
   
 }

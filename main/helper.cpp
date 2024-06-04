@@ -79,10 +79,10 @@ void setHardLeftTurn(){
   setRW_Forward();
   
 
-  analogWrite(BRpinEN, 120);
-  analogWrite(FLpinEN, 120);
-  analogWrite(BLpinEN, 120);
-  analogWrite(FRpinEN, 120);
+  analogWrite(BRpinEN, 140);
+  analogWrite(FLpinEN, 130);
+  analogWrite(BLpinEN, 140);
+  analogWrite(FRpinEN, 130);
 }
 
 void setHardRightTurn(){
@@ -110,6 +110,7 @@ bool isWhite(){
         // Serial.println(allWhiteThreshold);
           return false;
       }
+      
     }
 
     Serial.println("Seeing all white");
@@ -122,6 +123,7 @@ bool isBlack(){
     // must always get new error and sensor values even in loop
     // or else will never leave
 //    qtr.read(sensorValues);
+  getError();
     for(uint8_t i = 0; i < SensorCount; i++) {
       // if any don't hit the black threshold, return false
       if(s[i] <= 800) {
@@ -207,7 +209,7 @@ void goMove(){
 }
 
 // error function
-void getError() {
+int32_t getError() {
 //   qtr.read(sensorValues);
 //   for (uint8_t i = 0; i < SensorCount; i++)
 //  {
@@ -231,6 +233,7 @@ void getError() {
      Serial.print(s[i]);
      Serial.print('\t');
   }
+  
 //  
 
        
@@ -248,6 +251,8 @@ void getError() {
   Serial.print('\t');
   Serial.print(newError);
   prevError = newError;
+  Serial.println();
+  return newError;
 }
 
 bool isHalfBlack(){
@@ -271,20 +276,61 @@ void setFullReverse(){
   setLW_Reverse();
   setRW_Reverse();
 
-    analogWrite(BRpinEN, 120);
-    analogWrite(FLpinEN, 120);
-    analogWrite(BLpinEN, 120);
-    analogWrite(FRpinEN, 120);
+    analogWrite(BRpinEN, 50);
+    analogWrite(FLpinEN, 50);
+    analogWrite(BLpinEN, 50);
+    analogWrite(FRpinEN, 50);
 }
 
+void setFullForward(){
+  setLW_Forward();
+  setRW_Forward();
+
+    analogWrite(BRpinEN, 50);
+    analogWrite(FLpinEN, 50);
+    analogWrite(BLpinEN, 50);
+    analogWrite(FRpinEN, 50);
+}
+
+void stop(){
+
+    analogWrite(BRpinEN, 0);
+    analogWrite(FLpinEN, 0);
+    analogWrite(BLpinEN, 0);
+    analogWrite(FRpinEN, 0);
+}
+
+void updateLCDLF(){
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("LineFollowing");
+    lcd.setCursor(0, 1);
+    lcd.print("L:");
+    lcd.setCursor(6, 1);
+    lcd.print("R:");
+    lcd.setCursor(12,1);
+    lcd.print("D:");
+    lcd.setCursor(3, 1);
+    lcd.print(abs(speedLeft));
+    lcd.setCursor(9,1);
+    lcd.print(abs(speedRight));
+    lcd.setCursor(14,1);
+    lcd.print(getDistance());
+}
 int getDistance(){
-    distanceLeftUS = sensorL.measureDistanceCm();
-    distanceRightUS = sensorR.measureDistanceCm();
-    if (((distanceLeftUS+distanceRightUS)/2) > 99) {
-      return 99;
+    if((sensorL.measureDistanceCm()>0) && (sensorL.measureDistanceCm()<99))
+    {
+      
+      distanceLeftUS = sensorL.measureDistanceCm();
+    } else {
+      distanceLeftUS = 99;
     }
-    else {
-      Serial.println((distanceLeftUS+distanceRightUS)/2);
+    if((sensorR.measureDistanceCm()>0) && (sensorR.measureDistanceCm()<99))
+    {
+      distanceRightUS = sensorR.measureDistanceCm();
+    } else {
+      distanceRightUS = 99;
+    }
+  
     return ((distanceLeftUS+distanceRightUS)/2);
-    }
 }
