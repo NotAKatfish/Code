@@ -6,21 +6,20 @@
 
 int rowOfPatty(int pattyLocation)
 {
-  int rowAssignment[6] = {1 ,2, 3, 3, 2, 1};
+  int rowAssignment[6] = {1 ,1, 2, 2, 2, 3};
   return rowAssignment[pattyLocation-1];
 }
 
-bool isOnLeft(int pattyLocation) {return ((pattyLocation + 3) <= 6);}
+bool isOnLeft(int pattyLocation) {return ((pattyLocation + 1)%2 == 0);}
 void pickUp(int pattyLocation){
   
   int upOrDown = rowOfPatty(pattyLocation)-(currRow);
   lcd.setCursor(3,0);
   lcd.print(upOrDown);
   if(upOrDown > 0){
+    bool onCross = false;
     while(currRow != rowOfPatty(pattyLocation)){
       lineFollowing();
-      bool onCross = false;
-      Serial.print("point1");
       if((!onCross)&&(isBlack())) {
         currRow++;
         onCross = true;
@@ -31,9 +30,9 @@ void pickUp(int pattyLocation){
       Serial.println(currRow);
     }
   } else if(upOrDown < 0){
+    bool onCross = false;
     while(currRow != rowOfPatty(pattyLocation)){
       setFullReverse();
-      bool onCross = false;
       if((!onCross)&&(isBlack())) {
         currRow--;
         onCross = true;
@@ -46,11 +45,10 @@ void pickUp(int pattyLocation){
     
     if(isOnLeft(pattyLocation)){pickUpLeft();}
     else {pickUpRight();}
-    
+  
     backToCenter(pattyLocation);
   }
 
- 
 
 
 void pickUpLeft(){
@@ -122,21 +120,20 @@ void pickUpRight(){
   delay(10000);
 }
 
-void dropOff(int n){
-//  while(rows < n){
-//      lineFollowing();
-//      if(isHalfBlack() == true){
-//        while(isHalfBlack() == true){
-//          lineFollowing();
-//        }
-//        rows++;
-//      }
-//    }
-//    if (sensor1.measureDistanceCm()>25 && sensor2.measureDistanceCm()>25){
-//    setHardRightTurn();
-//  } else if (sensor1.measureDistanceCm()>5 && sensor2.measureDistanceCm()>5){
-//    lineFollowing();
-//  } 
+void dropOff(int dropOffLocation){
+  bool onT = false;
+  while(currRow < dropOffLocation){
+      lineFollowing();  
+      if((!onT)&&(isHalfBlack())) {
+        currRow++;
+        onT = true;
+      }
+      if(!isHalfBlack()) {onT = false;}
+  }
+  delay(150);
+    stop();
+    pickUpRight();
+
 }
 
 

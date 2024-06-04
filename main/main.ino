@@ -157,6 +157,7 @@
   const int pattyNumber = 3;
   int pattyLocation[pattyNumber] = {1, 2, 3};
   int inputsReceived = 0;
+  int dropOffLocation;
   
   bool pressed1 = false;
   bool pressed2 = false;

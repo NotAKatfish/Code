@@ -233,6 +233,8 @@ void Assembly(){
 
 
 void ramp(){
+  // currently just timed
+  
     Serial.println("ramp mode");
     lcd.clear();
     lcd.setCursor(0, 0);
@@ -260,11 +262,9 @@ void ramp(){
 
 void dropOff(){
     Serial.println("drop off");
+    currRow =1;
     // turn 90 deg right into drop off bay
-
-    //clawSequence();
-
-    // exit
+    dropOff(dropOffLocation());
 
 }
 
