@@ -2,7 +2,38 @@
 #define STATEFUNCTIONS_H
 #include <LiquidCrystal.h>
 #include <QTRSensors.h>
+<<<<<<< Updated upstream
 //#include <HCSR04.h>
+  #define IR_RECEIVE_PIN 9
+  #define IR_BUTTON_1 12
+  #define IR_BUTTON_2 24
+  #define IR_BUTTON_3 94
+  #define IR_BUTTON_4 8
+  #define IR_BUTTON_5 28
+  #define IR_BUTTON_6 90
+  #define IR_BUTTON_7 66
+  #define IR_BUTTON_8 86
+  #define IR_BUTTON_9 74
+  
+  #define IR_BUTTON_ON_OFF 69
+  #define IR_BUTTON_VOL_PLUS 70
+  #define IR_BUTTON_VOL_MIN 21
+  #define IR_BUTTON_FUNC_STOP 71
+  
+  #define IR_BUTTON_PLAY_PAUSE 64
+  #define IR_BUTTON_BACK 68
+  #define IR_BUTTON_FORWARD 67
+  #define IR_BUTTON_DOWN 7
+  #define IR_BUTTON_UP 9
+  
+  #define IR_BUTTON_EQ 25
+  #define IR_BUTTON_ST 13
+=======
+#include <LiquidCrystal.h>
+#include <HCSR04.h>
+
+>>>>>>> Stashed changes
+
   #define IR_RECEIVE_PIN 9
   #define IR_BUTTON_1 12
   #define IR_BUTTON_2 24
@@ -66,6 +97,10 @@ extern uint16_t s[];
   extern float pid;
 
   extern int error;
+<<<<<<< Updated upstream
+=======
+  int32_t newError;
+>>>>>>> Stashed changes
   extern int prevError;
   extern int speedLeft;
   extern int speedRight;
@@ -95,6 +130,7 @@ extern uint16_t s[];
   extern bool pressed4;
   extern bool pressed5;
   extern bool pressed6;
+<<<<<<< Updated upstream
 
   extern LiquidCrystal lcd;
   extern int currRow;
@@ -104,6 +140,16 @@ void curvedSection();
 void Assembly();
 void ramp();
 void dropOff();
+=======
+
+  extern LiquidCrystal lcd;
+
+//
+void curvedSection();
+void Assembly();
+void ramp();
+void disAssemble();
+>>>>>>> Stashed changes
 void Calibration();
 void userInput();
 
