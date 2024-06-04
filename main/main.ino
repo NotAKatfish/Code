@@ -155,7 +155,7 @@
   //
   
   const int pattyNumber = 3;
-  int pattyLocation[pattyNumber];
+  int pattyLocation[pattyNumber] = {1, 2, 3};
   int inputsReceived = 0;
   
   bool pressed1 = false;
@@ -249,7 +249,8 @@ void setup() {
 
      lcd.begin(16, 2);
   // Print a message to the LCD.
-     lcd.print("hello, world!");
+    
+     //userInput();
 }
 
 void loop() {
@@ -271,7 +272,7 @@ void loop() {
     currentMode = LINE_FOLLOWING;
   }
 
-  curvedSection();
+//  curvedSection();
   Assembly();
 
 

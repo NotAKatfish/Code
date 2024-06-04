@@ -189,10 +189,17 @@ void Assembly(){
     Serial.println("Assembly mode");
 
     // follow line until reaches all black
-    // while(isBlack() == false)
-    // {
-    //   lineFollowing();
-    // }
+     while(isBlack() == false)
+     {
+       lineFollowing();
+     }
+
+
+    analogWrite(BRpinEN, 0);
+    analogWrite(FLpinEN, 0);
+    analogWrite(BLpinEN, 0);
+    analogWrite(FRpinEN, 0);
+    
     
     for(int i = 0; i < 3; i++){
       pickUp(pattyLocation[i]);

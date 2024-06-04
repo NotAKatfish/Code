@@ -104,7 +104,7 @@ bool isWhite(){
 //    getError();
     for(uint8_t i = 0; i < SensorCount; i++) {
       // if any are black, return false
-      if(s[i] >= 800) {
+      if(s[i] >= 700) {
         // Serial.println("Point2");
         // Serial.println(s[i]);
         // Serial.println(allWhiteThreshold);
@@ -223,14 +223,14 @@ void getError() {
 //  }
 
     int32_t position = qtr.readLineBlack(sensorValues);
-//    for (uint8_t i = 0; i < SensorCount; i++)
-//    {
-//    // normalizing into calibrated values
-//    // absolute
-//    s[i] = sensorValues[i];
-//     Serial.print(s[i]);
-//     Serial.print('\t');
-//  }
+    for (uint8_t i = 0; i < SensorCount; i++)
+    {
+    // normalizing into calibrated values
+    // absolute
+    s[i] = sensorValues[i];
+     Serial.print(s[i]);
+     Serial.print('\t');
+  }
 //  
 
        

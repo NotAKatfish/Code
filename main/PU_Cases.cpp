@@ -9,23 +9,22 @@ void pickUp(int pattyLocation){
   // ROW 1
   if(pattyLocation == 1 || pattyLocation == 6)
   {
-    // line follow while it passes the black row twice
-    while(rows < 1){
-      lineFollowing();
-      if(isBlack() == true){
-        while(isBlack() == true){
-          lineFollowing();
-        }
-        rows++;
-      }
-    }    
+//    // line follow while it passes the black row twice
+//    while(rows < 1){
+//      lineFollowing();
+//      if(isBlack() == true){
+//        while(isBlack() == true){
+//          lineFollowing();
+//        }
+//        rows++;
+//      }
+        
       if (pattyLocation == 1){
         pickUpLeft();
       } else {
         pickUpRight();
       } 
   }
-  
 
 //ROW 2
   if(pattyLocation == 2 || pattyLocation == 5)
