@@ -260,7 +260,7 @@ void loop() {
 // Serial.println(getDistance());
   //goStorage();
  // moveArm();
-
+  Assembly();
 
   // goStorage();
   // moveArm();

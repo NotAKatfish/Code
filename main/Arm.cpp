@@ -3,7 +3,7 @@
 void moveArm(){
 
   // claw closes
-  if(limitTouched(bottom_limitSwitch)){
+  if(bottom_limitSwitch.isPressed() == true){
     claw_servo.write(pos); // every loop
     
     // once position hits position cap or limit switch is touched, stop
@@ -38,8 +38,11 @@ void moveArm(){
 
 void clawPickup() {
   
+  if(bottom_limitSwitch.isReleased()){
 //  while (!limitTouched(claw_limitSwitch)) {
     Serial.println("entered clawpickup");
+
+    
     goDownAndGrab();
     Serial.println("After goDownAndGrab()");
     pos = start; // reset claw position value in preparation to open again
@@ -62,16 +65,19 @@ void clawPickup() {
   stepperMove(stepPinRot, stepper_stepcounter, maxstepsRot); // rotate back to storage
   goStorage(-1);
   Serial.println("DISC PICKED UP");
+  }
 }
 
 void goDownAndGrab(){
   Serial.println("godownandgrab");
   claw_servo.write(90); // opens claw
+  pos = start;
   vert_stepcounter = 0; // initialize step counter
   setStepperDir (dirPinVert, LOW); // direction: down
-  Serial.println(limitTouched(bottom_limitSwitch));
-  while (limitTouched(bottom_limitSwitch) == false){ 
-    Serial.println(limitTouched(bottom_limitSwitch));
+  // Serial.println(limitTouched(bottom_limitSwitch));
+  bottom_limitSwitch.loop();
+  while (bottom_limitSwitch.isPressed() == false){ 
+    // Serial.println(limitTouched(bottom_limitSwitch));
     // moves claw down to platform until bottom limit switch is touched 
     //incremental_step();
     stepper_stepcounter = 0;
@@ -135,11 +141,11 @@ bool limitTouched(ezButton &limitSwitch){
   limitSwitch.loop(); // MUST call the loop() function first for limit switch
   int state = limitSwitch.getState();
   if(state == HIGH){
-    // Serial.println("The limit switch: UNTOUCHED");
+    Serial.println("The limit switch: UNTOUCHED");
     return false;
   }
   else{
-    // Serial.println("The limit switch: TOUCHED");
+    Serial.println("The limit switch: TOUCHED");
     return true;
   }
 
