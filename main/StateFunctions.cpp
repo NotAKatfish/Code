@@ -81,7 +81,7 @@ void Calibration(){
   
   for (uint16_t i = 0; i < 800; i++)
   {
-    if (calCounter == 6)
+    if (calCounter == 4)
     {
       break;
     }
@@ -109,7 +109,7 @@ void Calibration(){
     if (onWhite == false)
     {
       if (isWhite() == true) {
-        delay(200);
+        delay(150);
         calCounter++;
         Serial.println(calCounter);
         onWhite = true;

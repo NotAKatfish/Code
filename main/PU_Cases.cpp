@@ -105,9 +105,33 @@ void pickUp(int pattyLocation){
 
 
 void pickUpLeft(){
-  if (getDistance() > 25){
+  qtr.readCalibrated(sensorValues);
+////  bool readWhite = false;
+////  //while ((getDistance() > 15) && (sensorValues[1] <= 800)){
+//  while ((readWhite == false) || (sensorValues[0] <= 800)){
+//    Serial.print(sensorValues[0]);
+//    setHardLeftTurn();
+//    delay(100);
+//    if(sensorValues[3] <= 800){
+//      readWhite = true;
+//    }
+//    qtr.readCalibrated(sensorValues);
+//  }
+  while(isWhite() == false)
+  {
     setHardLeftTurn();
-  } else if (getDistance()>2){
+  }
+  getError();
+  while(sensorValues[1] <= 900)
+  {
+   Serial.println(sensorValues[1]);
+   setHardLeftTurn(); 
+   getError();
+  }
+
+
+   
+   while (getDistance()>4){
     lineFollowing();
   }
   analogWrite(BRpinEN, 0);
@@ -118,9 +142,10 @@ void pickUpLeft(){
 }
 
 void pickUpRight(){
-  if (getDistance() > 25){
+  while (getDistance() > 15){
     setHardRightTurn();
-  } else if (getDistance()>2){
+    }
+   while (getDistance()>4){
     lineFollowing();
   }
   analogWrite(BRpinEN, 0);
@@ -159,7 +184,7 @@ void backtoStart() {
   // turns to avoid middle black line
   setHardLeftTurn();
   delay(500);
-  while(s[3] <= 800 && s[4]<= 800){ //or until we get a certain distacne away from the shelf
+  while(sensorValues[3] <= 800 && sensorValues[4]<= 800){ //or until we get a certain distacne away from the shelf
     setHardLeftTurn();
   }
   while(rows > -1){

@@ -101,7 +101,7 @@ bool isWhite(){
 
     // must always get new error and sensor values even in loop
     // or else will never leave
-//    getError();
+    getError();
     for(uint8_t i = 0; i < SensorCount; i++) {
       // if any are black, return false
       if(s[i] >= 700) {
