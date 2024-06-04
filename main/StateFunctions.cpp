@@ -200,13 +200,14 @@ void Assembly(){
     analogWrite(BLpinEN, 0);
     analogWrite(FRpinEN, 0);
     
+    delay(1000);
     
     for(int i = 0; i < 3; i++){
       pickUp(pattyLocation[i]);
       clawPickup();
 
       
-      backtoStart();
+      // backtoStart();
     }
     // turn stepper pins off after assembly
     digitalWrite(RotPinEn, HIGH);

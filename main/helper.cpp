@@ -284,6 +284,7 @@ int getDistance(){
       return 99;
     }
     else {
+      Serial.println((distanceLeftUS+distanceRightUS)/2);
     return ((distanceLeftUS+distanceRightUS)/2);
     }
 }

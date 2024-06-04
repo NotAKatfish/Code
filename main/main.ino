@@ -257,7 +257,7 @@ void loop() {
 
 //sensorR.measureDistanceCm();
 //Serial.println(sensorL.measureDistanceCm());
-//Serial.println(getDistance());
+// Serial.println(getDistance());
   //goStorage();
  // moveArm();
 

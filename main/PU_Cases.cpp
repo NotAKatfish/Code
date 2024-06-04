@@ -25,48 +25,48 @@ void pickUp(int pattyLocation){
         pickUpRight();
       } 
   }
-
-//ROW 2
-  if(pattyLocation == 2 || pattyLocation == 5)
-  {
-    // line follow while it passes the black row twice
-    while(rows < 2){
-      lineFollowing();
-      if(isBlack() == true){
-        while(isBlack() == true){
-          lineFollowing();
-        }
-        rows++;
-      }
-    }    
-      if (pattyLocation == 2){
-        pickUpLeft();
-      } else {
-        pickUpRight();
-      } 
-  }
-
-
-  // ROW 3
-  if(pattyLocation == 3 || pattyLocation == 4)
-  {
-    // line follow while it passes the black row twice
-    while(rows < 3){
-      lineFollowing();
-      if(isBlack() == true){
-        while(isBlack() == true){
-          lineFollowing();
-        }
-        rows++;
-      }
-    }    
-      if (pattyLocation == 3){
-        pickUpLeft();
-      } else {
-        pickUpRight();
-      } 
-  }
 }
+// //ROW 2
+//   if(pattyLocation == 2 || pattyLocation == 5)
+//   {
+//     // line follow while it passes the black row twice
+//     while(rows < 2){
+//       lineFollowing();
+//       if(isBlack() == true){
+//         while(isBlack() == true){
+//           lineFollowing();
+//         }
+//         rows++;
+//       }
+//     }    
+//       if (pattyLocation == 2){
+//         pickUpLeft();
+//       } else {
+//         pickUpRight();
+//       } 
+//   }
+
+
+//   // ROW 3
+//   if(pattyLocation == 3 || pattyLocation == 4)
+//   {
+//     // line follow while it passes the black row twice
+//     while(rows < 3){
+//       lineFollowing();
+//       if(isBlack() == true){
+//         while(isBlack() == true){
+//           lineFollowing();
+//         }
+//         rows++;
+//       }
+//     }    
+//       if (pattyLocation == 3){
+//         pickUpLeft();
+//       } else {
+//         pickUpRight();
+//       } 
+//   }
+// }
 
 
 //    // if 1 on left
@@ -107,17 +107,27 @@ void pickUp(int pattyLocation){
 void pickUpLeft(){
   if (getDistance() > 25){
     setHardLeftTurn();
-  } else if (getDistance()>5){
+  } else if (getDistance()>2){
     lineFollowing();
   }
+  analogWrite(BRpinEN, 0);
+  analogWrite(FLpinEN, 0);
+  analogWrite(BLpinEN, 0);
+  analogWrite(FRpinEN, 0);
+  delay(1000);
 }
 
 void pickUpRight(){
   if (getDistance() > 25){
     setHardRightTurn();
-  } else if (getDistance()>5){
+  } else if (getDistance()>2){
     lineFollowing();
   }
+  analogWrite(BRpinEN, 0);
+  analogWrite(FLpinEN, 0);
+  analogWrite(BLpinEN, 0);
+  analogWrite(FRpinEN, 0);
+  delay(1000);
 }
 
 void dropOff(int n){
