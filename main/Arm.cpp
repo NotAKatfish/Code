@@ -38,12 +38,15 @@ void moveArm(){
 
 void clawPickup() {
   
-  if(bottom_limitSwitch.isReleased()){
+
+  
 //  while (!limitTouched(claw_limitSwitch)) {
     Serial.println("entered clawpickup");
 
     
     goDownAndGrab();
+
+  if(bottom_limitSwitch.isReleased()){
     Serial.println("After goDownAndGrab()");
     pos = start; // reset claw position value in preparation to open again
     
@@ -51,20 +54,20 @@ void clawPickup() {
     Serial.println(vert_stepcounter);
     stepper_stepcounter = 0;
     stepperMove (stepPinVert, stepper_stepcounter, vert_stepcounter); // move the claw back up to the top
-  //}
-  vert_stepcounter = 0;
-  stepper_stepcounter = 0;
-  setStepperDir(dirPinRot, LOW); // rotate clockwise 
-  stepperMove(stepPinRot, stepper_stepcounter, maxstepsRot); // rotate back to storage
-  
-  
-  claw_servo.write(pos); // open the claw
+    //}
+    vert_stepcounter = 0;
+    stepper_stepcounter = 0;
+    setStepperDir(dirPinRot, LOW); // rotate clockwise 
+    stepperMove(stepPinRot, stepper_stepcounter, maxstepsRot); // rotate back to storage
+    
+    
+    claw_servo.write(pos); // open the claw
 
-  stepper_stepcounter = 0;
-  setStepperDir(dirPinRot, HIGH); // rotate counterclockwise 
-  stepperMove(stepPinRot, stepper_stepcounter, maxstepsRot); // rotate back to storage
-  goStorage(-1);
-  Serial.println("DISC PICKED UP");
+    stepper_stepcounter = 0;
+    setStepperDir(dirPinRot, HIGH); // rotate counterclockwise 
+    stepperMove(stepPinRot, stepper_stepcounter, maxstepsRot); // rotate back to storage
+    goStorage(-1);
+    Serial.println("DISC PICKED UP");
   }
 }
 
