@@ -183,36 +183,35 @@ void Assembly(){
     digitalWrite(RotPinEn, LOW);
     digitalWrite(VertPinEn, LOW);
     digitalWrite(StoragePinEn, LOW);
-
-    
+    clawPickup();
 
     Serial.println("Assembly mode");
 
     // follow line until reaches all black
-     while(isBlack() == false)
-     {
-       lineFollowing();
-     }
+//     while(isBlack() == false)
+//     {
+//       lineFollowing();
+//     }
 
 
-    analogWrite(BRpinEN, 0);
-    analogWrite(FLpinEN, 0);
-    analogWrite(BLpinEN, 0);
-    analogWrite(FRpinEN, 0);
+//    analogWrite(BRpinEN, 0);
+//    analogWrite(FLpinEN, 0);
+//    analogWrite(BLpinEN, 0);
+//    analogWrite(FRpinEN, 0);
     
-    delay(1000);
+    //delay(1000);
     
-    for(int i = 0; i < 3; i++){
-      pickUp(pattyLocation[i]);
-      clawPickup();
+//    for(int i = 0; i < 3; i++){
+//      pickUp(pattyLocation[i]);
+
 
       
       // backtoStart();
-    }
+//    }
     // turn stepper pins off after assembly
-    digitalWrite(RotPinEn, HIGH);
-    digitalWrite(VertPinEn, HIGH);
-    digitalWrite(StoragePinEn, HIGH);
+//    digitalWrite(RotPinEn, HIGH);
+//    digitalWrite(VertPinEn, HIGH);
+//    digitalWrite(StoragePinEn, HIGH);
 
     //backtoStart();
     //pickUp(pattyLocation2);
@@ -222,7 +221,7 @@ void Assembly(){
     int pattyLocation2 = 2;
     int pattyLocation3 = 3;
     //pickup patty, replace patty Location with patties want to grab
-    pickUp(pattyLocation1);
+    //pickUp(pattyLocation1);
     //clawPickup();
     // pickUp(pattyLocation2);
     // pickUp(pattyLocation3);

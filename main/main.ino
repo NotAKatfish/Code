@@ -112,9 +112,9 @@
   const int stepPinVert = 50; //go up or down
   const int dirPinVert = 51; 
 
-  const int RotPinEn = 37;
+  const int RotPinEn = 35;
   const int VertPinEn = 36;
-  const int StoragePinEn = 35;
+  const int StoragePinEn = 37;
 
   const int maxstepsRot = 1400; //200 steps per rotation, 7 complete rotations
   const int maxstepsVert = 2000; //200 steps per rotation, 10 complete rotations
@@ -132,8 +132,8 @@
   // defines pins numbers
   const int stepPinStorage = 48; 
   const int dirPinStorage = 49; 
-  const int servoL_Pin = 8;
-  const int servoR_Pin = 9;
+  const int servoL_Pin = 33;
+  const int servoR_Pin = 34;
 
   // alignment angles for the servo motors
   const int servoL_flat = 42;
@@ -189,8 +189,8 @@ void setup() {
     servoL.attach (servoL_Pin);
     servoR.attach (servoR_Pin);
     // move the aligners to their away position
-    servoL.write (servoL_away);
-    servoR.write (servoR_away);
+    servoL.write (servoL_flat);
+    servoR.write (servoR_flat);
 
 
 
@@ -265,15 +265,15 @@ void loop() {
   // goStorage();
   // moveArm();
 
-  if(currentMode == CALIBRATION){
-    Calibration();
-    Serial.println("Calibrated");
-
-    currentMode = LINE_FOLLOWING;
-  }
+//  if(currentMode == CALIBRATION){
+//    Calibration();
+//    Serial.println("Calibrated");
+//
+//    currentMode = LINE_FOLLOWING;
+//  }
 
 //  curvedSection();
-  Assembly();
+  //Assembly();
 
 
 

@@ -39,6 +39,7 @@ void moveArm(){
 void clawPickup() {
   
 //  while (!limitTouched(claw_limitSwitch)) {
+    Serial.println("entered clawpickup");
     goDownAndGrab();
     Serial.println("After goDownAndGrab()");
     pos = start; // reset claw position value in preparation to open again
@@ -60,19 +61,28 @@ void clawPickup() {
   setStepperDir(dirPinRot, HIGH); // rotate counterclockwise 
   stepperMove(stepPinRot, stepper_stepcounter, maxstepsRot); // rotate back to storage
   goStorage(-1);
+  Serial.println("DISC PICKED UP");
 }
 
 void goDownAndGrab(){
+  Serial.println("godownandgrab");
   claw_servo.write(90); // opens claw
   vert_stepcounter = 0; // initialize step counter
   setStepperDir (dirPinVert, LOW); // direction: down
-  while (!limitTouched(bottom_limitSwitch)){ 
+  Serial.println(limitTouched(bottom_limitSwitch));
+  while (limitTouched(bottom_limitSwitch) == false){ 
+    Serial.println(limitTouched(bottom_limitSwitch));
     // moves claw down to platform until bottom limit switch is touched 
     //incremental_step();
     stepper_stepcounter = 0;
     stepperMove (stepPinVert, stepper_stepcounter, 1);
-    //delay(50);
+   // Serial.println("step moved");
+      
     vert_stepcounter++;
+    
+    Serial.println(vert_stepcounter);
+  
+    
   }
   // for the raising distance, if limit_limit switch pressed_ move one step. else 
   while (!(pos == desired_pos || limitTouched(claw_limitSwitch))){ 
