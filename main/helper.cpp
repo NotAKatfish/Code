@@ -230,8 +230,8 @@ int32_t getError() {
     // normalizing into calibrated values
     // absolute
     s[i] = sensorValues[i];
-     Serial.print(s[i]);
-     Serial.print('\t');
+//     Serial.print(s[i]);
+//     Serial.print('\t');
   }
   
 //  
@@ -276,20 +276,30 @@ void setFullReverse(){
   setLW_Reverse();
   setRW_Reverse();
 
-    analogWrite(BRpinEN, 50);
-    analogWrite(FLpinEN, 50);
-    analogWrite(BLpinEN, 50);
-    analogWrite(FRpinEN, 50);
+    analogWrite(BRpinEN, 60);
+    analogWrite(FLpinEN, 60);
+    analogWrite(BLpinEN, 60);
+    analogWrite(FRpinEN, 60);
 }
 
 void setFullForward(){
   setLW_Forward();
   setRW_Forward();
 
-    analogWrite(BRpinEN, 50);
-    analogWrite(FLpinEN, 50);
-    analogWrite(BLpinEN, 50);
-    analogWrite(FRpinEN, 50);
+    analogWrite(BRpinEN, 60);
+    analogWrite(FLpinEN, 60);
+    analogWrite(BLpinEN, 60);
+    analogWrite(FRpinEN, 60);
+}
+
+void setFullForwardRamp(int rampSpeed){
+  setLW_Forward();
+  setRW_Forward();
+
+    analogWrite(BRpinEN, rampSpeed);
+    analogWrite(FLpinEN, rampSpeed);
+    analogWrite(BLpinEN, rampSpeed);
+    analogWrite(FRpinEN, rampSpeed);
 }
 
 void stop(){

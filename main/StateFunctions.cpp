@@ -12,7 +12,7 @@ void userInput(){
   while(inputsReceived != pattyNumber)
   {  
       
-      // set up the LCD's number of columns and rows:
+      // set up the LCD's number of columns and s:
     if (IrReceiver.decode() && (inputsReceived != pattyNumber)) {
           IrReceiver.resume();
           int command = IrReceiver.decodedIRData.command;
@@ -108,11 +108,9 @@ void Calibration(){
 //       Serial.print(sensorValues[i]);
 //       Serial.print(' ');
 //    }
-    if (onWhite == false)
-    {
+    if (onWhite == false){
       if (isWhite() == true) {
-        for(int i = 0; i< 3; i++)
-        {
+        for(int i = 0; i< 3; i++) {
           qtr.calibrate();
         }
         calCounter++;
@@ -120,12 +118,10 @@ void Calibration(){
         onWhite = true;
       }
     }
-    if (isBlack() == true)
-    {
+    if (isBlack() == true){
       onWhite = false;
     }
   }
-
             lcd.clear();
             lcd.setCursor(0, 0);
             lcd.print("Calibration");
@@ -133,53 +129,43 @@ void Calibration(){
             lcd.print("Complete");
             
     while (isCentered == false){
-      setLW_Forward();
-      setRW_Forward();
+      
  
       while (!isBlack()){
-        analogWrite(BRpinEN, 50);
-        analogWrite(FLpinEN, 50);
-        analogWrite(BLpinEN, 50);
-        analogWrite(FRpinEN, 50);
+        setFullForward();
       }
       delay(150);
-
       setHardRightTurn();
       delay(500);
       while(abs(getError() > 500)){
         Serial.println();
-       
-     setHardRightTurn();
-        
+        setHardRightTurn();
      }
-     analogWrite(BRpinEN, 0);
-     analogWrite(FLpinEN, 0);
-     analogWrite(BLpinEN, 0);
-     analogWrite(FRpinEN, 0);
-             isCentered = true;
-            lcd.clear();
-            lcd.setCursor(0, 0);
-            lcd.print("Centered");
+     stop();
+     isCentered = true;
+     lcd.clear();
+     lcd.setCursor(0, 0);
+     lcd.print("Centered");
 
     }
     
   
-  // print the calibration minimum values measured when emitters were on
-  for (uint8_t i = 0; i < SensorCount; i++)
-  {
-    Serial.print(qtr.calibrationOn.minimum[i]);
-    Serial.print(' ');
-  }
-  Serial.println();
-  
-  // print the calibration maximum values measured when emitters were on
-  for (uint8_t i = 0; i < SensorCount; i++)
-  {
-    Serial.print(qtr.calibrationOn.maximum[i]);
-    Serial.print(' ');
-  }
-  Serial.println();
-  Serial.println();
+//  // print the calibration minimum values measured when emitters were on
+//  for (uint8_t i = 0; i < SensorCount; i++)
+//  {
+//    Serial.print(qtr.calibrationOn.minimum[i]);
+//    Serial.print(' ');
+//  }
+//  Serial.println();
+//  
+//  // print the calibration maximum values measured when emitters were on
+//  for (uint8_t i = 0; i < SensorCount; i++)
+//  {
+//    Serial.print(qtr.calibrationOn.maximum[i]);
+//    Serial.print(' ');
+//  }
+//  Serial.println();
+//  Serial.println();
   delay(3000);
 
   
@@ -194,18 +180,27 @@ void Assembly(){
 //    digitalWrite(StoragePinEn, LOW);
 //    clawPickup();
     lcd.clear();
-    Serial.println("Assembly mode");
-
-    // follow line until reaches all black
-
-
-
+    lcd.setCursor(0,0);
+    lcd.print("Mode:");
+    lcd.setCursor(0,1);
+    lcd.print("Assembly");
     stop();
-    
+
+    currRow = 1;
+    lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print(currRow);
+
     //delay(1000);
     
     for(int i = 0; i < 3; i++){
+      lcd.clear();
+      lcd.setCursor(0,0);
+      lcd.print(pattyLocation[i]);
+      lcd.setCursor(0,1);
+      lcd.print(currRow);
       pickUp(pattyLocation[i]);
+      
     }
 
 
@@ -239,10 +234,28 @@ void Assembly(){
 
 void ramp(){
     Serial.println("ramp mode");
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("Ramp");
+    delay(500);
 
-    // start when detect ultrasonic
+    for(int i = 0; i < 200; i++){
+     lineFollowing();
+      updateLCDLF();
+      delay(1);
+      Serial.println(i);
+    }
+  
+    setFullForwardRamp(150);
+    delay(2000);
+
+    while(!isHalfBlack()){
+      lineFollowing();
+      updateLCDLF();
+      }
+    stop();
+  delay(150);
     
-    // increase torque, go over ramp
 }
 
 void dropOff(){

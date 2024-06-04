@@ -97,6 +97,7 @@ extern uint16_t s[];
   extern bool pressed6;
 
   extern LiquidCrystal lcd;
+  extern int currRow;
 
 
 void curvedSection();

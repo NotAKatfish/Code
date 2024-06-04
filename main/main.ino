@@ -28,7 +28,7 @@
   bool firstTurnDone = false;
 
   // pikcup and line
-  int rows = 0;
+  int currRow = 0;
 
 // Motor control pins
   int FLpin1 = 22;
@@ -49,7 +49,7 @@
 
 // speed vars, pid
   const float Nspeed = 10; //60
-  const float Kp = 0.0070; //proportional 0-0.1
+  const float Kp = 0.0075; //proportional 0-0.1
   const float Ki = 0.000; //offset  
   const float Kd = 0.02; //difference
 
@@ -75,7 +75,7 @@
   int up_threshold = 20;
   int low_threshold = -50;
   int deadzone = 40;
-  int deadzone_speed = 40;
+  int deadzone_speed = 50;
 
 
   // switching to reverse
@@ -263,7 +263,7 @@ void loop() {
 
     //Serial.println(getDistance());
   // goStorage();
-  // moveArm();
+//  // moveArm();
   if(currentMode == CALIBRATION){
     Calibration();
     Serial.println("Calibrated");
@@ -271,9 +271,12 @@ void loop() {
   }
      curvedSection();
      Assembly();
+     ramp();
+
 }
-   
+
  
+
   //Assembly();
   
 

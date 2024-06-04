@@ -97,4 +97,5 @@ void firstTurn();
 void stop();
 void updateLCDLF();
 void setFullForward();
+void setFullForwardRamp(int rampSpeed);
 #endif

@@ -3,17 +3,19 @@
 #include <HCSR04.h>
 
 // ultrasonic vars
-  extern UltraSonicDistanceSensor sensor1;
-  extern UltraSonicDistanceSensor sensor2;
- extern int rows;
+ extern UltraSonicDistanceSensor sensor1;
+ extern UltraSonicDistanceSensor sensor2;
+ extern int currRow;
  
 
 void pickUp(int pattyLocation);
 void pickUpLeft();
 void pickUpRight();
 void dropOff(int n);
-void backtoStart();
-
+void backToCenter(int pattyLocation);
+void goToRow();
+int rowOfPatty(int pattyLocation);
+bool isOnLeft(int pattyLocation);
 
 
 
