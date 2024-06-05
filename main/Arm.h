@@ -31,6 +31,7 @@ extern int vert_stepcounter; // step counter for vertical stepper
 
 
   extern bool armFaceFront; // arm default faces front
+  extern bool proceed;
 
 void moveArm();
 void clawPickup();

@@ -113,10 +113,10 @@ void Calibration(){
       setRW_Reverse();
       Serial.println("GoingReverse");
     }
-          analogWrite(BRpinEN, 50);
-          analogWrite(FLpinEN, 50);
-          analogWrite(BLpinEN, 50);
-          analogWrite(FRpinEN, 50);
+          analogWrite(BRpinEN, 65);
+          analogWrite(FLpinEN, 65);
+          analogWrite(BLpinEN, 65);
+          analogWrite(FRpinEN, 65);
    
     qtr.calibrate();
     qtr.read(sensorValues);
@@ -210,9 +210,9 @@ void Assembly(){
 //<<<<<<< Updated upstream
 
 //    // turn on stepper pins before assembly
-//    digitalWrite(RotPinEn, LOW);
-//    digitalWrite(VertPinEn, LOW);
-//    digitalWrite(StoragePinEn, LOW);
+    digitalWrite(RotPinEn, LOW);
+    digitalWrite(VertPinEn, LOW);
+    digitalWrite(StoragePinEn, LOW);
 //    clawPickup();
     lcd.clear();
     lcd.setCursor(0,0);
@@ -297,8 +297,11 @@ void ramp(){
     lcd.setCursor(0, 0);
     lcd.print("Ramp");
     delay(500);
+    deadzone_speed = 55;
 
     for(int i = 0; i < 200; i++){
+          // dynamic object
+     while(getDistance() <=20){stop;}
      lineFollowing();
       updateLCDLF();
       delay(1);
@@ -309,6 +312,8 @@ void ramp(){
     delay(2000);
 
     while(!isHalfBlack()){
+                // dynamic object
+      while(getDistance() <=20){stop;}
       lineFollowing();
       updateLCDLF();
       }
@@ -376,7 +381,7 @@ void curvedSection(){
   delay(500);
 //<<<<<<< Updated upstream
 
-  while(isBlack() == false)
+  while(!isBlack())
   {
     lineFollowing();
     updateLCDLF();
@@ -389,6 +394,9 @@ void curvedSection(){
   lcd.clear();
   while(Nspeed == 25)
   {
+    // dynamic object scenario
+    while(getDistance() <=20){stop;}
+
     lcd.setCursor(0, 0);
     lcd.print("LineFollowing");
     lineFollowing();

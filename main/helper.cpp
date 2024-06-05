@@ -5,10 +5,35 @@
 
 
 int32_t newError = 0;
+int32_t constantErrorCheck[10] = {30, 30, 30, 30, 30, 30, 30, 30, 30, 0};
+int errorIndex = 0;
+int32_t errorMax = -1;
+int32_t errorMin = 2000;
 
 
 void lineFollowing() {
   // read raw sensor values
+
+    // if it stalls
+//    constantErrorCheck[errorIndex] = newError;
+//    for(int i = 0; i < 10; i++){
+//      if(constantErrorCheck[i] > errorMax){errorMax = constantErrorCheck[i];}
+//      if(constantErrorCheck[i] < errorMin){errorMin = constantErrorCheck[i];}
+//  
+//      // if repeating
+//      if((errorMax - errorMin) < 10){
+//        analogWrite(BRpinEN, 60);
+//        analogWrite(FLpinEN, 60);
+//        analogWrite(BLpinEN, 60);
+//        analogWrite(FRpinEN, 60);
+//        delay(300);
+//        errorIndex = -1;
+//      }
+//    }
+//    errorIndex++;
+//    if(errorIndex == 11){errorIndex = 0;}
+
+  
     getError();
     pid = (Kp * P) + (Ki * I) + (Kd * D);
     speedLeft = Nspeed - pid;
@@ -43,7 +68,6 @@ void lineFollowing() {
     //   analogWrite(FRpinEN, 60);
     //   delay(100);
     // }
-
 
     // // do first turn
     // firstTurn();
@@ -279,20 +303,20 @@ void setFullReverse(){
   setLW_Reverse();
   setRW_Reverse();
 
-    analogWrite(BRpinEN, 60);
-    analogWrite(FLpinEN, 60);
-    analogWrite(BLpinEN, 60);
-    analogWrite(FRpinEN, 60);
+    analogWrite(BRpinEN, 65);
+    analogWrite(FLpinEN, 65);
+    analogWrite(BLpinEN, 65);
+    analogWrite(FRpinEN, 65);
 }
 
 void setFullForward(){
   setLW_Forward();
   setRW_Forward();
 
-    analogWrite(BRpinEN, 60);
-    analogWrite(FLpinEN, 60);
-    analogWrite(BLpinEN, 60);
-    analogWrite(FRpinEN, 60);
+    analogWrite(BRpinEN, 65);
+    analogWrite(FLpinEN, 65);
+    analogWrite(BLpinEN, 65);
+    analogWrite(FRpinEN, 65);
 }
 
 void setFullForwardRamp(int rampSpeed){

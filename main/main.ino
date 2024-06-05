@@ -49,9 +49,9 @@
 
 // speed vars, pid
   const float Nspeed = 10; //60
-  const float Kp = 0.0075; //proportional 0-0.1
+  const float Kp = 0.0086; //proportional 0-0.1
   const float Ki = 0.000; //offset  
-  const float Kd = 0.02; //difference
+  const float Kd = 0.020; //difference
 
 //  const float Nspeed = 20 ; //30
 //  const float Kp = 0.007; //proportional 0-0.1
@@ -72,10 +72,10 @@
   // min and max power output
   //int up_threshold = 80;
   //int low_threshold = -40;
-  int up_threshold = 20;
+  int up_threshold = 22;
   int low_threshold = -50;
   int deadzone = 40;
-  int deadzone_speed = 50;
+  int deadzone_speed = 58;
 
 
   // switching to reverse
@@ -116,14 +116,16 @@
   const int VertPinEn = 36;
   const int StoragePinEn = 37;
 
-  const int maxstepsRot = 1400; //200 steps per rotation, 7 complete rotations
+  const int maxstepsRot = 1300; //200 steps per rotation, 7 complete rotations
   const int maxstepsVert = 2000; //200 steps per rotation, 10 complete rotations
   int stepper_stepcounter = 0;    // always reset before each stepper action
   int vert_stepcounter = 0;
   const int vert_step = 1;
   
 
-  bool armFaceFront = true; // arm default faces front
+  bool armFaceFront = true; // arm default faces fron
+  bool proceed=false;
+  
 
 
 // initialize storage
@@ -155,9 +157,9 @@
   //
   
   const int pattyNumber = 3;
-  int pattyLocation[pattyNumber] = {1, 2, 3};
+  int pattyLocation[pattyNumber] = {1, 3, 5};
   int inputsReceived = 0;
-  int dropOffLocation;
+  int dropOffLocation=4;
   
   bool pressed1 = false;
   bool pressed2 = false;
@@ -178,9 +180,9 @@ Mode currentMode = CALIBRATION;
 
 void setup() {
   // make all stepper poins HIGH (off before use)
-    digitalWrite(RotPinEn, HIGH);
-    digitalWrite(VertPinEn, HIGH);
-    digitalWrite(StoragePinEn, HIGH);
+    digitalWrite(RotPinEn, LOW);
+    digitalWrite(VertPinEn, LOW);
+    digitalWrite(StoragePinEn, LOW);
 
   // storage initialization
     // define stepper step and direction pins
@@ -190,8 +192,8 @@ void setup() {
     servoL.attach (servoL_Pin);
     servoR.attach (servoR_Pin);
     // move the aligners to their away position
-    servoL.write (servoL_flat);
-    servoR.write (servoR_flat);
+    servoL.write (servoL_away);
+    servoR.write (servoR_away);
 
 
 
@@ -256,52 +258,13 @@ void setup() {
 
 void loop() {
 
-//sensorR.measureDistanceCm();
-//Serial.println(sensorL.measureDistanceCm());
-// Serial.println(getDistance());
-  //goStorage();
- // moveArm();
 
-    //Serial.println(getDistance());
-  // goStorage();
-//  // moveArm();
-  if(currentMode == CALIBRATION){
     Calibration();
-    Serial.println("Calibrated");
-    currentMode = LINE_FOLLOWING;
-  }
-     curvedSection();
+    curvedSection();
      Assembly();
-     //ramp();
+     ramp();
+    dropOff();
 
 }
 
  
-
-  //Assembly();
-  
-
-
-
-//    firstTurn();
-//    if(firstTurnDone == true){currentMode = ASSEMBLY;}
-
-
-//    if(assemblyDone == true && getDistance()< 4){currentMode = RAMP;}
-
-// // State changer
-//     switch (currentMode) {
-//         case LINE_FOLLOWING:
-// //            Serial.println("Line Following");
-//             lineFollowing();
-//             break;
-//         case ASSEMBLY:
-//             Assembly();
-//             // after assembly is done
-//             currentMode = LINE_FOLLOWING;
-//             firstTurnDone = false;
-//             break;
-//         case RAMP:
-//             ramp();
-//             break;
-//     }

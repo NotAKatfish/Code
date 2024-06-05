@@ -7,12 +7,13 @@
 int rowOfPatty(int pattyLocation)
 //Takes in pattyLocation, gives the row it is in
 {
-  int rowAssignment[6] = {1 ,1, 2, 2, 2, 3};
+  int rowAssignment[6] = {1 ,1, 2, 2, 3, 3};
   return rowAssignment[pattyLocation-1];
 }
 
 bool isOnLeft(int pattyLocation) {return ((pattyLocation + 1)%2 == 0);} // checks if its on the left or right
 void pickUp(int pattyLocation){
+  deadzone_speed = 65;
   
   int upOrDown = rowOfPatty(pattyLocation)-(currRow); //check if patty location is in front or behind current row
   lcd.setCursor(3,0);
@@ -78,15 +79,41 @@ void pickUpLeft(){
   stop(); 
   setFullForward(); // move slightly infront of black lne
   delay(100);
-  
-  while (getDistance()>2){ // line follow until distance is met
+//  
+//  while (getDistance()>2){ // line follow until distance is met
+//    lineFollowing();
+//    updateLCDLF();
+//  }
+//  while(getDistance()>2){
+//    for(int i = 0; i<3;){
+//      if(getDistance() <=8){
+//        i++;
+//      lineFollowing();
+//    }else{
+//      i=0;
+//    }
+//  }
+//  lineFollowing();
+//  updateLCDLF();
+//}
+while(limitTouched(claw_limitSwitch)){
+    proceed=false;
+  }
+  proceed=true;
+while (!(limitTouched(claw_limitSwitch))){ 
     lineFollowing();
     updateLCDLF();
   }
-  delay(100);
+  
+ delay(100);
   stop();
-  delay(1000);
-  }
+  delay(1000); 
+  clawPickup();
+}
+//    }
+//  }
+//  
+//  }
 
 
 void pickUpRight(){ // read pickUpLeft() 
@@ -113,13 +140,34 @@ void pickUpRight(){ // read pickUpLeft()
   setFullForward();
   delay(100);
   
-  while (getDistance()>2){
+//  while (getDistance()>2){
+//    lineFollowing();
+//    updateLCDLF();
+//  }
+//  while(getDistance()>2){
+//    for(int i = 0; i<3;){
+//      if(getDistance() <=8){
+//        i++;
+//      lineFollowing();
+//    }else{
+//      i=0;
+//    }
+//  }
+//  lineFollowing();
+//  updateLCDLF();
+//}
+while(limitTouched(claw_limitSwitch)){
+    proceed=false;
+  }
+  proceed=true;
+while (!(limitTouched(claw_limitSwitch))){ 
     lineFollowing();
     updateLCDLF();
   }
   delay(100);
   stop();
-  delay(10000);
+  delay(1000);
+  clawPickup();
 }
  
 void dropOff(int dropOffLocation){
@@ -167,7 +215,7 @@ void backToCenter(int pattyLocation) {
       Serial.println(); 
     }
   }
-  while (abs(getError())>1200){
+  while (abs(getError())>500){
     lineFollowing();
     updateLCDLF();
 //    bool onCross = false;

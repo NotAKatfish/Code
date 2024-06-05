@@ -7,7 +7,7 @@ void moveArm(){
     claw_servo.write(pos); // every loop
     
     // once position hits position cap or limit switch is touched, stop
-    if(go_right == true && !(pos == desired_pos || limitTouched(claw_limitSwitch)) ){
+    if(go_right == true && !(pos == desired_pos) ){
       claw_servo.write(pos--);
       delay(40);
     }
@@ -56,15 +56,19 @@ void clawPickup() {
   
   
   claw_servo.write(pos); // open the claw
-
+  goStorage(-1);
+  Serial.println("DISC PICKED UP");
   stepper_stepcounter = 0;
   setStepperDir(dirPinRot, HIGH); // rotate counterclockwise 
   stepperMove(stepPinRot, stepper_stepcounter, maxstepsRot); // rotate back to storage
-  goStorage(-1);
-  Serial.println("DISC PICKED UP");
+
 }
 
 void goDownAndGrab(){
+  while(limitTouched(bottom_limitSwitch)){
+    proceed=false;
+  }
+  proceed=true;
   Serial.println("godownandgrab");
   claw_servo.write(90); // opens claw
   vert_stepcounter = 0; // initialize step counter
@@ -85,7 +89,7 @@ void goDownAndGrab(){
     
   }
   // for the raising distance, if limit_limit switch pressed_ move one step. else 
-  while (!(pos == desired_pos || limitTouched(claw_limitSwitch))){ 
+  while (!(pos == desired_pos)){ 
     // close claw
     claw_servo.write(pos--);
     delay(40);
@@ -93,22 +97,27 @@ void goDownAndGrab(){
 }
 
 void clawDropoff() {
+    
     claw_servo.write(pos); // opens claw
     stepper_stepcounter = 0; 
     vert_stepcounter = 0;
     setStepperDir(dirPinRot, LOW); // rotate clockwise 
-    stepperMove(stepPinRot, stepper_stepcounter, 1300); // rotate partially 
+    stepperMove(stepPinRot, stepper_stepcounter, 1200); // rotate partially 
     setStepperDir(dirPinVert, LOW);//  set direction down 
 
+    while(limitTouched(bottom_limitSwitch)){
+    proceed=false;
+  }
+  proceed=true;
     while (!limitTouched(bottom_limitSwitch)){ // moves claw down to platform until bottom limit switch is touched 
     stepper_stepcounter = 0;
     stepperMove (stepPinVert, stepper_stepcounter, 1);
     vert_stepcounter++;
    }
-   stepperMove(stepPinRot, stepper_stepcounter, maxstepsRot-1300);// rotate back to storage
+   stepperMove(stepPinRot, stepper_stepcounter, maxstepsRot-1200);// rotate back to storage
    goStorage(3);
    //digitalWrite(StoragePinEn, HIGH); //Turn off storage enable
-   while (!(pos == desired_pos || limitTouched(claw_limitSwitch))){ // close claw
+   while (!(pos == desired_pos)){ // close claw
     claw_servo.write(pos--);
    }
    setStepperDir(dirPinVert, LOW);//  set direction up
@@ -120,6 +129,10 @@ void clawDropoff() {
    setStepperDir(dirPinVert, HIGH);//  set direction down
 
    vert_stepcounter = 0;
+   while(limitTouched(bottom_limitSwitch)){
+    proceed=false;
+  }
+  proceed=true;
    while (!limitTouched(bottom_limitSwitch)){ // moves claw down to platform until bottom limit switch is touched 
    stepper_stepcounter = 0;
     stepperMove (stepPinVert, stepper_stepcounter, 1);
@@ -173,7 +186,6 @@ void incremental_step(int stepPin){
     digitalWrite(stepPin, LOW);
     delayMicroseconds(40000); 
 }
-
 
 //PICKUP
 // put claw manually at the top
