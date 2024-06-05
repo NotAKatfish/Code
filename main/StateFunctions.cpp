@@ -228,18 +228,18 @@ void Assembly(){
     lcd.clear();
      //turn on stepper pins before assembly
 
-    Serial.print("point1");
-  stepper_stepcounter = 0;
-  setStepperDir(dirPinRot, LOW); // rotate clockwise 
-  stepperMove(stepPinRot, stepper_stepcounter, maxstepsRot); // rotate back to storage
+//    Serial.print("point1");
+//  stepper_stepcounter = 0;
+//  setStepperDir(dirPinRot, LOW); // rotate clockwise 
+//  stepperMove(stepPinRot, stepper_stepcounter, maxstepsRot); // rotate back to storage
     
     
-    digitalWrite(RotPinEn, LOW);
-    digitalWrite(VertPinEn, LOW);
-    digitalWrite(StoragePinEn, LOW);
+//    digitalWrite(RotPinEn, LOW);
+//    digitalWrite(VertPinEn, LOW);
+//    digitalWrite(StoragePinEn, LOW);
     Serial.print("point2");
     //goStorage(-1);  
-    clawPickup();
+    //clawPickup();
 //>>>>>>> Stashed changes
 
     currRow = 1;
