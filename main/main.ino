@@ -64,7 +64,7 @@
   float pid = 0;
 
   int error = 0;
-  int32_t newError = 0;
+  // int32_t newError = 0;
   int prevError = 0;
   int speedLeft = Nspeed;
   int speedRight = Nspeed;
