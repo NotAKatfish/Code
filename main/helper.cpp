@@ -90,10 +90,10 @@ void setHardRightTurn(){
     setRW_Reverse();
     
 
-    analogWrite(BRpinEN, 120);
-    analogWrite(FLpinEN, 120);
-    analogWrite(BLpinEN, 120);
-    analogWrite(FRpinEN, 120);
+  analogWrite(BRpinEN, 140);
+  analogWrite(FLpinEN, 130);
+  analogWrite(BLpinEN, 140);
+  analogWrite(FRpinEN, 130);
 }
 
 // return true if all white

@@ -5,20 +5,21 @@
 #include <HCSR04.h>
 
 int rowOfPatty(int pattyLocation)
+//Takes in pattyLocation, gives the row it is in
 {
   int rowAssignment[6] = {1 ,1, 2, 2, 2, 3};
   return rowAssignment[pattyLocation-1];
 }
 
-bool isOnLeft(int pattyLocation) {return ((pattyLocation + 1)%2 == 0);}
+bool isOnLeft(int pattyLocation) {return ((pattyLocation + 1)%2 == 0);} // checks if its on the left or right
 void pickUp(int pattyLocation){
   
-  int upOrDown = rowOfPatty(pattyLocation)-(currRow);
+  int upOrDown = rowOfPatty(pattyLocation)-(currRow); //check if patty location is in front or behind current row
   lcd.setCursor(3,0);
   lcd.print(upOrDown);
-  if(upOrDown > 0){
-    bool onCross = false;
-    while(currRow != rowOfPatty(pattyLocation)){
+  if(upOrDown > 0){ //if in front, move to destination row, increment currentRow when cross is detected
+    bool onCross = false; // make sure each cross is registered only once
+    while(currRow != rowOfPatty(pattyLocation)){ 
       lineFollowing();
       if((!onCross)&&(isBlack())) {
         currRow++;
@@ -29,7 +30,7 @@ void pickUp(int pattyLocation){
       Serial.println(onCross);
       Serial.println(currRow);
     }
-  } else if(upOrDown < 0){
+  } else if(upOrDown < 0){ //if behind, move to destination row, decrement currentRow when cross is detected
     bool onCross = false;
     while(currRow != rowOfPatty(pattyLocation)){
       setFullReverse();
@@ -43,7 +44,7 @@ void pickUp(int pattyLocation){
     delay(150);
     stop();
     
-    if(isOnLeft(pattyLocation)){pickUpLeft();}
+    if(isOnLeft(pattyLocation)){pickUpLeft();} // checks if patty location is on the left or right
     else {pickUpRight();}
   
     backToCenter(pattyLocation);
@@ -53,31 +54,32 @@ void pickUp(int pattyLocation){
 
 void pickUpLeft(){
 
-  while(!isWhite()){
+  while(!isWhite()) { 
+    // initiates left turn, forces it to read white space before centering to row
     setHardLeftTurn();
   }
   getError();
   
   Serial.println();
   
-  while(sensorValues[1] <= 800){
+  while(sensorValues[1] <= 800){ // lock onto black row
    setHardLeftTurn(); 
    getError();
    Serial.println();
   }
-  while (getDistance()>5){
+  while (getDistance()>5){ // line follow until distance is met
     lineFollowing();
     updateLCDLF();
   }
   stop(); delay(1000);
-  while(!isBlack()){
+  while(!isBlack()){ // back up to black line to give more room for line following and centering
     setFullReverse();
   }
   stop(); 
-  setFullForward();
+  setFullForward(); // move slightly infront of black lne
   delay(100);
   
-  while (getDistance()>2){
+  while (getDistance()>2){ // line follow until distance is met
     lineFollowing();
     updateLCDLF();
   }
@@ -87,7 +89,7 @@ void pickUpLeft(){
   }
 
 
-void pickUpRight(){
+void pickUpRight(){ // read pickUpLeft() 
   while(!isWhite()){
     setHardRightTurn();
   }
@@ -119,7 +121,7 @@ void pickUpRight(){
   stop();
   delay(10000);
 }
-
+ 
 void dropOff(int dropOffLocation){
   bool onT = false;
   while(currRow < dropOffLocation){
@@ -143,10 +145,10 @@ void backToCenter(int pattyLocation) {
    //reverse straight until the sensors read all black
   while(!isBlack()) {setFullReverse();}
   stop();
-  setFullForward();
+  setFullForward();// move slightly infront of cross
   delay(550);
   stop();
-  if(isOnLeft(pattyLocation)){
+  if(isOnLeft(pattyLocation)){ // check if exiting row is left or right, and make it face forward
     while(!isWhite()){setHardRightTurn();}
     getError();
     Serial.println();
