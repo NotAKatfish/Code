@@ -5,25 +5,19 @@
 #include "PU_Cases.h"
 #include "Arm.h"
 #include <IRremote.hpp> 
-<<<<<<< Updated upstream
-//#include <HCSR04.h>
-=======
-
-
 #include <HCSR04.h>
 
->>>>>>> Stashed changes
+//>>>>>>> Stashed changes
 void userInput(){
   IrReceiver.begin(IR_RECEIVE_PIN);
   
   while(inputsReceived != pattyNumber)
   {  
       
-<<<<<<< Updated upstream
+//<<<<<<< Updated upstream
       // set up the LCD's number of columns and s:
-=======
       // set up the LCD's number of columns and rows:
->>>>>>> Stashed changes
+//>>>>>>> Stashed changes
     if (IrReceiver.decode() && (inputsReceived != pattyNumber)) {
           IrReceiver.resume();
           int command = IrReceiver.decodedIRData.command;
@@ -68,11 +62,11 @@ void userInput(){
             lcd.print(pattyLocation[1]);
             lcd.setCursor(4, 1);
             lcd.print(pattyLocation[2]);
-<<<<<<< Updated upstream
+//<<<<<<< Updated upstream
             lcd.setCursor(6, 1);
             lcd.print(inputsReceived);
-=======
->>>>>>> Stashed changes
+//=======
+//>>>>>>> Stashed changes
   
    
       }
@@ -80,15 +74,15 @@ void userInput(){
 
 void Calibration(){
   uint16_t calCounter = 0;
-<<<<<<< Updated upstream
-=======
+//<<<<<<< Updated upstream
+//=======
   lcd.clear();
   lcd.setCursor(0, 0);
   lcd.print("Mode:");
   lcd.setCursor(0, 1);
   lcd.print("Calibration");
 
->>>>>>> Stashed changes
+//>>>>>>> Stashed changes
   bool onWhite = false;
   bool isCentered = false;
   pinMode(LED_BUILTIN, OUTPUT);
@@ -145,23 +139,23 @@ void Calibration(){
       onWhite = false;
     }
   }
-<<<<<<< Updated upstream
+//<<<<<<< Updated upstream
             lcd.clear();
             lcd.setCursor(0, 0);
             lcd.print("Calibration");
             lcd.setCursor(0, 1);
             lcd.print("Complete");
             
-=======
+//=======
     lcd.clear();
     lcd.setCursor(0, 0);
     lcd.print("Calibration");
     lcd.setCursor(0, 1);
     lcd.print("Complete");
->>>>>>> Stashed changes
+//>>>>>>> Stashed changes
     while (isCentered == false){
       
-<<<<<<< Updated upstream
+//<<<<<<< Updated upstream
  
       while (!isBlack()){
         setFullForward();
@@ -179,7 +173,7 @@ void Calibration(){
      lcd.setCursor(0, 0);
      lcd.print("Centered");
 
-=======
+//=======
         analogWrite(BRpinEN, 0);
         analogWrite(FLpinEN, 0);
         analogWrite(BLpinEN, 0);
@@ -188,7 +182,7 @@ void Calibration(){
         lcd.clear();
         lcd.setCursor(0, 0);
         lcd.print("Centered");
->>>>>>> Stashed changes
+//>>>>>>> Stashed changes
     }
     
   
@@ -213,7 +207,7 @@ void Calibration(){
   
 
 void Assembly(){
-<<<<<<< Updated upstream
+//<<<<<<< Updated upstream
 
 //    // turn on stepper pins before assembly
 //    digitalWrite(RotPinEn, LOW);
@@ -226,7 +220,7 @@ void Assembly(){
     lcd.setCursor(0,1);
     lcd.print("Assembly");
     stop();
-=======
+//=======
     lcd.clear();
     lcd.setCursor(0, 0);
     lcd.print("Assembly Section");
@@ -234,19 +228,19 @@ void Assembly(){
     lcd.clear();
      //turn on stepper pins before assembly
 
-    Serial.print("point1");
-  stepper_stepcounter = 0;
-  setStepperDir(dirPinRot, LOW); // rotate clockwise 
-  stepperMove(stepPinRot, stepper_stepcounter, maxstepsRot); // rotate back to storage
+//    Serial.print("point1");
+//  stepper_stepcounter = 0;
+//  setStepperDir(dirPinRot, LOW); // rotate clockwise 
+//  stepperMove(stepPinRot, stepper_stepcounter, maxstepsRot); // rotate back to storage
     
     
-    digitalWrite(RotPinEn, LOW);
-    digitalWrite(VertPinEn, LOW);
-    digitalWrite(StoragePinEn, LOW);
+//    digitalWrite(RotPinEn, LOW);
+//    digitalWrite(VertPinEn, LOW);
+//    digitalWrite(StoragePinEn, LOW);
     Serial.print("point2");
     //goStorage(-1);  
-    clawPickup();
->>>>>>> Stashed changes
+    //clawPickup();
+//>>>>>>> Stashed changes
 
     currRow = 1;
     lcd.clear();
@@ -295,7 +289,7 @@ void Assembly(){
 
 
 void ramp(){
-<<<<<<< Updated upstream
+//<<<<<<< Updated upstream
   // currently just timed
   
     Serial.println("ramp mode");
@@ -321,7 +315,7 @@ void ramp(){
     stop();
   delay(150);
     
-=======
+//=======
     lcd.clear();
     lcd.setCursor(0, 0);
     lcd.print("Ramp Section");
@@ -329,22 +323,23 @@ void ramp(){
     lcd.clear();
 
     // start when detect ultrasonic
-    if (sensor1.measureDistanceCm()<15 && sensor2.measureDistanceCm()<15) //change 15 to whatever distance.
+    // if (sensor1.measureDistanceCm()<15 && sensor2.measureDistanceCm()<15) //change 15 to whatever distance.
     
-     increase torque, go over ramp
->>>>>>> Stashed changes
+    
+    // increase torque, go over ramp
+//>>>>>>> Stashed changes
 }
 
-void dropOff(){
-    Serial.println("drop off");
-    currRow =1;
-    // turn 90 deg right into drop off bay
-    dropOff(dropOffLocation());
+// void dropOff(){
+//     Serial.println("drop off");
+//     currRow =1;
+//     // turn 90 deg right into drop off bay
+//     dropOff(dropOffLocation());
 
-<<<<<<< Updated upstream
-}
+// //<<<<<<< Updated upstream
+// }
 
-=======
+//=======
 void disAssemble(){
     Serial.println("drop off");
 }
@@ -373,13 +368,13 @@ void dropOff(){
 
 }
 
->>>>>>> Stashed changes
+//>>>>>>> Stashed changes
 void curvedSection(){
   lcd.clear();
   lcd.setCursor(0, 0);
   lcd.print("Curved Section");
   delay(500);
-<<<<<<< Updated upstream
+//<<<<<<< Updated upstream
 
   while(isBlack() == false)
   {
@@ -390,7 +385,7 @@ void curvedSection(){
   
   
   
-=======
+//=======
   lcd.clear();
   while(Nspeed == 25)
   {
@@ -417,5 +412,5 @@ void curvedSection(){
   
   
  
->>>>>>> Stashed changes
+//>>>>>>> Stashed changes
 }

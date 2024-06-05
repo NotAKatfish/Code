@@ -4,6 +4,8 @@
 #include "stateFunctions.h"
 
 
+int32_t newError = 0;
+
 
 void lineFollowing() {
   // read raw sensor values
@@ -241,8 +243,9 @@ int32_t getError() {
 
   // dark lines kinda above 600
   // under 100, white
-
-  newError = 3500-position;
+  
+  int32_t threshold_number = 3500;
+  newError = threshold_number-position;
 
   
   P = newError;

@@ -2,7 +2,7 @@
 #define STATEFUNCTIONS_H
 #include <LiquidCrystal.h>
 #include <QTRSensors.h>
-<<<<<<< Updated upstream
+//<<<<<<< Updated upstream
 //#include <HCSR04.h>
   #define IR_RECEIVE_PIN 9
   #define IR_BUTTON_1 12
@@ -28,11 +28,11 @@
   
   #define IR_BUTTON_EQ 25
   #define IR_BUTTON_ST 13
-=======
+//=======
 #include <LiquidCrystal.h>
 #include <HCSR04.h>
 
->>>>>>> Stashed changes
+//>>>>>>> Stashed changes
 
   #define IR_RECEIVE_PIN 9
   #define IR_BUTTON_1 12
@@ -97,10 +97,10 @@ extern uint16_t s[];
   extern float pid;
 
   extern int error;
-<<<<<<< Updated upstream
-=======
-  int32_t newError;
->>>>>>> Stashed changes
+//<<<<<<< Updated upstream
+//=======
+  // int32_t newError;
+//>>>>>>> Stashed changes
   extern int prevError;
   extern int speedLeft;
   extern int speedRight;
@@ -130,7 +130,7 @@ extern uint16_t s[];
   extern bool pressed4;
   extern bool pressed5;
   extern bool pressed6;
-<<<<<<< Updated upstream
+//<<<<<<< Updated upstream
 
   extern LiquidCrystal lcd;
   extern int currRow;
@@ -140,7 +140,7 @@ void curvedSection();
 void Assembly();
 void ramp();
 void dropOff();
-=======
+//=======
 
   extern LiquidCrystal lcd;
 
@@ -149,7 +149,7 @@ void curvedSection();
 void Assembly();
 void ramp();
 void disAssemble();
->>>>>>> Stashed changes
+//>>>>>>> Stashed changes
 void Calibration();
 void userInput();
 

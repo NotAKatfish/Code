@@ -58,7 +58,7 @@
   extern int deadzone_speed;
 
   extern int error;
-  extern int32_t newError;
+  // extern int32_t newError;
   extern int prevError;
   extern int speedLeft;
   extern int speedRight;
