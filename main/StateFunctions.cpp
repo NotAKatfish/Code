@@ -210,10 +210,11 @@ void Assembly(){
 //<<<<<<< Updated upstream
 
 //    // turn on stepper pins before assembly
-    digitalWrite(RotPinEn, LOW);
+   digitalWrite(RotPinEn, LOW);
     digitalWrite(VertPinEn, LOW);
-    digitalWrite(StoragePinEn, LOW);
-//    clawPickup();
+  digitalWrite(StoragePinEn, LOW);
+
+    
     lcd.clear();
     lcd.setCursor(0,0);
     lcd.print("Mode:");
@@ -276,10 +277,12 @@ void Assembly(){
     int pattyLocation2 = 2;
     int pattyLocation3 = 3;
     //pickup patty, replace patty Location with patties want to grab
-    //pickUp(pattyLocation1);
-    //clawPickup();
-    // pickUp(pattyLocation2);
-    // pickUp(pattyLocation3);
+    pickUp(pattyLocation1);
+    clawPickup();
+//    pickUp(pattyLocation2);
+//    clawPickup();
+    pickUp(pattyLocation3);
+    clawPickup(); 
 
     // assembly ends at the starting location
 

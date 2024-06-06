@@ -5,7 +5,7 @@
  */
 
 // defines pins numbers
-const int stepPin1 = 51; //rotate 180 degrees
+const int stepPin1 = 52; //rotate 180 degrees
 const int dirPin1 = 53; 
 
 const int stepPin2 = 47; //go up or down
@@ -13,7 +13,7 @@ const int dirPin2 = 49;
 
 const int RotPinEn = 37;
 const int VertPinEn = 36;
-const in StorageEnPinEn = 35;
+const int StorageEnPinEn = 35;
 
 
 
@@ -59,7 +59,7 @@ void loop() {
     digitalWrite(stepPin1,HIGH); 
     delayMicroseconds(20000); 
     digitalWrite(stepPin1,LOW); 
-    delayMicroseconds(2000); 
+    delayMicroseconds(20000); 
     stepcounter++;
   }}
   

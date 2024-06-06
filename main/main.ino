@@ -259,11 +259,11 @@ void setup() {
 void loop() {
 
 
-    Calibration();
-    curvedSection();
-     Assembly();
+Calibration();
+curvedSection();
+    Assembly();
      ramp();
-    dropOff();
+    //dropOff();
 
 }
 

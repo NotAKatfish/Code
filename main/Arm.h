@@ -42,5 +42,8 @@ void setStepperDir(int dirPin, int LEVEL);
 void stepperMove(int stepPin, int &stepcounter, int desired_steps);
 void incremental_step(int stepPin);
 extern void goStorage(int n);
+//////
+//void goDownAndGrab1();
+//void clawPickup1();
 
 #endif

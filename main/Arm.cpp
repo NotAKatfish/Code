@@ -60,9 +60,64 @@ void clawPickup() {
   Serial.println("DISC PICKED UP");
   stepper_stepcounter = 0;
   setStepperDir(dirPinRot, HIGH); // rotate counterclockwise 
-  stepperMove(stepPinRot, stepper_stepcounter, maxstepsRot); // rotate back to storage
+  stepperMove(stepPinRot, stepper_stepcounter, maxstepsRot); // rotate back to front
 
 }
+///////////////////////////////////////////////////////////////////////////////////////////
+//void clawPickup1() {
+//  while (!(pos == desired_pos)){ 
+//    // close claw
+//    claw_servo.write(pos--);
+//    delay(40);
+//  }
+//    Serial.println("Entered clawPickup1()");
+//    goDownAndGrab1();
+//    Serial.println("After goDownAndGrab1()");
+//    pos = start; // reset claw position value in preparation to open again
+//    
+//    setStepperDir(dirPinVert, HIGH);//  set direction up
+//    Serial.println(vert_stepcounter);
+//    stepper_stepcounter = 0;
+//    stepperMove (stepPinVert, stepper_stepcounter, vert_stepcounter+1000); // move the claw back up to the top
+//    vert_stepcounter = 0;
+//    stepper_stepcounter = 0;
+//}
+//void goDownAndGrab1(){
+//  
+//  Serial.println("Entered goDownAndGrab1()");
+//  vert_stepcounter = 0; // initialize step counter
+//  setStepperDir (dirPinVert, LOW); // direction: down
+//  Serial.println(limitTouched(bottom_limitSwitch));
+//  stepperMove (stepPinVert, stepper_stepcounter, 1000);
+//  delay(100);
+//  claw_servo.write(90); // opens claw
+//   delay(100);
+//   while(limitTouched(bottom_limitSwitch)){
+//    proceed=false;
+//  }
+//  proceed=true;
+//  
+//  while (limitTouched(bottom_limitSwitch) == false){ 
+//    Serial.println(limitTouched(bottom_limitSwitch));
+//    // moves claw down to platform until bottom limit switch is touched 
+//    //incremental_step();
+//    stepper_stepcounter = 0;
+//    stepperMove (stepPinVert, stepper_stepcounter, 1);
+//   // Serial.println("step moved");
+//      
+//    vert_stepcounter++;
+//    
+//    Serial.println(vert_stepcounter);
+//  
+//     // for the raising distance, if limit_limit switch pressed_ move one step. else 
+//  }
+//  while (!(pos == desired_pos)){ 
+//    // close claw
+//    claw_servo.write(pos--);
+//    delay(40);
+//  }
+//}
+/////////////////////////////////////////////////////////
 
 void goDownAndGrab(){
   while(limitTouched(bottom_limitSwitch)){
@@ -88,6 +143,8 @@ void goDownAndGrab(){
   
     
   }
+  Serial.print("vert_stepcounter ");
+  Serial.println(vert_stepcounter);
   // for the raising distance, if limit_limit switch pressed_ move one step. else 
   while (!(pos == desired_pos)){ 
     // close claw
@@ -172,9 +229,9 @@ void stepperMove(int stepPin, int &stepcounter, int desired_steps) {
   for(; stepcounter < desired_steps; stepcounter++){
 
     digitalWrite(stepPin, HIGH);
-    delayMicroseconds(40000); // Delay maybe too high
+    delayMicroseconds(5000); // Delay maybe too high
     digitalWrite(stepPin, LOW);
-    delayMicroseconds(40000);  
+    delayMicroseconds(5000);  
   }
   //delay(2000);
 } 
