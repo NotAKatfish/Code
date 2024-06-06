@@ -361,7 +361,7 @@ void dropOff(){
     // turn 90 deg right into drop off bay
     int dropoffLocation = 2;
     dropOff(dropoffLocation);
-    clawDropoff();
+    //clawDropoff();
     //if the robot sees black on the right most sensor, count the row
     //keep going straight
     //when row number=dropofflocation stop 

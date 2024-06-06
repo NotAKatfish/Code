@@ -132,13 +132,13 @@ void pickUpRight(){ // read pickUpLeft()
     lineFollowing();
     updateLCDLF();
   }
-  stop(); delay(1000);
-  while(!isBlack()){
-    setFullReverse();
-  }
-  stop(); 
-  setFullForward();
-  delay(100);
+//  stop(); delay(1000);
+//  while(!isBlack()){
+//    setFullReverse();
+//  }
+//  stop(); 
+//  setFullForward();
+//  delay(100);
   
 //  while (getDistance()>2){
 //    lineFollowing();
@@ -167,7 +167,9 @@ while (!(limitTouched(claw_limitSwitch))){
   delay(100);
   stop();
   delay(1000);
-  clawPickup();
+  //clawPickup();
+  //clawDropoff();
+  goDownAndGrab();
 }
  
 void dropOff(int dropOffLocation){

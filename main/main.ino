@@ -258,12 +258,16 @@ void setup() {
 
 void loop() {
 
-
+while (!(pos == desired_pos)){ 
+    // close claw
+    claw_servo.write(pos--);
+    delay(40);
+  }
 Calibration();
-curvedSection();
-    Assembly();
-     ramp();
-    //dropOff();
+//curvedSection();
+    //Assembly();
+     //ramp();
+    dropOff();
 
 }
 
