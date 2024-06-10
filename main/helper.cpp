@@ -14,26 +14,6 @@ int32_t errorMin = 2000;
 void lineFollowing() {
   // read raw sensor values
 
-    // if it stalls
-//    constantErrorCheck[errorIndex] = newError;
-//    for(int i = 0; i < 10; i++){
-//      if(constantErrorCheck[i] > errorMax){errorMax = constantErrorCheck[i];}
-//      if(constantErrorCheck[i] < errorMin){errorMin = constantErrorCheck[i];}
-//  
-//      // if repeating
-//      if((errorMax - errorMin) < 10){
-//        analogWrite(BRpinEN, 60);
-//        analogWrite(FLpinEN, 60);
-//        analogWrite(BLpinEN, 60);
-//        analogWrite(FRpinEN, 60);
-//        delay(300);
-//        errorIndex = -1;
-//      }
-//    }
-//    errorIndex++;
-//    if(errorIndex == 11){errorIndex = 0;}
-
-  
     getError();
     pid = (Kp * P) + (Ki * I) + (Kd * D);
     speedLeft = Nspeed - pid;
@@ -46,33 +26,10 @@ void lineFollowing() {
     if (speedRight < low_threshold){ speedRight = low_threshold;}
     
 
-    Serial.print('\t');
-    Serial.print(pid);
-    Serial.print('\t');
-    Serial.print(speedLeft);
-    Serial.print('\t');
-    Serial.print(speedRight);
-    Serial.println();
-
     if(speedLeft < 0){setLW_Reverse();}
     else if (speedLeft >= 0){setLW_Forward();}
     if(speedRight < 0){setRW_Reverse();}
     else if(speedRight >= 0){setRW_Forward();}
-
-    // if(isWhite()==true){
-    //   setLW_Reverse();
-    //   setRW_Reverse();
-    //   analogWrite(BRpinEN, 60);
-    //   analogWrite(FLpinEN, 60);
-    //   analogWrite(BLpinEN, 60);
-    //   analogWrite(FRpinEN, 60);
-    //   delay(100);
-    // }
-
-    // // do first turn
-    // firstTurn();
-
-    // Serial.println("NO MORE WHITE");
     goMove();
 }
 
@@ -236,49 +193,19 @@ void goMove(){
 
 // error function
 int32_t getError() {
-//   qtr.read(sensorValues);
-//   for (uint8_t i = 0; i < SensorCount; i++)
-//  {
-//    // normalizing into calibrated values
-//    // absolute
-//    s[i] = (sensorValues[i]-offsetVal[i])*1000/normVal[i];
-//    if(s[i] < 0)
-//    {
-//      s[i] = 0; 
-//    }
-//     Serial.print(s[i]);
-//     Serial.print('\t');
-//  }
 
     int32_t position = qtr.readLineBlack(sensorValues);
-    for (uint8_t i = 0; i < SensorCount; i++)
-    {
-    // normalizing into calibrated values
-    // absolute
+    for (uint8_t i = 0; i < SensorCount; i++){
     s[i] = sensorValues[i];
-//     Serial.print(s[i]);
-//     Serial.print('\t');
   }
-  
-//  
-
-       
-      // delay(1000);
-
-  // dark lines kinda above 600
-  // under 100, white
   
   int32_t threshold_number = 3500;
   newError = threshold_number-position;
-
   
   P = newError;
   I = I + newError;
   D = newError-prevError;
-  Serial.print('\t');
   Serial.print(newError);
-  prevError = newError;
-  Serial.println();
   return newError;
 }
 

@@ -132,30 +132,6 @@ void pickUpRight(){ // read pickUpLeft()
     lineFollowing();
     updateLCDLF();
   }
-//  stop(); delay(1000);
-//  while(!isBlack()){
-//    setFullReverse();
-//  }
-//  stop(); 
-//  setFullForward();
-//  delay(100);
-  
-//  while (getDistance()>2){
-//    lineFollowing();
-//    updateLCDLF();
-//  }
-//  while(getDistance()>2){
-//    for(int i = 0; i<3;){
-//      if(getDistance() <=8){
-//        i++;
-//      lineFollowing();
-//    }else{
-//      i=0;
-//    }
-//  }
-//  lineFollowing();
-//  updateLCDLF();
-//}
 while(limitTouched(claw_limitSwitch)){
     proceed=false;
   }
