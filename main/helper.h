@@ -78,6 +78,10 @@
   extern int distanceLeftUS;
   extern int distanceRightUS;
 
+    extern const int pattyNumber;
+  extern int pattyLocation[];
+  extern int inputsReceived;
+
 void lineFollowing();
 void setLW_Reverse();
 void setRW_Reverse();

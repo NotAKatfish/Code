@@ -1,5 +1,5 @@
 # include "Arm.h"
-
+#include "helper.h"
 void moveArm(){
 
   // claw closes
@@ -120,11 +120,12 @@ void clawPickup() {
 /////////////////////////////////////////////////////////
 
 void goDownAndGrab(){
-  while (!(pos == desired_pos)){ 
-    // close claw
-    claw_servo.write(pos--);
-    delay(40);
-  }
+//  while (!(pos == desired_pos)){ 
+//    // close claw
+//    claw_servo.write(pos--);
+//    delay(40);
+//  }
+claw_servo.write(pos); // open the claw
   while(limitTouched(bottom_limitSwitch)){
     proceed=false;
   }
@@ -150,19 +151,20 @@ void goDownAndGrab(){
   }
   Serial.print("vert_stepcounter ");
   Serial.println(vert_stepcounter);
-  claw_servo.write(90); // opens claw
+  //claw_servo.write(90); // opens claw
   delay(100);
   // for the raising distance, if limit_limit switch pressed_ move one step. else 
-//  while (!(pos == desired_pos)){ 
-//    // close claw
-//    claw_servo.write(pos--);
-//    delay(40);
-//  }
+  while (!(pos == desired_pos)){ 
+    // close claw
+    claw_servo.write(pos--);
+    delay(40);
+  }
 }
 
 void clawDropoff() {
     
     claw_servo.write(pos); // opens claw
+    delay(40);
     stepper_stepcounter = 0; 
     vert_stepcounter = 0;
     setStepperDir(dirPinRot, LOW); // rotate clockwise 
@@ -179,20 +181,21 @@ void clawDropoff() {
 //    vert_stepcounter++;
 //   }
 stepper_stepcounter = 0;
-    stepperMove (stepPinVert, stepper_stepcounter, 1215);
+    stepperMove (stepPinVert, stepper_stepcounter, 893);
    //stepperMove(stepPinRot, stepper_stepcounter, maxstepsRot);// rotate back to storage
-   goStorage(2);
+   goStorage(pattyNumber);
    //digitalWrite(StoragePinEn, HIGH); //Turn off storage enable
    while (!(pos == desired_pos)){ // close claw
     claw_servo.write(pos--);
+    delay(40);
    }
-   setStepperDir(dirPinVert, LOW);//  set direction up
+   setStepperDir(dirPinVert, HIGH);//  set direction up
    stepper_stepcounter = 0; 
-   stepperMove (stepPinVert, stepper_stepcounter, 1215); // move the claw back up to the top
+   stepperMove (stepPinVert, stepper_stepcounter, 893); // move the claw back up to the top
    setStepperDir(dirPinRot, HIGH); // rotate counterclockwise
    stepper_stepcounter = 0;
    stepperMove(stepPinRot, stepper_stepcounter, maxstepsRot); // rotate counter clockwise back to front position 
-   setStepperDir(dirPinVert, HIGH);//  set direction down
+   setStepperDir(dirPinVert, LOW);//  set direction down
 
    vert_stepcounter = 0;
    while(limitTouched(bottom_limitSwitch)){
@@ -204,8 +207,13 @@ stepper_stepcounter = 0;
     stepperMove (stepPinVert, stepper_stepcounter, 1);
    vert_stepcounter++;
    }
+   
    delay(40);
-   claw_servo.write(pos); // opens claw
+   while(pos != start){
+     claw_servo.write(pos++); // opens claw
+     delay(40);
+   }
+  
 }
 
 //TODO: not sure if this is looped inside or if it must be called in a loop

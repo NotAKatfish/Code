@@ -17,6 +17,7 @@ void backToCenter(int pattyLocation);
 void goToRow();
 int rowOfPatty(int pattyLocation);
 bool isOnLeft(int pattyLocation);
+void dropOffRight();
 
 
 

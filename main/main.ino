@@ -49,7 +49,7 @@
 
 // speed vars, pid
   const float Nspeed = 10; //60
-  const float Kp = 0.0086; //proportional 0-0.1
+  const float Kp = 0.0082; //proportional 0-0.1
   const float Ki = 0.000; //offset  
   const float Kd = 0.020; //difference
 
@@ -103,7 +103,7 @@
   int start = 90;    // starting position
   int pos = start;
   bool go_right = true;
-  int desired_pos = 17;
+  int desired_pos = 16;
 
 
 // stepper vars for arm
@@ -258,16 +258,18 @@ void setup() {
 
 void loop() {
 
-while (!(pos == desired_pos)){ 
-    // close claw
-    claw_servo.write(pos--);
-    delay(40);
-  }
+//while (!(pos == desired_pos)){ 
+//    // close claw
+//    claw_servo.write(pos--);
+//    delay(40);
+//  }
 Calibration();
-//curvedSection();
-    //Assembly();
-     //ramp();
+curvedSection();
+    Assembly();
+     ramp();
     dropOff();
+    delay(100000);
+
 
 }
 

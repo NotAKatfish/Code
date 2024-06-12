@@ -143,9 +143,41 @@ while (!(limitTouched(claw_limitSwitch))){
   delay(100);
   stop();
   delay(1000);
-  //clawPickup();
+  clawPickup();
   //clawDropoff();
-  goDownAndGrab();
+  //goDownAndGrab();
+}
+
+void dropOffRight(){ // read pickUpLeft() 
+  while(!isWhite()){
+    setHardRightTurn();
+  }
+  getError();
+  Serial.println();
+  
+  while(sensorValues[6] <= 800){
+   setHardRightTurn(); 
+   getError();
+   Serial.println();
+  }
+  while (getDistance()>5){
+    lineFollowing();
+    updateLCDLF();
+  }
+while(limitTouched(claw_limitSwitch)){
+    proceed=false;
+  }
+  proceed=true;
+while (!(limitTouched(claw_limitSwitch))){ 
+    lineFollowing();
+    updateLCDLF();
+  }
+  delay(100);
+  stop();
+  delay(1000);
+  //clawPickup();
+  clawDropoff();
+  //goDownAndGrab();
 }
  
 void dropOff(int dropOffLocation){
@@ -159,8 +191,10 @@ void dropOff(int dropOffLocation){
       if(!isHalfBlack()) {onT = false;}
   }
   delay(150);
-    stop();
-    pickUpRight();
+  stop();
+  dropOffRight();
+  backToCenter(currRow);
+    
 
 }
 

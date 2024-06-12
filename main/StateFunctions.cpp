@@ -214,7 +214,7 @@ void Assembly(){
     digitalWrite(VertPinEn, LOW);
   digitalWrite(StoragePinEn, LOW);
 
-    
+ 
     lcd.clear();
     lcd.setCursor(0,0);
     lcd.print("Mode:");
@@ -250,7 +250,7 @@ void Assembly(){
 
     //delay(1000);
     
-    for(int i = 0; i < 3; i++){
+    for(int i = 0; i < pattyNumber; i++){
       lcd.clear();
       lcd.setCursor(0,0);
       lcd.print(pattyLocation[i]);
@@ -273,16 +273,16 @@ void Assembly(){
     //pickUp(pattyLocation2);
     //backtoStart();
     // always starts at start line
-    int pattyLocation1 = 1;
-    int pattyLocation2 = 2;
-    int pattyLocation3 = 3;
-    //pickup patty, replace patty Location with patties want to grab
-    pickUp(pattyLocation1);
-    clawPickup();
-//    pickUp(pattyLocation2);
+//    int pattyLocation1 = 1;
+//    int pattyLocation2 = 2;
+//    int pattyLocation3 = 3;
+//    //pickup patty, replace patty Location with patties want to grab
+//    pickUp(pattyLocation1);
 //    clawPickup();
-    pickUp(pattyLocation3);
-    clawPickup(); 
+////    pickUp(pattyLocation2);
+////    clawPickup();
+//    pickUp(pattyLocation3);
+//    clawPickup(); 
 
     // assembly ends at the starting location
 
@@ -304,19 +304,18 @@ void ramp(){
 
     for(int i = 0; i < 200; i++){
           // dynamic object
-     while(getDistance() <=20){stop;}
-     lineFollowing();
+      lineFollowing();
       updateLCDLF();
       delay(1);
       Serial.println(i);
     }
   
     setFullForwardRamp(150);
-    delay(2000);
+    delay(1900);
+    deadzone_speed = 50;
 
     while(!isHalfBlack()){
                 // dynamic object
-      while(getDistance() <=20){stop;}
       lineFollowing();
       updateLCDLF();
       }
@@ -359,8 +358,12 @@ void dropOff(){
     delay(500);
     lcd.clear();
     // turn 90 deg right into drop off bay
-    int dropoffLocation = 2;
+    int dropoffLocation = 4;
+    
     dropOff(dropoffLocation);
+    for(int i = 0; i < 10; i++){
+      lineFollowing();
+    }
     //clawDropoff();
     //if the robot sees black on the right most sensor, count the row
     //keep going straight
@@ -383,45 +386,18 @@ void curvedSection(){
   lcd.print("Curved Section");
   delay(500);
 //<<<<<<< Updated upstream
-
-  while(!isBlack())
+  bool dynamicObstacle = false;
+  while((!isBlack()))
   {
     lineFollowing();
+    while((getDistance()<=20) && (dynamicObstacle == false)){
+      stop();
+      if(getDistance() > 20){
+        dynamicObstacle = true;
+      }
+   }
     updateLCDLF();
   }
-  delay(150);
-  
-  
-  
-//=======
-  lcd.clear();
-  while(Nspeed == 25)
-  {
-    // dynamic object scenario
-    while(getDistance() <=20){stop;}
-
-    lcd.setCursor(0, 0);
-    lcd.print("LineFollowing");
-    lineFollowing();
-    lcd.setCursor(0, 1);
-    lcd.print("LS:");
-    lcd.setCursor(3, 1);
-    lcd.print(abs(speedLeft));
-    lcd.setCursor(6, 1);
-    lcd.print("RS:");
-    lcd.setCursor(9,1);
-    lcd.print(abs(speedRight));
-    lcd.setCursor(12,1);
-    lcd.print("D:");
-    lcd.setCursor(14,1);
-    lcd.print(getDistance());
-  }
-  setHardLeftTurn();
-
-  
-
-  
-  
- 
-//>>>>>>> Stashed changes
+  delay(200);
 }
+  
