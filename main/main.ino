@@ -48,8 +48,8 @@
   int BRpinEN = 10;
 
 // speed vars, pid
-  const float Nspeed = 10; //60
-  const float Kp = 0.0082; //proportional 0-0.1
+  const float Nspeed = 13; //60
+  const float Kp = 0.0075; //proportional 0-0.1
   const float Ki = 0.000; //offset  
   const float Kd = 0.020; //difference
 
@@ -157,7 +157,7 @@
   //
   
   const int pattyNumber = 3;
-  int pattyLocation[pattyNumber] = {1, 3, 5};
+  int pattyLocation[pattyNumber] = {3, 5, 6};
   int inputsReceived = 0;
   int dropOffLocation=4;
   
@@ -264,9 +264,9 @@ void loop() {
 //    delay(40);
 //  }
 Calibration();
-curvedSection();
-    Assembly();
-     ramp();
+//curvedSection();
+    //Assembly();
+     //ramp();
     dropOff();
     delay(100000);
 
